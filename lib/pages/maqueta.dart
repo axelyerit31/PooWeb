@@ -3,7 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poo_web/mystyle.dart';
 
-import '../../myWidgets.dart';
+import '../myWidgets.dart';
+import 'pacientes/fichaPersonal.dart';
 
 class Maqueta extends StatefulWidget {
 
@@ -72,27 +73,7 @@ class _MaquetaState extends State<Maqueta> {
           Expanded(
             child: Container(
               margin: EdgeInsets.all(separador+13),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 350,
-                        width: 250,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("assets/perfil-hombre.png"),
-                            fit: BoxFit.contain
-                          )
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(),
-                      )
-                    ],
-                  )
-                ],
-              ),
+              child: FichaPersonal(),
             )
           )
         ],
@@ -145,12 +126,8 @@ class _MaquetaState extends State<Maqueta> {
           ),
           Column(
             children: [
-              opcionDraw(separador, 0),
-              opcionDraw(separador, 1),
-              opcionDraw(separador, 2),
-              opcionDraw(separador, 3),
-              opcionDraw(separador, 4),
-              opcionDraw(separador, 5),
+              for (var i = 0; i < opciones.length; i++)
+                opcionDraw(separador, i)
             ],
           ),
         ],
@@ -188,9 +165,9 @@ class _MaquetaState extends State<Maqueta> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(width: separador),
+                SizedBox(width: separador * 3/5),
                 Icon(FontAwesomeIcons.personBooth, color: logicaLetra()),
-                SizedBox(width: separador),
+                SizedBox(width: separador * 3/5),
                 MyRText(text: opciones[valor], color: logicaLetra(), tipo: "bodyL", bold: 5,),
               ],
             ),

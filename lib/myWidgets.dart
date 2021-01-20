@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:poo_web/pages/pacientes/maqueta.dart';
+import 'package:poo_web/pages/maqueta.dart';
 
 import 'mystyle.dart';
 import 'pages/pacientes/homePacientes.dart';
@@ -320,39 +320,32 @@ class Header extends StatelessWidget {
     var screenS = MediaQuery.of(context).size;
     var sW = screenS.width;
     var sH = screenS.height;
-    return Stack(
-      children: [
-        Container(
-          height: sW > maxScreenSize ? sizeMiPantalla - sizeAppBar : 500,
-          width: double.infinity,
-          /* decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/fondo_home.png")
-            )
-          ), */
-        ),
-        Container(
-          color: MyColors().colorClaro(),
-          padding: EdgeInsets.only(
-            top: 0
-          ),
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Builder(
-                builder: (BuildContext context){
-                  if( sW > maxScreenSize){
-                    return _contentEscritorioMax(context, sW);
-                  }else{
-                    return _contentEscritorioMin(context, sW);
-                  }
-                },
-              )
-            ],
-          ),
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: MyColors().colorClaro(),
+        image: DecorationImage(
+          image: AssetImage("assets/fondo_home.png"),
+          fit: BoxFit.fitWidth
+        )
+      ),
+      padding: EdgeInsets.only(
+        top: 0
+      ),
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Builder(
+            builder: (BuildContext context){
+              if( sW > maxScreenSize){
+                return _contentEscritorioMax(context, sW);
+              }else{
+                return _contentEscritorioMin(context, sW);
+              }
+            },
+          )
+        ],
+      ),
     );
   }
   
@@ -368,7 +361,7 @@ class Header extends StatelessWidget {
           //Texto
           Container(
             margin: EdgeInsets.only(right: 100),
-            width: sW * 2/5,
+            width: sW * 2/6,
             child: _contentText(sW),
           ),
           
@@ -378,11 +371,11 @@ class Header extends StatelessWidget {
             child: Transform.translate(
               offset: Offset(100, 0),
               child: Transform.scale(
+                scale: 1.7,
                 alignment: Alignment.centerRight,
-                scale: 1.6,
                 child: Container(
                   width: sW * 1 / 3,
-                  child: _contentImage(),
+                  child: _contentImage()
                 ),
               ),
             ),

@@ -10,6 +10,7 @@ double widthToHide = 800;
 double sizeMiPantalla = 763.2000122070312;
 Color _color = Color(0xFF3A56BC);
 Color _colorAzulClaro = Color(0xFF5E81FE);
+Color _colorAzulMedio = Color(0xFF6E87DC);
 Color _colorAppBar = Color(0xFFC2DAFF);
 Color _colorVerde = Color(0xFFC7F3DB);
 Color _colorVerdeOscuro = Color(0xFF83C6A2);
@@ -42,6 +43,10 @@ class MyColors{
     return _colorAzulClaro;
   }
 
+  Color colorAzulMedio(){
+    return _colorAzulMedio;
+  }
+
   Color colorVerde(){
     return _colorVerde;
   }
@@ -56,10 +61,6 @@ class MyColors{
 
   Color colorGrisOscuro(){
     return _colorGrisOscuro;
-  }
-
-  Color colorMasClaro(){
-    return _colorHome;
   }
 
   Color colorAppBar(){
@@ -110,6 +111,8 @@ class MyRText extends StatelessWidget {
       return [14, 16];
     }else if(tipo == "subtitle"){
       return [22, 26];
+    }else if(tipo == "subtitleL"){
+      return [18, 22];
     }else{
       return [14, 16];
     }

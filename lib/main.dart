@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poo_web/pages/pacientes/maqueta.dart';
+import 'package:poo_web/pages/maqueta.dart';
 
 import 'pages/pacientes/homePacientes.dart';
 
