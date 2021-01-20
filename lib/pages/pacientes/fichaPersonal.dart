@@ -113,3 +113,19 @@ class PlanDental extends StatelessWidget {
     );
   }
 }
+
+class Recomendaciones extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        MyRText(text: "Recomendaciones", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+        Padding(
+          padding: EdgeInsets.only(left: sangria),
+          child: MyRText(text: "${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+        ),
+      ],
+    );
+  }
+}
