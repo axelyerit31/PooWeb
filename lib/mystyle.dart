@@ -109,6 +109,10 @@ class MyRText extends StatelessWidget {
       return [18, 20];
     }else if(tipo == "bodyL"){
       return [14, 16];
+    }else if(tipo == "bodyLL"){
+      return [12, 14];
+    }else if(tipo == "bodyLLL"){
+      return [10, 12];
     }else if(tipo == "subtitle"){
       return [22, 26];
     }else if(tipo == "subtitleL"){

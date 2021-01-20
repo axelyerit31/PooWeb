@@ -60,6 +60,7 @@ class _MaquetaState extends State<Maqueta> {
       height: double.infinity,
       child: Row(
         children: [
+          //Barra Verde
           Container(
             decoration: BoxDecoration(
               color: MyColors().colorVerde(),
@@ -70,16 +71,27 @@ class _MaquetaState extends State<Maqueta> {
             ),
             width: sW/20
           ),
+
+          //Contenido Principal
           Expanded(
             child: Container(
               margin: EdgeInsets.all(separador+13),
-              child: FichaPersonal(),
+              child: pantallas[indexSeleccionado],
             )
           )
         ],
       )
     );
   }
+
+  List<Widget> pantallas = [
+    FichaPersonal(),
+    Container(),
+    Container(),
+    Container(),
+    Container(),
+    Container(),
+  ];
 
 
   int indexSeleccionado = 0;
