@@ -1,0 +1,1 @@
+flutter pub global run dhttpd --port 5500 --path build/web
