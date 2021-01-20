@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poo_web/pages/pacientes/maqueta.dart';
 
 import 'pages/pacientes/homePacientes.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePacientes(),
+      home: Maqueta(),
       routes: <String, WidgetBuilder>{
       },
     );

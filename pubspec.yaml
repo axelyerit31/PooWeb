@@ -57,6 +57,8 @@ flutter:
     - assets/especialidad5.jpg
     - assets/fondo_home.png
     - assets/logo.png
+    - assets/perfil-bottomLeft.png
+    - assets/perfil-hombre.png
     - assets/footer/bottomRight.png
     - assets/footer/bottomLeft.png
 

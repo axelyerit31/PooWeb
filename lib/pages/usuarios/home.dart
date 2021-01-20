@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
     double width = sW > maxScreenSize ? sW : maxScreenSize;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(tipo: "home")

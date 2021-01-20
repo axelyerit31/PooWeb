@@ -13,8 +13,13 @@ Color _colorAzulClaro = Color(0xFF5E81FE);
 Color _colorAppBar = Color(0xFFC2DAFF);
 Color _colorVerde = Color(0xFFC7F3DB);
 Color _colorVerdeOscuro = Color(0xFF83C6A2);
+Color _colorGris = Color(0xFFbebebe);
+Color _colorGrisOscuro = Color(0xFFa0a0a0);
 Color _colorHome = Color(0xFFEEF9FF);
 Color _colorFooter = Color(0xff90A8FF);
+double roundedL = 7;
+double roundedM = 12;
+double roundedB = 17;
 
 String codigoImagen = "https://drive.google.com/uc?id=";
 String imageHome = codigoImagen + "1pJFsMGZEkuBFky0WwVlhKGafgDIwFF-b";
@@ -45,17 +50,16 @@ class MyColors{
     return _colorVerdeOscuro;
   }
 
-  Color colorMasClaro(){
-    return _colorHome;
-  }
-
-
   Color colorGris(){
-    return Color(0xFFBEBEBE);
+    return _colorGris;
   }
 
   Color colorGrisOscuro(){
-    return Color(0xFFBEBEBE);
+    return _colorGrisOscuro;
+  }
+
+  Color colorMasClaro(){
+    return _colorHome;
   }
 
   Color colorAppBar(){
@@ -150,7 +154,7 @@ class MyROutlineButton extends StatelessWidget {
     return FlatButton(
       shape: ContinuousRectangleBorder(
         side: BorderSide(color: color),
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(roundedL+3)
       ),
       color: Colors.white.withOpacity(0.3),
       hoverColor: Colors.white.withOpacity(0.8),
@@ -197,11 +201,11 @@ class MyRButton extends StatelessWidget {
             Color(0xFF5E81FE)
           ]
         ),
-        borderRadius: BorderRadius.circular(7)
+        borderRadius: BorderRadius.circular(roundedL)
       ),
       child: FlatButton(
         shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(7)
+          borderRadius: BorderRadius.circular(roundedL)
         ),
         color: Colors.transparent,
         hoverColor: Colors.white.withOpacity(0.1),

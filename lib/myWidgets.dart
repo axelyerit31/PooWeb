@@ -424,10 +424,7 @@ class Header extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(
-            imageHome,
-            scale: 1 
-          ),
+          image: AssetImage("assets/dentista-dibujo.png"),
           fit: BoxFit.contain
         )
       )
