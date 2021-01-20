@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poo_web/mystyle.dart';
-import 'package:flutter_cursor/flutter_cursor.dart';
 
 import '../../myWidgets.dart';
 
