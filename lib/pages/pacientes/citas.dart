@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
 
+import '../../myWidgets.dart';
 import '../../mystyle.dart';
 import '../maqueta.dart';
 import 'fichaPersonal.dart';
@@ -10,23 +11,47 @@ class Citas extends StatefulWidget {
   _CitasState createState() => _CitasState();
 }
 
+double _alturaImagen = 250;
+
 class _CitasState extends State<Citas> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         _header(),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(roundedB),
-              color: Colors.white
-            ),
-            margin: EdgeInsets.only(top: 40),
-            padding: EdgeInsets.symmetric(horizontal: 0),
-            child: SingleChildScrollView(child: TablaCitas())
+        Container(
+          height: sizeMiPantalla - sizeAppBar - separador*4 - _alturaImagen,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 6
+                  ),
+                  primary: Colors.white
+                ),
+                onPressed: () {},
+                child: MyRText(
+                  text: "Agregar Cita",
+                  tipo: "bodyLL",
+                  color: MyColors().colorAzulClaro(),
+                  bold: 5
+                )
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(roundedB),
+                  color: Colors.white
+                ),
+                margin: EdgeInsets.only(top: 40),
+                padding: EdgeInsets.symmetric(horizontal: 0),
+                child: SingleChildScrollView(child: TablaCitas())
+              ),
+            ],
           ),
-        ),
+        )
       ],
     );
   }
@@ -40,7 +65,7 @@ Widget _header(){
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          height: 250,
+          height: _alturaImagen,
           width: 190,
           child: perfilCerca()
         ),
