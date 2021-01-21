@@ -43,7 +43,7 @@ String nombresVertical(){
     resultado += "\n";
   }
 
-  return resultado;
+  return resultado.trim();
 }
 
 
@@ -114,10 +114,12 @@ class _MaquetaState extends State<Maqueta> {
             ),
             height: double.infinity,
             width: sW/20,
+            alignment: Alignment.center,
             child: MyRText(
               text: nombresVertical(),
               tipo: "subtitle",
               color: MyColors().colorOscuro(),
+              bold: 7
             ),
           ),
 
