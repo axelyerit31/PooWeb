@@ -153,12 +153,17 @@ class _TablaCitasState extends State<TablaCitas> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           MyRText(text: "¿Que acción desea Realizar?", tipo: "body", color: MyColors().colorOscuro(), bold: 6),
-          IconButton(
-            splashRadius: 15,
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            }
+          Transform.translate(
+            offset: Offset(20, -20),
+            child: Container(
+              child: IconButton(
+                splashRadius: 15,
+                icon: Icon(Icons.close, color: MyColors().colorAzulMedio()),
+                onPressed: () {
+                  Navigator.pop(context);
+                }
+              ),
+            ),
           )
         ],
       ),
