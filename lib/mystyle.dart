@@ -162,7 +162,7 @@ class MyROutlineButton extends StatelessWidget {
     double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
 
     double horizontalPadding = lerpDouble(6, 15, sW/width);
-    double verticalPadding = lerpDouble(4, 10, sW/width);
+    double verticalPadding = lerpDouble(4, 8.7, sW/width);
 
     return FlatButton(
       shape: ContinuousRectangleBorder(
@@ -206,7 +206,7 @@ class MyRButton extends StatelessWidget {
     double verticalPadding = lerpDouble(4, 10, sW/width);
 
     return Container(
-      height: 24+verticalPadding*2,
+      //height: 24+verticalPadding*2,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [

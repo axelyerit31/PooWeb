@@ -53,10 +53,3 @@ var cita4 = {
   "costo": 80.00,
   "estado": "Asistió",
 };
-
-List citas = [
-  cita1,
-  cita2,
-  cita3,
-  cita4
-];
