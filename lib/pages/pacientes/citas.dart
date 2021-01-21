@@ -19,38 +19,38 @@ class _CitasState extends State<Citas> {
     return Column(
       children: [
         _header(),
-        Container(
-          height: sizeMiPantalla - sizeAppBar - separador*4 - _alturaImagen,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 6
-                  ),
-                  primary: Colors.white
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            SizedBox(height: separador),
+            TextButton(
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 6
                 ),
-                onPressed: () {},
-                child: MyRText(
-                  text: "Agregar Cita",
-                  tipo: "bodyLL",
-                  color: MyColors().colorAzulClaro(),
-                  bold: 5
-                )
+                primary: Colors.white
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(roundedB),
-                  color: Colors.white
-                ),
-                margin: EdgeInsets.only(top: 40),
-                padding: EdgeInsets.symmetric(horizontal: 0),
-                child: SingleChildScrollView(child: TablaCitas())
+              onPressed: () {},
+              child: MyRText(
+                text: "+ Agregar Cita",
+                tipo: "bodyLL",
+                color: MyColors().colorOscuro(),
+                bold: 6
+              )
+            ),
+            SizedBox(height: sangria/2),
+            Container(
+              height: 209,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(roundedB),
+                color: Colors.white
               ),
-            ],
-          ),
+              padding: EdgeInsets.symmetric(horizontal: 0),
+              child: SingleChildScrollView(child: TablaCitas())
+            ),
+          ],
         )
       ],
     );
