@@ -17,22 +17,29 @@ String nombresVertical(){
 
   //Obtengo solo el primer nombre
   for (var i = 0; i < nombres.length; i++) {
-    do {
-      nombre += nombres[i];
-    } while (nombres[i] != " ");
+    if(true){
+      nombre += nombres.substring(i, i+1);
+      if(nombres.substring(i, i+1) == " "){
+        break;
+      }
+    }
   }
+  
 
   //Obtengo el primer apellido
   for (var i = 0; i < apellidos.length; i++) {
-    do {
-      apellido += apellidos[i];
-    } while (apellidos[i] != " ");
+    if(true){
+      apellido += apellidos.substring(i, i+1);
+      if(apellidos.substring(i, i+1) == " "){
+        break;
+      }
+    }
   }
 
   String nombreApellido = nombre + apellido;
 
   for (var i = 0; i < nombreApellido.length; i++) {
-    resultado += nombreApellido;
+    resultado += nombreApellido.substring(i, i+1);
     resultado += "\n";
   }
 
@@ -108,7 +115,7 @@ class _MaquetaState extends State<Maqueta> {
             height: double.infinity,
             width: sW/20,
             child: MyRText(
-              text: "h",
+              text: nombresVertical(),
               tipo: "subtitle",
               color: MyColors().colorOscuro(),
             ),

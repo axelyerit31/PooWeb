@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../mystyle.dart';
+import '../../mystyle.dart';
 
 
 class MiPagina extends StatelessWidget {
