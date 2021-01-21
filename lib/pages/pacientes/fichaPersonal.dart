@@ -27,7 +27,7 @@ class FichaPersonal extends StatelessWidget {
                 width: sW/6,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/perfil-hombre.png"),
+                    image: AssetImage(imagePerfil),
                     fit: BoxFit.contain
                   )
                 ),
