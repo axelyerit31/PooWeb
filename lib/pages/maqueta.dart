@@ -47,6 +47,9 @@ String nombresVertical(){
   return resultado.trim();
 }
 
+//Widget para almacenar el ultimo widget mostrado antes de presionar "Cerrar Sesion", el cual no devuelve ni un widget
+Widget ultimoWidget;
+
 
 class Maqueta extends StatefulWidget {
 
@@ -64,10 +67,12 @@ class _MaquetaState extends State<Maqueta> {
 
   @override
   Widget build(BuildContext context) {
-    
-    print(nombresVertical());
 
     double sW = MediaQuery.of(context).size.width;
+    double sWActual = sW - separador*4;
+    double altura = sizeMiPantalla - sizeAppBar - separador*2;
+
+    print(altura);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -75,17 +80,22 @@ class _MaquetaState extends State<Maqueta> {
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(tipo: "perfil")
       ),
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: separador, horizontal: separador),
-        child: Row(
-          children: [
-            Expanded(flex: 7, child: DrawBar(sW),),
-            SizedBox(width: separador),
-            Expanded(flex: 24, child: Main(sW),),
-            SizedBox(width: separador),
-            Expanded(flex: 12, child: Placeholder(),),
-          ],
-        )
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: separador, horizontal: separador),
+          child: Row(
+            children: [
+              Container(height: altura, width: sWActual * 7/43, child: DrawBar(sW)),
+              //Expanded(flex: 7, child: DrawBar(sW),),
+              SizedBox(width: separador),
+              Container(height: altura, width: sWActual * 24/43, child: Main(sW)),
+              //Expanded(flex: 24, child: Main(sW),),
+              SizedBox(width: separador),
+              Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
+              //Expanded(flex: 12, child: Placeholder(),),
+            ],
+          )
+        ),
       ),
     );
   }
@@ -147,7 +157,16 @@ class _MaquetaState extends State<Maqueta> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.all(separador+13),
-                  child: pantallas[indexSeleccionado],
+                  child: Builder(
+                    builder: (BuildContext context){
+                      if(indexSeleccionado < iconos.length-1){
+                        ultimoWidget = pantallas[indexSeleccionado];
+                        return pantallas[indexSeleccionado];
+                      }else{
+                        return ultimoWidget;
+                      }
+                    },
+                  )
                 )
               )
             ],
@@ -166,7 +185,7 @@ class _MaquetaState extends State<Maqueta> {
   ];
 
 
-  int indexSeleccionado = 2;
+  int indexSeleccionado = 0;
   int indexApuntado = 10;
   double alturaOpcion = 55;
 
@@ -186,7 +205,17 @@ class _MaquetaState extends State<Maqueta> {
     "Cita",
     "Plan Dental",
     "Notificaciones",
-    "Editar Perfil"
+    "Editar Perfil",
+    "Cerrar Sesión"
+  ];
+
+  List<String> iconos = [
+    "assets/iconos/perfil.png",
+    "assets/iconos/citas.png",
+    "assets/iconos/citas.png",
+    "assets/iconos/editar_perfil.png",
+    "assets/iconos/notificacion.png",
+    "assets/iconos/cerrar_sesion.png",
   ];
 
   Widget DrawBar(double sW){
@@ -242,6 +271,16 @@ class _MaquetaState extends State<Maqueta> {
       }
     }
 
+    Color logicaIcono(){
+      if(indexApuntado == valor && indexSeleccionado != valor){
+        return MyColors().colorGrisOscuro();
+      }else if(indexSeleccionado == valor){
+        return null;
+      }else{
+        return MyColors().colorGris();
+      }
+    }
+
     return GestureDetector(
       onTap: () {opcionSeleccionada(valor);},
       child: MouseRegion(
@@ -261,7 +300,15 @@ class _MaquetaState extends State<Maqueta> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(width: separador * 3/5),
-                Icon(FontAwesomeIcons.personBooth, color: logicaLetra()),
+                Container(
+                  height: 14,
+                  width: 16,
+                  child: Image.asset(
+                    iconos[valor],
+                    color: logicaIcono(),
+                    alignment: Alignment.center,
+                  )
+                ),
                 SizedBox(width: separador * 3/5),
                 MyRText(text: opciones[valor], color: logicaLetra(), tipo: "bodyL", bold: 5,),
               ],
