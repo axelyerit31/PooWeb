@@ -4,7 +4,41 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poo_web/mystyle.dart';
 
 import '../myWidgets.dart';
+import 'datos.dart';
 import 'pacientes/fichaPersonal.dart';
+
+
+String nombresVertical(){
+  String resultado = "";
+  String nombres = datosPersonales["nombres"];
+  String apellidos = datosPersonales["apellidos"];
+  String nombre = "";
+  String apellido = "";
+
+  //Obtengo solo el primer nombre
+  for (var i = 0; i < nombres.length; i++) {
+    do {
+      nombre += nombres[i];
+    } while (nombres[i] != " ");
+  }
+
+  //Obtengo el primer apellido
+  for (var i = 0; i < apellidos.length; i++) {
+    do {
+      apellido += apellidos[i];
+    } while (apellidos[i] != " ");
+  }
+
+  String nombreApellido = nombre + apellido;
+
+  for (var i = 0; i < nombreApellido.length; i++) {
+    resultado += nombreApellido;
+    resultado += "\n";
+  }
+
+  return resultado;
+}
+
 
 class Maqueta extends StatefulWidget {
 
@@ -22,6 +56,8 @@ class _MaquetaState extends State<Maqueta> {
 
   @override
   Widget build(BuildContext context) {
+    
+    print(nombresVertical());
 
     double sW = MediaQuery.of(context).size.width;
 
@@ -69,7 +105,13 @@ class _MaquetaState extends State<Maqueta> {
                 bottomLeft: Radius.circular(roundedB),
               )
             ),
-            width: sW/20
+            height: double.infinity,
+            width: sW/20,
+            child: MyRText(
+              text: "h",
+              tipo: "subtitle",
+              color: MyColors().colorOscuro(),
+            ),
           ),
 
           //Contenido Principal

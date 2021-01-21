@@ -35,11 +35,14 @@ class FichaPersonal extends StatelessWidget {
               SizedBox(width: separador),
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Datos(),
                     SizedBox(height: separador),
                     PlanDental(),
+                    SizedBox(height: separador),
+                    Recomendaciones()
                   ]
                 ),
               )
@@ -123,9 +126,9 @@ class Recomendaciones extends StatelessWidget {
         MyRText(text: "Recomendaciones", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
         Padding(
           padding: EdgeInsets.only(left: sangria),
-          child: MyRText(text: "${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+          child: MyRText(text: "Cuidar más el consumo de azúcar, pues hay aparición de caries.", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
         ),
-      ],
+      ], 
     );
   }
 }

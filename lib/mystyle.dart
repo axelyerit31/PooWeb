@@ -75,6 +75,8 @@ class MyRText extends StatelessWidget {
   final Color color;
   final int bold;
   final String tipo;
+  final TextAlign textAlign;
+  final TextDirection textDirection;
 
   const MyRText({
     Key key,
@@ -83,7 +85,9 @@ class MyRText extends StatelessWidget {
     this.maxSize,
     this.color,
     this.bold,
-    this.tipo
+    this.tipo,
+    this.textAlign,
+    this.textDirection
   }):super(key:key);
   
   FontWeight _bold(){
@@ -135,8 +139,10 @@ class MyRText extends StatelessWidget {
       style: GoogleFonts.poppins(
         fontSize: fontSize,
         color: color,
-        fontWeight: _bold()
+        fontWeight: _bold(),
       ),
+      textAlign: textAlign,
+      textDirection: textDirection,
     );
   }
 }
