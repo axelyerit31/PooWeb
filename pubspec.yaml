@@ -59,6 +59,9 @@ flutter:
     - assets/logo.png
     - assets/perfil-bottomLeft.png
     - assets/perfil-hombre.png
+    - assets/perfil-mujer.png
+    - assets/perfil-hombre-cerca.png
+    - assets/perfil-mujer-cerca.png
     - assets/footer/bottomRight.png
     - assets/footer/bottomLeft.png
 

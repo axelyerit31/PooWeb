@@ -4,7 +4,7 @@ import 'package:poo_web/pages/datos.dart';
 import '../../mystyle.dart';
 
 double sangria = 10;
-double separador = 30;
+double separador = 40;
 
 class FichaPersonal extends StatelessWidget {
   const FichaPersonal({
@@ -47,7 +47,8 @@ class FichaPersonal extends StatelessWidget {
                 ),
               )
             ],
-          )
+          ),
+          Expanded(child: Citas())
         ],
       ),
     );
@@ -129,6 +130,59 @@ class Recomendaciones extends StatelessWidget {
           child: MyRText(text: "Cuidar más el consumo de azúcar, pues hay aparición de caries.", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
         ),
       ], 
+    );
+  }
+}
+
+class Citas extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _ultimaCita(),
+          _proximaCita()
+        ],
+      )
+    );
+  }
+
+  Widget _ultimaCita(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        MyRText(text: "Última Cita", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(roundedB)
+          ),
+          height: 60,
+          width: 300
+        )
+      ],
+    );
+  }
+
+  Widget _proximaCita(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        MyRText(text: "Próxima Cita", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(roundedB)
+          ),
+          height: 60,
+          width: 300
+        )
+      ],
     );
   }
 }
