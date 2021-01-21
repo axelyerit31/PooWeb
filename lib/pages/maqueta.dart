@@ -5,7 +5,9 @@ import 'package:poo_web/mystyle.dart';
 
 import '../myWidgets.dart';
 import 'datos.dart';
+import 'pacientes/citas.dart';
 import 'pacientes/fichaPersonal.dart';
+import 'pacientes/planDental.dart';
 
 
 String nombresVertical(){
@@ -137,8 +139,8 @@ class _MaquetaState extends State<Maqueta> {
 
   List<Widget> pantallas = [
     FichaPersonal(),
-    Container(),
-    Container(),
+    Citas(),
+    PlanDental(),
     Container(),
     Container(),
     Container(),

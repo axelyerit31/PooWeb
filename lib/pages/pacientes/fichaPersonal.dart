@@ -3,8 +3,6 @@ import 'package:poo_web/pages/datos.dart';
 
 import '../../mystyle.dart';
 
-double sangria = 10;
-double separador = 40;
 
 class FichaPersonal extends StatelessWidget {
   const FichaPersonal({
@@ -22,14 +20,17 @@ class FichaPersonal extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 350,
-                width: sW/6,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(imagePerfil),
-                    fit: BoxFit.contain
-                  )
+              Hero(
+                tag: "imagePerfil",
+                child: Container(
+                  height: 350,
+                  width: sW/6,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(imagePerfil),
+                      fit: BoxFit.contain
+                    )
+                  ),
                 ),
               ),
               SizedBox(width: separador),
@@ -40,15 +41,15 @@ class FichaPersonal extends StatelessWidget {
                   children: [
                     Datos(),
                     SizedBox(height: separador),
-                    PlanDental(),
+                    PlanDentalFicha(),
                     SizedBox(height: separador),
-                    Recomendaciones()
+                    _Recomendaciones()
                   ]
                 ),
               )
             ],
           ),
-          Expanded(child: Citas())
+          Expanded(child: _Citas())
         ],
       ),
     );
@@ -97,7 +98,7 @@ class Datos extends StatelessWidget {
   }
 }
 
-class PlanDental extends StatelessWidget {
+class PlanDentalFicha extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -118,7 +119,7 @@ class PlanDental extends StatelessWidget {
   }
 }
 
-class Recomendaciones extends StatelessWidget {
+class _Recomendaciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -134,7 +135,7 @@ class Recomendaciones extends StatelessWidget {
   }
 }
 
-class Citas extends StatelessWidget {
+class _Citas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

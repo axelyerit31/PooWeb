@@ -1,3 +1,6 @@
+double sangria = 10;
+double separador = 40;
+
 var datosPersonales = {
   "nombres": "John Ernesto",
   "apellidos": "Doe Quispe",
