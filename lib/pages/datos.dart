@@ -17,3 +17,46 @@ var datosPlan = {
   "plan": "Plan Inicial",
   "precio": "S/. 29.90"
 };
+
+var cita1 = {
+  "especialidad": "Endodoncia",
+  "fecha": "Dic, 06",
+  "hora": "6:40 p.m.",
+  "dentista": "Nilton Salinas",
+  "costo": "----",
+  "estado": "En Espera",
+};
+
+var cita2 = {
+  "especialidad": "Implante Dental",
+  "fecha": "Set, 22",
+  "hora": "10:50 a.m.",
+  "dentista": "Nilton Salinas",
+  "costo": "----",
+  "estado": "En Espera",
+};
+
+var cita3 = {
+  "especialidad": "Limpieza Rutinaria",
+  "fecha": "Ago, 30",
+  "hora": "5:00 p.m.",
+  "dentista": "Nilton Salinas",
+  "costo": 0.00,
+  "estado": "Faltó",
+};
+
+var cita4 = {
+  "especialidad": "Endodoncia",
+  "fecha": "Ago, 27",
+  "hora": "4:30 p.m.",
+  "dentista": "Nilton Salinas",
+  "costo": 80.00,
+  "estado": "Asistió",
+};
+
+List citas = [
+  cita1,
+  cita2,
+  cita3,
+  cita4
+];

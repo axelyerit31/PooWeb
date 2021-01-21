@@ -143,11 +143,10 @@ class _MaquetaState extends State<Maqueta> {
     PlanDental(),
     Container(),
     Container(),
-    Container(),
   ];
 
 
-  int indexSeleccionado = 0;
+  int indexSeleccionado = 1;
   int indexApuntado = 10;
   double alturaOpcion = 55;
 
@@ -165,7 +164,6 @@ class _MaquetaState extends State<Maqueta> {
   List<String> opciones = [
     "Ficha Personal",
     "Cita",
-    "Historial",
     "Plan Dental",
     "Notificaciones",
     "Editar Perfil"

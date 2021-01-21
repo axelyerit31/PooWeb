@@ -20,17 +20,14 @@ class FichaPersonal extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                tag: "imagePerfil",
-                child: Container(
-                  height: 350,
-                  width: sW/6,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(imagePerfil),
-                      fit: BoxFit.contain
-                    )
-                  ),
+              Container(
+                height: 350,
+                width: sW/6,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(imagePerfil),
+                    fit: BoxFit.contain
+                  )
                 ),
               ),
               SizedBox(width: separador),
