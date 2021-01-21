@@ -64,6 +64,7 @@ flutter:
     - assets/perfil-mujer-cerca.png
     - assets/footer/bottomRight.png
     - assets/footer/bottomLeft.png
+    - assets/iconos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

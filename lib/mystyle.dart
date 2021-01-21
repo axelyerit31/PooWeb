@@ -11,16 +11,17 @@ double sizeMiPantalla = 763.2000122070312;
 Color _color = Color(0xFF3A56BC);
 Color _colorAzulClaro = Color(0xFF5E81FE);
 Color _colorAzulMedio = Color(0xFF6E87DC);
+Color _colorAzulMedioBajo = Color(0xFF8CA5FF);
 Color _colorAppBar = Color(0xFFC2DAFF);
 Color _colorVerde = Color(0xFFC7F3DB);
 Color _colorVerdeOscuro = Color(0xFF83C6A2);
 Color _colorGris = Color(0xFFbebebe);
-Color _colorGrisOscuro = Color(0xFFa0a0a0);
+Color _colorGrisOscuro = Color(0xFFababab);
 Color _colorHome = Color(0xFFEEF9FF);
 Color _colorFooter = Color(0xff90A8FF);
 double roundedL = 7;
-double roundedM = 12;
-double roundedB = 17;
+double roundedM = 11;
+double roundedB = 15;
 
 String codigoImagen = "https://drive.google.com/uc?id=";
 String imageHome = codigoImagen + "1pJFsMGZEkuBFky0WwVlhKGafgDIwFF-b";
@@ -45,6 +46,10 @@ class MyColors{
 
   Color colorAzulMedio(){
     return _colorAzulMedio;
+  }
+
+  Color colorAzulMedioBajo(){
+    return _colorAzulMedioBajo;
   }
 
   Color colorVerde(){

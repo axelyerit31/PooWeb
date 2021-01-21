@@ -10,7 +10,7 @@ import 'pacientes/citas.dart';
 import 'pacientes/fichaPersonal.dart';
 import 'pacientes/planDental.dart';
 
-
+//funcion para obtner el primer nombre y primer apellido de forma vertical
 String nombresVertical(){
   String resultado = "";
   String nombres = datosPersonales["nombres"];
@@ -27,7 +27,6 @@ String nombresVertical(){
       }
     }
   }
-  
 
   //Obtengo el primer apellido
   for (var i = 0; i < apellidos.length; i++) {
@@ -49,6 +48,9 @@ String nombresVertical(){
   return resultado.trim();
 }
 
+//Widget para almacenar el ultimo widget mostrado antes de presionar "Cerrar Sesion", el cual no devuelve ni un widget
+Widget ultimoWidget;
+
 
 class Maqueta extends StatefulWidget {
 
@@ -66,10 +68,12 @@ class _MaquetaState extends State<Maqueta> {
 
   @override
   Widget build(BuildContext context) {
-    
-    print(nombresVertical());
 
     double sW = MediaQuery.of(context).size.width;
+    double sWActual = sW - separador*4;
+    double altura = sizeMiPantalla - sizeAppBar - separador*2;
+
+    print(altura);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -77,64 +81,99 @@ class _MaquetaState extends State<Maqueta> {
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(tipo: "perfil")
       ),
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: separador, horizontal: separador),
-        child: Row(
-          children: [
-            Expanded(flex: 7, child: DrawBar(sW),),
-            SizedBox(width: separador),
-            Expanded(flex: 24, child: Main(sW),),
-            SizedBox(width: separador),
-            Expanded(flex: 12, child: Placeholder(),),
-          ],
-        )
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: separador, horizontal: separador),
+          child: Row(
+            children: [
+              Container(height: altura, width: sWActual * 7/43, child: DrawBar(sW)),
+              //Expanded(flex: 7, child: DrawBar(sW),),
+              SizedBox(width: separador),
+              Container(height: altura, width: sWActual * 24/43, child: Main(sW)),
+              //Expanded(flex: 24, child: Main(sW),),
+              SizedBox(width: separador),
+              Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
+              //Expanded(flex: 12, child: Placeholder(),),
+            ],
+          )
+        ),
       ),
     );
   }
 
   Widget Main(double sW){
-    return Container(
-      decoration: BoxDecoration(
-        color: MyColors().colorClaro(),
-        borderRadius: BorderRadius.circular(roundedB),
-        image: DecorationImage(
-          image: AssetImage("assets/perfil-bottomLeft.png"),
-          alignment: Alignment.bottomRight,
-          fit: BoxFit.fitHeight
-        )
-      ),
-      height: double.infinity,
-      child: Row(
-        children: [
-          //Barra Verde
-          Container(
-            decoration: BoxDecoration(
-              color: MyColors().colorVerde(),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(roundedB),
-                bottomLeft: Radius.circular(roundedB),
-              )
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 2,
+              width: 2,
+              child: perfil()
             ),
-            height: double.infinity,
-            width: sW/20,
-            alignment: Alignment.center,
-            child: MyRText(
-              text: nombresVertical(),
-              tipo: "subtitle",
-              color: MyColors().colorOscuro(),
-              bold: 7
+            Container(
+              height: 2,
+              width: 2,
+              child: perfilCerca()
             ),
-          ),
-
-          //Contenido Principal
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.all(separador+13),
-              child: pantallas[indexSeleccionado],
+          ],
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: MyColors().colorClaro(),
+            borderRadius: BorderRadius.circular(roundedB),
+            image: DecorationImage(
+              image: AssetImage("assets/perfil-bottomLeft.png"),
+              alignment: Alignment.bottomRight,
+              fit: BoxFit.fitHeight
             )
+          ),
+          height: double.infinity,
+          child: Row(
+            children: [
+              //Barra Verde
+              Container(
+                decoration: BoxDecoration(
+                  color: MyColors().colorVerde(),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(roundedB),
+                    bottomLeft: Radius.circular(roundedB),
+                  )
+                ),
+                height: double.infinity,
+                width: sW/20,
+                alignment: Alignment.center,
+                child: MyRText(
+                  text: nombresVertical(),
+                  tipo: "subtitle",
+                  color: MyColors().colorOscuro(),
+                  bold: 7
+                ),
+              ),
+
+              //Contenido Principal
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.all(separador+13),
+                  child: Builder(
+                    builder: (BuildContext context){
+                      if(indexSeleccionado < iconos.length-1){
+                        ultimoWidget = pantallas[indexSeleccionado];
+                        return pantallas[indexSeleccionado];
+                      }else{
+                        return ultimoWidget;
+                      }
+                    },
+                  )
+                )
+              )
+            ],
           )
-        ],
-      )
+        ),
+      ],
     );
   }
 
@@ -147,7 +186,11 @@ class _MaquetaState extends State<Maqueta> {
   ];
 
 
+<<<<<<< HEAD
   int indexSeleccionado = 3;
+=======
+  int indexSeleccionado = 0;
+>>>>>>> a39e95e18410c9261243496cec359efb8b212a04
   int indexApuntado = 10;
   double alturaOpcion = 55;
 
@@ -167,7 +210,17 @@ class _MaquetaState extends State<Maqueta> {
     "Cita",
     "Plan Dental",
     "Notificaciones",
-    "Editar Perfil"
+    "Editar Perfil",
+    "Cerrar Sesión"
+  ];
+
+  List<String> iconos = [
+    "assets/iconos/perfil.png",
+    "assets/iconos/citas.png",
+    "assets/iconos/citas.png",
+    "assets/iconos/editar_perfil.png",
+    "assets/iconos/notificacion.png",
+    "assets/iconos/cerrar_sesion.png",
   ];
 
   Widget DrawBar(double sW){
@@ -210,7 +263,33 @@ class _MaquetaState extends State<Maqueta> {
         return MyColors().colorGris();
       }
     }
+<<<<<<< HEAD
  
+=======
+
+    double marginOpcion = 5;
+
+    double logicaMargin(){
+      if(indexApuntado == valor){
+        return marginOpcion;
+      }else if(indexSeleccionado == valor){
+        return marginOpcion;
+      }else{
+        return 0;
+      }
+    }
+
+    Color logicaIcono(){
+      if(indexApuntado == valor && indexSeleccionado != valor){
+        return MyColors().colorGrisOscuro();
+      }else if(indexSeleccionado == valor){
+        return null;
+      }else{
+        return MyColors().colorGris();
+      }
+    }
+
+>>>>>>> a39e95e18410c9261243496cec359efb8b212a04
     return GestureDetector(
       onTap: () {opcionSeleccionada(valor);},
       child: MouseRegion(
@@ -225,12 +304,20 @@ class _MaquetaState extends State<Maqueta> {
             curve: Curves.easeInOutSine,
             alignment: Alignment.centerLeft,
             duration: Duration(milliseconds: 200),
-            margin: EdgeInsets.only(left: indexApuntado == valor ? 5 : 0),
+            margin: EdgeInsets.only(left: logicaMargin()),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(width: separador * 3/5),
-                Icon(FontAwesomeIcons.personBooth, color: logicaLetra()),
+                Container(
+                  height: 14,
+                  width: 16,
+                  child: Image.asset(
+                    iconos[valor],
+                    color: logicaIcono(),
+                    alignment: Alignment.center,
+                  )
+                ),
                 SizedBox(width: separador * 3/5),
                 MyRText(text: opciones[valor], color: logicaLetra(), tipo: "bodyL", bold: 5,),
               ],
@@ -240,4 +327,28 @@ class _MaquetaState extends State<Maqueta> {
       ),
     );
   }
+}
+
+//Widget con la imagen del perfil cerca, que usare para todas las pantallas donde vaya imagen de perfil cerca
+Widget perfilCerca(){
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(imagePerfilCerca),
+        fit: BoxFit.contain
+      )
+    ),
+  );
+}
+
+//Widget con la imagen del perfil, que usare para todas las pantallas donde vaya imagen de perfil
+Widget perfil(){
+  return Container(
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(imagePerfil),
+        fit: BoxFit.contain
+      )
+    ),
+  );
 }

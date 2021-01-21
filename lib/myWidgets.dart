@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:poo_web/pages/maqueta.dart';
 
 import 'mystyle.dart';
@@ -80,17 +81,49 @@ class _MyRAppBarState extends State<MyRAppBar> {
                     Container(
                       alignment: Alignment.centerLeft,
                       padding: EdgeInsets.only(
-                        left: sW/25,
+                        left: sW/35,
                         right: sW/25,
+                        bottom: 10
                       ),
                       child: TextButton(
                         style: TextButton.styleFrom(
                           primary: Colors.white
                         ),
-                        child: MyRText(
-                            text: "Dental Care",
-                            tipo: "subtitle",
-                            color: MyColors().colorOscuro()
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 45,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/logo.png"),
+                                  fit: BoxFit.contain
+                                )
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  constraints: BoxConstraints(maxHeight: 27),
+                                  child: Text(
+                                    "Sonríamos",
+                                    style: GoogleFonts.reemKufi(color: MyColors().colorAzulClaro(), fontSize: 24, fontWeight: FontWeight.w600)
+                                  ),
+                                ),
+                                Container(
+                                  constraints: BoxConstraints(maxHeight: 30),
+                                  child: Text(
+                                    "Juntos",
+                                    style: GoogleFonts.reemKufi(color: Color(0xFFE9FFF3), fontSize: 24, fontWeight: FontWeight.w700)
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         ),
                         onPressed: () {
                           bool regreso = Navigator.canPop(context);

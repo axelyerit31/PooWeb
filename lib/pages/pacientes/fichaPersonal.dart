@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
 
 import '../../mystyle.dart';
+import '../maqueta.dart';
 
 
 class FichaPersonal extends StatelessWidget {
@@ -16,6 +17,7 @@ class FichaPersonal extends StatelessWidget {
 
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,12 +25,7 @@ class FichaPersonal extends StatelessWidget {
               Container(
                 height: 350,
                 width: sW/6,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(imagePerfil),
-                    fit: BoxFit.contain
-                  )
-                ),
+                child: perfil()
               ),
               SizedBox(width: separador),
               Expanded(
@@ -46,7 +43,7 @@ class FichaPersonal extends StatelessWidget {
               )
             ],
           ),
-          Expanded(child: _Citas())
+          _Citas()
         ],
       ),
     );
@@ -106,7 +103,7 @@ class PlanDentalFicha extends StatelessWidget {
           padding: EdgeInsets.only(left: sangria),
           child: Row(
             children: [
-              MyRText(text: "${datosPlan["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+              MyRText(text: "Plan ${datosPlan["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
               MyRText(text: "${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
             ],
           ),

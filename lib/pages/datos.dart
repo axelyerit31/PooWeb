@@ -14,8 +14,8 @@ String imagePerfil = datosPersonales["sexo"] == "hombre" ? "assets/perfil-hombre
 String imagePerfilCerca = datosPersonales["sexo"] == "hombre" ? "assets/perfil-hombre-cerca.png" : "assets/perfil-mujer-cerca.png";
 
 var datosPlan = {
-  "plan": "Plan Inicial",
-  "precio": "S/. 29.90"
+  "plan": "Inicial",
+  "precio": "S/. 29.90",
 };
 
 var cita1 = {
