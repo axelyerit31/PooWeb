@@ -26,19 +26,27 @@ class Notificaciones extends StatelessWidget {
                 height: separador
                  ,
               ),
-              SingleChildScrollView(
-                child: Builder(
-                  builder: (BuildContext context){
-                    return Column(
-                      children:[
-                        for (var i = 0; i <notificaciones.length; i++)
-                          new _Notificaciones(
-                            notificacion: notificaciones[i]["notificacion"],
-                            comentario: notificaciones[i]["comentario"],
-                          )
-                      ]
-                    );
-                  } 
+              Container(
+                height: 247,
+                child: SingleChildScrollView(
+                  child: Builder(
+                    builder: (BuildContext context){
+                      return Column(
+                        children:[
+                          for (var i = 0; i <notificaciones.length; i++)
+                            new _Notificaciones(
+                              notificacion: notificaciones[i]["notificacion"],
+                              comentario: notificaciones[i]["comentario"],
+                            ),
+                          for (var i = 0; i <notificaciones.length; i++)
+                            new _Notificaciones(
+                              notificacion: notificaciones[i]["notificacion"],
+                              comentario: notificaciones[i]["comentario"],
+                            ),
+                        ]
+                      );
+                    } 
+                  ),
                 ),
               )
             ]
