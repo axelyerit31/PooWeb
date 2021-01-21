@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
 
 import '../../mystyle.dart';
+import '../maqueta.dart';
 import 'fichaPersonal.dart';
 
 class Citas extends StatefulWidget {
@@ -41,12 +42,7 @@ Widget _header(){
         Container(
           height: 250,
           width: 190,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imagePerfilCerca),
-              fit: BoxFit.contain
-            )
-          ),
+          child: perfilCerca()
         ),
         SizedBox(width: separador),
         Column(
@@ -61,6 +57,7 @@ Widget _header(){
     ),
   );
 }
+
 
 List citas = [
   cita1,
