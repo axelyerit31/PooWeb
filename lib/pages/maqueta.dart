@@ -186,11 +186,7 @@ class _MaquetaState extends State<Maqueta> {
   ];
 
 
-<<<<<<< HEAD
-  int indexSeleccionado = 3;
-=======
   int indexSeleccionado = 0;
->>>>>>> a39e95e18410c9261243496cec359efb8b212a04
   int indexApuntado = 10;
   double alturaOpcion = 55;
 
@@ -263,9 +259,6 @@ class _MaquetaState extends State<Maqueta> {
         return MyColors().colorGris();
       }
     }
-<<<<<<< HEAD
- 
-=======
 
     double marginOpcion = 5;
 
@@ -289,7 +282,6 @@ class _MaquetaState extends State<Maqueta> {
       }
     }
 
->>>>>>> a39e95e18410c9261243496cec359efb8b212a04
     return GestureDetector(
       onTap: () {opcionSeleccionada(valor);},
       child: MouseRegion(
