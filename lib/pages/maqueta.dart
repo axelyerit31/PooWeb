@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poo_web/mystyle.dart';
+import 'package:poo_web/pages/pacientes/notificaciones.dart';
 
 import '../myWidgets.dart';
 import 'datos.dart';
@@ -141,12 +142,12 @@ class _MaquetaState extends State<Maqueta> {
     FichaPersonal(),
     Citas(),
     PlanDental(),
-    Container(),
+    Notificaciones(),
     Container(),
   ];
 
 
-  int indexSeleccionado = 1;
+  int indexSeleccionado = 3;
   int indexApuntado = 10;
   double alturaOpcion = 55;
 
@@ -209,7 +210,7 @@ class _MaquetaState extends State<Maqueta> {
         return MyColors().colorGris();
       }
     }
-
+ 
     return GestureDetector(
       onTap: () {opcionSeleccionada(valor);},
       child: MouseRegion(
