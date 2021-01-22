@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
 
 import '../../mystyle.dart';
-import '../maqueta.dart';
+import '../maquetaPerfil.dart';
 
 
 class FichaPersonal extends StatelessWidget {

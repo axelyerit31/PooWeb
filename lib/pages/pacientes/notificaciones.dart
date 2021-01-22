@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
+import 'package:poo_web/pages/maquetaPerfil.dart';
 
 import '../../mystyle.dart';
 import 'fichaPersonal.dart';
@@ -66,12 +67,7 @@ Widget _header (){
         Container(
           height: 250,
           width: 190,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(imagePerfilCerca),
-              fit: BoxFit.contain
-            )
-          ),
+          child: perfilCerca()
         ),
         SizedBox(width: separador),
         Column(

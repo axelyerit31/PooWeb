@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:poo_web/pages/maqueta.dart';
 
 import 'mystyle.dart';
 import 'pages/pacientes/homePacientes.dart';

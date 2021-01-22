@@ -3,7 +3,7 @@ import 'package:poo_web/pages/pacientes/fichaPersonal.dart';
 
 import '../../mystyle.dart';
 import '../datos.dart';
-import '../maqueta.dart';
+import '../maquetaPerfil.dart';
 import 'citas.dart';
 
 class PlanDental extends StatefulWidget {

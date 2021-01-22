@@ -10,9 +10,6 @@ var datosPersonales = {
   "celular": "962084579"
 };
 
-String imagePerfil = datosPersonales["sexo"] == "hombre" ? "assets/perfil-hombre.png" : "assets/perfil-mujer.png";
-String imagePerfilCerca = datosPersonales["sexo"] == "hombre" ? "assets/perfil-hombre-cerca.png" : "assets/perfil-mujer-cerca.png";
-
 var datosPlan = {
   "plan": "Inicial",
   "precio": "S/. 29.90",

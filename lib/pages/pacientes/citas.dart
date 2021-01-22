@@ -3,7 +3,7 @@ import 'package:poo_web/pages/datos.dart';
 
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
-import '../maqueta.dart';
+import '../maquetaPerfil.dart';
 import 'fichaPersonal.dart';
 
 class Citas extends StatefulWidget {

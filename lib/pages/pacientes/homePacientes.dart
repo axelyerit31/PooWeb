@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mystyle.dart';
 import 'package:poo_web/myWidgets.dart';
 
-import '../maqueta.dart';
+import '../maquetaPerfil.dart';
 
 class HomePacientes extends StatefulWidget {
 

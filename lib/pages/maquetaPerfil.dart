@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:poo_web/mystyle.dart';
-import 'package:poo_web/pages/pacientes/notificaciones.dart';
 
 import '../myWidgets.dart';
 import 'datos.dart';
-import 'pacientes/citas.dart';
-import 'pacientes/fichaPersonal.dart';
-import 'pacientes/planDental.dart';
 
 //funcion para obtner el primer nombre y primer apellido de forma vertical
 String nombresVertical(){
@@ -50,13 +45,17 @@ String nombresVertical(){
 
 //Widget para almacenar el ultimo widget mostrado antes de presionar "Cerrar Sesion", el cual no devuelve ni un widget
 Widget ultimoWidget;
-
+String imagePerfil;
+String imagePerfilCerca;
 
 class Maqueta extends StatefulWidget {
 
-  final Widget child;
+  final String rol;
+  final List<Widget> pantallas;
+  final List<String> opciones;
+  final List<String> iconosOpciones;
 
-  const Maqueta({Key key, this.child}) : super(key: key);
+  const Maqueta({Key key, this.rol, this.pantallas, this.opciones, this.iconosOpciones}) : super(key: key);
 
   @override
   _MaquetaState createState() => _MaquetaState();
@@ -64,10 +63,38 @@ class Maqueta extends StatefulWidget {
 
 class _MaquetaState extends State<Maqueta> {
 
+  List<Widget> pantallas;
+  List<String> opciones;
+  List<String> iconos;
+
+  //Obtener los datos de que pantallas, opciones e iconos habran, dados desde [rol]Perfil
+  void obtenerDatos(){
+    pantallas = widget.pantallas;
+    opciones = widget.opciones;
+    iconos = widget.iconosOpciones;
+  }
+
+  void obtenerImagenes(){
+    if(widget.rol == "paciente"){
+      if(datosPersonales["sexo"] == "hombre"){
+        imagePerfil = "assets/perfil-hombre.png";
+        imagePerfilCerca = "assets/perfil-hombre-cerca.png";
+      }else{
+        imagePerfil = "assets/perfil-mujer.png";
+        imagePerfilCerca = "assets/perfil-mujer-cerca.png";
+      }
+    }else if(widget.rol == "dentista"){
+      imagePerfil = "assets/perfil-dentista.png";
+      imagePerfilCerca = "assets/perfil-dentista-cerca.png";
+    }
+  }
+
   double separador = 30;
 
   @override
   Widget build(BuildContext context) {
+    obtenerDatos();
+    obtenerImagenes();
 
     double sW = MediaQuery.of(context).size.width;
     double sWActual = sW - separador*4;
@@ -191,32 +218,6 @@ class _MaquetaState extends State<Maqueta> {
       indexSeleccionado = valor;
     });
   }
-
-  List<Widget> pantallas = [
-    FichaPersonal(),
-    Citas(),
-    PlanDental(),
-    Notificaciones(),
-    Container(),
-  ];
-
-  List<String> opciones = [
-    "Ficha Personal",
-    "Cita",
-    "Plan Dental",
-    "Notificaciones",
-    "Editar Perfil",
-    "Cerrar Sesión"
-  ];
-
-  List<String> iconos = [
-    "assets/iconos/perfil.png",
-    "assets/iconos/citas.png",
-    "assets/iconos/citas.png",
-    "assets/iconos/editar_perfil.png",
-    "assets/iconos/notificacion.png",
-    "assets/iconos/cerrar_sesion.png",
-  ];
 
   Widget DrawBar(double sW){
 
