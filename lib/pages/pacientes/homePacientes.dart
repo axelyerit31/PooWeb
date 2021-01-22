@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 
 import '../../mystyle.dart';
@@ -30,7 +31,14 @@ class _HomePacientesState extends State<HomePacientes> {
           myRoute: PacientesPerfil()
         )
       ),
-      body: MyRHome(),
+      body: pantallasHome[indicePantallaHome],
     );
   }
+
+  List<Widget> pantallasHome = [
+    MyRHome(),
+    Container(child: Text("Nosotros")),
+    Container(child: Text("Planes Dentales")),
+    Container(child: Text("Contacto")),
+  ];
 }

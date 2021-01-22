@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
 import 'mystyle.dart';
 import 'pages/pacientes/homePacientes.dart';
@@ -13,6 +14,7 @@ import 'pages/usuarios/registro.dart';
 
 double sizeAppBar = 80;
 double hFooter = 120;
+int indicePantallaHome = 0;
 
 class MyRAppBar extends StatefulWidget {
 
@@ -27,15 +29,9 @@ class MyRAppBar extends StatefulWidget {
 
 class _MyRAppBarState extends State<MyRAppBar> {
 
-  void toTrue(bool valor){
-    setState(() {
-      valor = true;
-    });
-  }
-  void toFalse(bool valor){
-    setState(() {
-      valor = false;
-    });
+  void cambioPantalla(int valor){
+    indicePantallaHome = valor;
+    print(indicePantallaHome);
   }
 
   @override
@@ -138,55 +134,52 @@ class _MyRAppBarState extends State<MyRAppBar> {
                     HideIf(
                       minWidth: widthToHide,
                       child: Row(children: [
-                        MouseRegion(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.white
-                            ),
-                            onPressed: (){},
-                            child: MyRText(
-                              text: "Nosotros",
-                              tipo: "body",
-                              color: _cursorNosotros ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                              bold: 5
-                            ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white
                           ),
-                          onEnter: (_) {toTrue(_cursorNosotros);},
-                          onExit: (_) {toFalse(_cursorNosotros);},
+                          onPressed: (){
+                            Navigator.push(context,
+                              new CupertinoPageRoute(builder: (context) => Container(child: Text("Nosotros")),));
+                          },
+                          child: MyRText(
+                            text: "Nosotros",
+                            tipo: "body",
+                            color: _cursorNosotros ? MyColors().colorClaro() : MyColors().colorOscuro(),
+                            bold: 5
+                          ),
                         ),
                         SizedBox(width: sW/30),
-                        MouseRegion(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.white
-                            ),
-                            onPressed: (){},
-                            child: MyRText(
-                              text: "Planes Dentales",
-                              tipo: "body",
-                              color: _cursorPlanes ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                              bold: 5
-                            ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white
                           ),
-                          onEnter: (_) {toTrue(_cursorPlanes);},
-                          onExit: (_) {toFalse(_cursorPlanes);},
+                          onPressed: (){
+                            Navigator.push(context,
+                              new CupertinoPageRoute(builder: (context) => PlanesDentalesHome(),));
+                          },
+                          child: MyRText(
+                            text: "Planes Dentales",
+                            tipo: "body",
+                            color: _cursorPlanes ? MyColors().colorClaro() : MyColors().colorOscuro(),
+                            bold: 5
+                          ),
                         ),
                         SizedBox(width: sW/30),
-                        MouseRegion(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              primary: Colors.white
-                            ),
-                            onPressed: (){},
-                            child: MyRText(
-                              text: "Contacto",
-                              tipo: "body",
-                              color: _cursorContacto ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                              bold: 5
-                            ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white
                           ),
-                          onEnter: (_) {toTrue(_cursorContacto);},
-                          onExit: (_) {toFalse(_cursorContacto);},
+                          onPressed: (){
+                            Navigator.push(context,
+                              new CupertinoPageRoute(builder: (context) => Container(child: Text("Contacto")),));
+                          },
+                          child: MyRText(
+                            text: "Contacto",
+                            tipo: "body",
+                            color: _cursorContacto ? MyColors().colorClaro() : MyColors().colorOscuro(),
+                            bold: 5
+                          ),
                         ),
                       ],),
                     ),

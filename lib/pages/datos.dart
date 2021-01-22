@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 double sangria = 10;
 double separador = 40;
 
+String rol = "usuario";
+
 var datosPersonales = {
   "nombres": "John Ernesto",
   "apellidos": "Doe Quispe",
