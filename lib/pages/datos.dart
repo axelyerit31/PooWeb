@@ -41,7 +41,7 @@ var cita3 = {
   "fecha": "Ago, 30",
   "hora": "5:00 p.m.",
   "dentista": "Nilton Salinas",
-  "costo": 0.00,
+  "costo": "0.00",
   "estado": "Faltó",
 };
 
@@ -50,7 +50,7 @@ var cita4 = {
   "fecha": "Ago, 27",
   "hora": "4:30 p.m.",
   "dentista": "Nilton Salinas",
-  "costo": 80.00,
+  "costo": "80.00",
   "estado": "Asistió",
 };
 

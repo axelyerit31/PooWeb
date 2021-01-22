@@ -177,15 +177,6 @@ class _MaquetaState extends State<Maqueta> {
     );
   }
 
-  List<Widget> pantallas = [
-    FichaPersonal(),
-    Citas(),
-    PlanDental(),
-    Notificaciones(),
-    Container(),
-  ];
-
-
   int indexSeleccionado = 0;
   int indexApuntado = 10;
   double alturaOpcion = 55;
@@ -200,6 +191,14 @@ class _MaquetaState extends State<Maqueta> {
       indexSeleccionado = valor;
     });
   }
+
+  List<Widget> pantallas = [
+    FichaPersonal(),
+    Citas(),
+    PlanDental(),
+    Notificaciones(),
+    Container(),
+  ];
 
   List<String> opciones = [
     "Ficha Personal",
