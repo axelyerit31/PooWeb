@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 
 import '../../mystyle.dart';
 import 'package:poo_web/myWidgets.dart';
@@ -26,7 +27,7 @@ class _HomePacientesState extends State<HomePacientes> {
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(
           tipo: "usuarios",
-          myRoute: Maqueta()
+          myRoute: PacientesPerfil()
         )
       ),
       body: MyRHome(),

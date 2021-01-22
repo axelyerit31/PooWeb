@@ -83,7 +83,7 @@ class _MaquetaState extends State<Maqueta> {
         imagePerfil = "assets/perfil-mujer.png";
         imagePerfilCerca = "assets/perfil-mujer-cerca.png";
       }
-    }else if(widget.rol == "dentista"){
+    }else if(widget.rol == "personal"){
       imagePerfil = "assets/perfil-dentista.png";
       imagePerfilCerca = "assets/perfil-dentista-cerca.png";
     }
@@ -97,7 +97,7 @@ class _MaquetaState extends State<Maqueta> {
     obtenerImagenes();
 
     double sW = MediaQuery.of(context).size.width;
-    double sWActual = sW - separador*4;
+    double sWActual = sW - separador*3;
     double altura = sizeMiPantalla - sizeAppBar - separador*2;
 
     print(altura);
@@ -116,10 +116,10 @@ class _MaquetaState extends State<Maqueta> {
               Container(height: altura, width: sWActual * 7/43, child: DrawBar(sW)),
               //Expanded(flex: 7, child: DrawBar(sW),),
               SizedBox(width: separador),
-              Container(height: altura, width: sWActual * 24/43, child: Main(sW)),
+              Container(height: altura, width: sWActual * 36/43, child: Main(sW)),
               //Expanded(flex: 24, child: Main(sW),),
-              SizedBox(width: separador),
-              Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
+              //SizedBox(width: separador),
+              //Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
               //Expanded(flex: 12, child: Placeholder(),),
             ],
           )

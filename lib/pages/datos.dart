@@ -1,3 +1,10 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+
+import 'baseDatos/bdUsuario.dart';
+import 'package:http/http.dart' as http;
+
 double sangria = 10;
 double separador = 40;
 
@@ -51,4 +58,11 @@ var cita4 = {
   "estado": "Asistió",
 };
 
+//metodo para obtenerusuarios
 
+final urlUsuarios = "http://192.168.18.3/PooWeb/verUsuarios.php";
+
+Future<List<Usuario>> obtenerUsuarios() async{
+  final resp = await http.get(urlUsuarios);
+  return usuarioFromJson( resp.body );
+}

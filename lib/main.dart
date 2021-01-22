@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 
 import 'pages/pacientes/homePacientes.dart';
+import 'pages/personal/personalPerfil.dart';
 
 
 void main() {
