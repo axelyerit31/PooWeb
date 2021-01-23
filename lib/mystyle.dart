@@ -71,6 +71,18 @@ class MyColors{
   Color colorAppBar(){
     return _colorAppBar;
   }
+
+  List<Color> colorPlanDentalCero(){
+    return [Color(0xFF6F85D6), Color(0xFF546FCE)];
+  }
+
+  List<Color> colorPlanDentalInicial(){
+    return [Color(0xFF6481EA), Color(0xFF4568E7)];
+  }
+
+  List<Color> colorPlanDentalExperto(){
+    return [Color(0xFF5E81FE), Color(0xFF456BF1)];
+  }
 }
 
 class MyRText extends StatelessWidget {
@@ -112,6 +124,8 @@ class MyRText extends StatelessWidget {
       return [14, 16];
     }else if(tipo == "title"){
       return [40, 46];
+    }else if(tipo == "precio"){
+      return [38, 40];
     }else if(tipo == "body"){
       return [16, 18];
     }else if(tipo == "bodyB"){

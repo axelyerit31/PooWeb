@@ -58,6 +58,10 @@ flutter:
     - assets/especialidad5.jpg
     - assets/fondo_home.png
     - assets/logo.png
+    - assets/flechas.png
+    - assets/mejorsonrisa.png
+    - assets/dentista-loading.png
+    - assets/dentistas-dibujo.png
     - assets/perfil-bottomLeft.png
     - assets/perfil-hombre.png
     - assets/perfil-hombre-cerca.png
@@ -68,6 +72,7 @@ flutter:
     - assets/footer/bottomRight.png
     - assets/footer/bottomLeft.png
     - assets/iconos/
+    - assets/planDental/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

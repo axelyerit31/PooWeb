@@ -58,7 +58,7 @@ class Login extends StatelessWidget {
                           width: sW * 2 / 4,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage("assets/dentista-dibujo-full.png"),
+                              image: AssetImage("assets/dentista-dibujo.png"),
                               alignment: Alignment.center
                             )
                           ),

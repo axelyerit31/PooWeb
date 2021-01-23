@@ -104,7 +104,7 @@ class PlanDentalFicha extends StatelessWidget {
           child: Row(
             children: [
               MyRText(text: "Plan ${datosPlan["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
-              MyRText(text: "${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              MyRText(text: "S/. ${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
             ],
           ),
         ),

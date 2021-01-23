@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 
@@ -7,6 +6,19 @@ import 'package:http/http.dart' as http;
 
 double sangria = 10;
 double separador = 40;
+
+var planCero = {
+  "plan": "Cero",
+  "precio": "0.00"
+};
+var planInicial = {
+  "plan": "Inicial",
+  "precio": "39.90"
+};
+var planExperto = {
+  "plan": "Experto",
+  "precio": "47.90"
+};
 
 String rol = "usuario";
 
@@ -21,7 +33,7 @@ var datosPersonales = {
 
 var datosPlan = {
   "plan": "Inicial",
-  "precio": "S/. 29.90",
+  "precio": "39.90",
 };
 
 var cita1 = {

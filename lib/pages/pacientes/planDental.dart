@@ -39,11 +39,11 @@ Widget _header(){
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _planDental("Experto", "47.90"),
+              _planDental("${planExperto["plan"]}", "${planExperto["precio"]}"),
               SizedBox(height: separador/4),
-              _planDental("Inicial", "29.90"),
+              _planDental("${planInicial["plan"]}", "${planInicial["precio"]}"),
               SizedBox(height: separador/4),
-              _planDental("Cero", "0.00"),
+              _planDental("${planCero["plan"]}", "${planCero["precio"]}"),
               SizedBox(height: separador*1.5),
               _estadoPlan()
             ],

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poo_web/pages/usuarios/nosotros.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
 import 'mystyle.dart';
@@ -12,7 +13,7 @@ import 'pages/usuarios/home.dart';
 import 'pages/usuarios/login.dart';
 import 'pages/usuarios/registro.dart';
 
-double sizeAppBar = 80;
+double sizeAppBar = 60;
 double hFooter = 120;
 int indicePantallaHome = 0;
 
@@ -67,7 +68,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
             return Hero(
               tag: "tagAppBar2",
               child: Container(
-                padding: EdgeInsets.only(top: 8),
+                padding: EdgeInsets.only(top: 0),
                 color: MyColors().colorAppBar(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,7 +141,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
                           ),
                           onPressed: (){
                             Navigator.push(context,
-                              new CupertinoPageRoute(builder: (context) => Container(child: Text("Nosotros")),));
+                              new CupertinoPageRoute(builder: (context) => Nosotros(),));
                           },
                           child: MyRText(
                             text: "Nosotros",

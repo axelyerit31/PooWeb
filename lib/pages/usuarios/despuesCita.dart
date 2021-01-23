@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../mystyle.dart';
 
 
-class MiPagina extends StatelessWidget {
+class DespuesCita extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void Function() {}
@@ -26,7 +26,6 @@ class MiPagina extends StatelessWidget {
             ),
           ),
           Container(
-            
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -36,14 +35,13 @@ class MiPagina extends StatelessWidget {
                   height: 420,
                   margin: EdgeInsets.only(top: 30, bottom: 5),
                   child: 
-                    Image.asset('densista_loading.png'),
+                    Image.asset('assets/dentista-loading.png'),
                   constraints: BoxConstraints.tightForFinite(),
                 ),
                 Container(
                   child: MyRText(
                           text: "Gracias por reservar una cita con nosotros",
-                          color: Colors.blue,
-                          tipo: "subtitle",
+                          color: MyColors().colorOscuro(),
                           bold: 7,
                         ),
                   margin: EdgeInsets.only(bottom: 4 ),
@@ -52,10 +50,10 @@ class MiPagina extends StatelessWidget {
                   width: ancho*2/5,
                   child: MyRText(
                     textAlign: TextAlign.center,
-                    text: "Registrate y podras acceder a tus citas, ficha de pacientee historial dental,todo desde esta plataforma.",
-                    color: Colors.blue,
-                    tipo: "bodyB",
-                    bold: 3,
+                    text: "Regístrate y podrás acceder a tus citas y ficha de paciente, todo desde esta plataforma.",
+                    color: MyColors().colorVerdeOscuro(),
+                    tipo: "bodyL",
+                    bold: 5,
                   ),
                   margin: EdgeInsets.only(bottom: 30),
                 ),
