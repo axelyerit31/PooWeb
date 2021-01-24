@@ -24,7 +24,7 @@ class _PlanesDentalesHomeState extends State<PlanesDentalesHome> {
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(
-          tipo: "usuarios",
+          tipo: rolGlobal,
         )
       ),
       body: SingleChildScrollView(

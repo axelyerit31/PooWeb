@@ -20,7 +20,7 @@ var planExperto = {
   "precio": "47.90"
 };
 
-String rol = "usuario";
+String rolGlobal = "usuario";
 
 var datosPersonales = {
   "nombres": "John Ernesto",

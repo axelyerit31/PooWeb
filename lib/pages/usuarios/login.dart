@@ -1,11 +1,17 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:http/http.dart' as http;
+
+import 'package:poo_web/pages/pacientes/homePacientes.dart';
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
+import '../datos.dart';
 import 'registro.dart';
+
 List<String> formHints = [
   "Correo electrónico",
   "Ingrese su contraseña",
@@ -14,12 +20,84 @@ List<String> formHints = [
 TextEditingController controlCorreo = new TextEditingController();
 TextEditingController controlContrasena = new TextEditingController();
 
+var urlLogin = "http://192.168.18.3/PooWeb/login.php";
+
+//Alerta para mostrar cuando algo va mal
+AlertDialog rowAlert(String mensaje, BuildContext context){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyRText(text: "Ha ocurrido un error", tipo: "body", color: MyColors().colorOscuro(), bold: 6),
+            Transform.translate(
+              offset: Offset(20, -20),
+              child: Container(
+                child: IconButton(
+                  splashRadius: 15,
+                  icon: Icon(Icons.close, color: MyColors().colorAzulMedio()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }
+                ),
+              ),
+            )
+          ],
+        ),
+        content: MyRText(
+          text: mensaje,
+          tipo: "bodyLL", color: MyColors().colorAzulMedio(),
+          bold: 5
+        ),
+        actions: [
+          MyRButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: MyRText(text: "Aceptar", tipo: "bodyLLL", color: Colors.white, bold: 5)
+          )
+        ],
+      );
+    }
+  );
+}
+
+Future<List> login(BuildContext context) async{
+
+  final response = await http.post(urlLogin, body: {
+    "correo": controlCorreo.text,
+    "contrasena": controlContrasena.text,
+  });
+
+  var resultado =  jsonDecode(response.body);
+
+  if(resultado == "no existe"){
+    rowAlert("El correo electrónico ingresado no se encuentra registrado.", context);
+  }else if(resultado == "contrasena incorrecta"){
+    rowAlert("La contraseña ingresada es incorecta.", context);
+  }else{
+    rolGlobal = resultado;
+    print("Inicio de sesión exitoso, bienvenido $rolGlobal");
+  }
+}
+
+
 List<TextEditingController> formControllers = [
   controlCorreo,
   controlContrasena,
 ];
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+bool bienCorreoForm = true;
+bool bienContrasenaForm = true;
+
+class _LoginState extends State<Login> {
  @override
   Widget build(BuildContext context) {
 
@@ -38,7 +116,7 @@ class Login extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: sW > maxScreenSize ? sizeMiPantalla : sizeMiPantalla-95,
+          height: sW > maxScreenSize ? sizeMiPantalla-sizeAppBar : sizeMiPantalla-sizeAppBar-95,
           padding: EdgeInsets.only(top: 60),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +181,21 @@ class Login extends StatelessWidget {
                         Container(
                           constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
                           child: MyRButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (controlCorreo.text == ""){
+                                setState(() {
+                                  bienCorreoForm = false;
+                                  print(bienCorreoForm);
+                                });
+                              }else if (controlContrasena.text == ""){
+                                setState(() {
+                                  bienContrasenaForm = false;
+                                  print(bienContrasenaForm);
+                                });
+                              }else{
+                                login(context);
+                              }
+                            },
                             child: MyRText(
                               text: "Iniciar Sesión",
                               tipo: "buttonContent",
@@ -183,7 +275,6 @@ class Login extends StatelessWidget {
                   )
                 ],
               ),
-              Footer()
             ],
           ),
         ),
@@ -192,33 +283,54 @@ class Login extends StatelessWidget {
   }
 
   Container _formFields(double sW) {
+
+    Color colorNormalForm = MyColors().colorGris();
+    Color colorErrorForm = Colors.red;
+    Color colorCorreoForm = bienCorreoForm ? colorNormalForm : colorErrorForm;
+    Color colorContrasenaForm = bienContrasenaForm ? colorNormalForm : colorErrorForm;
   
-  double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
+    double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
 
-  double separador = lerpDouble(10, 16, sW/width);
+    double separador = lerpDouble(10, 16, sW/width);
 
-   return Container(
-    child: Column(
-      children: [
-        Container(height: separador),
+    return Container(
+      child: Column(
+        children: [
+          Container(height: separador),
 
-        MyRTextFormField(
-          hintText: formHints[0],
-          controller: formControllers[0],
-          keyboardType: TextInputType.emailAddress,
-          obscureText: false,
-        ),
-        Container(height: separador),
+          MyRTextFormField(
+            textColor: colorCorreoForm,
+            onTap: (){
+              setState(() {
+                setState(() {
+                  bienCorreoForm = true;
+                });
+              });
+            },
+            hintText: formHints[0],
+            controller: formControllers[0],
+            keyboardType: TextInputType.emailAddress,
+            obscureText: false,
+            formColor: MyColors().colorGrisClaro()
+          ),
+          Container(height: separador),
 
-        MyRTextFormField(
-          hintText: formHints[1],
-          controller: formControllers[1],
-          keyboardType: TextInputType.text,
-          obscureText: true,
-        ),
-        Container(height: separador),
-      ]
-    )
-  );
- }
+          MyRTextFormField(
+            textColor: colorContrasenaForm,
+            onTap: () {
+              setState(() {
+                bienContrasenaForm = true;
+              });
+            },
+            hintText: formHints[1],
+            controller: formControllers[1],
+            keyboardType: TextInputType.text,
+            obscureText: true,
+            formColor: MyColors().colorGrisClaro()
+          ),
+          Container(height: separador),
+        ]
+      )
+    );
+  }
 }

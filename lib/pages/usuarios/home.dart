@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
-        child: MyRAppBar(tipo: "home")
+        child: MyRAppBar(tipo: "usuario")
       ),
       body: MyRHome(),
     );

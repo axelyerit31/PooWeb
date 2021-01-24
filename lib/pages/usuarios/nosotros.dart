@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../myWidgets.dart';
+import '../datos.dart';
 import '../../mystyle.dart';
 
 class Nosotros extends StatelessWidget {
@@ -9,7 +10,12 @@ class Nosotros extends StatelessWidget {
 
     double sW = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(toolbarHeight: sizeAppBar,),
+      appBar: PreferredSize(
+        preferredSize: new Size.fromHeight(sizeAppBar),
+        child: MyRAppBar(
+          tipo: rolGlobal,
+        )
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

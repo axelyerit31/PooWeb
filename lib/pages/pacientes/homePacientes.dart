@@ -27,18 +27,11 @@ class _HomePacientesState extends State<HomePacientes> {
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(
-          tipo: "usuarios",
+          tipo: "paciente",
           myRoute: PacientesPerfil()
         )
       ),
-      body: pantallasHome[indicePantallaHome],
+      body: MyRHome(),
     );
   }
-
-  List<Widget> pantallasHome = [
-    MyRHome(),
-    Container(child: Text("Nosotros")),
-    Container(child: Text("Planes Dentales")),
-    Container(child: Text("Contacto")),
-  ];
 }

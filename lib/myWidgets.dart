@@ -39,13 +39,13 @@ class _MyRAppBarState extends State<MyRAppBar> {
   Widget build(BuildContext context) {
 
     Widget acciones(){
-      if(widget.tipo == "home"){
+      if(widget.tipo == "usuario"){
         return accionesNoLogin(context);
       }else if(widget.tipo == "login"){
         return accionesLogin(context);
       }else if(widget.tipo == "registro"){
         return accionesRegistro(context);
-      }else if(widget.tipo == "usuarios"){
+      }else if(widget.tipo == "paciente" || widget.tipo == "personal" || widget.tipo == "admin"){
         return accionesUsuarios(context);
       }else if(widget.tipo == "perfil"){
         return accionesPerfil(context);
@@ -68,7 +68,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
             return Hero(
               tag: "tagAppBar2",
               child: Container(
-                padding: EdgeInsets.only(top: 0),
+                padding: EdgeInsets.only(top: 2),
                 color: MyColors().colorAppBar(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,7 +79,6 @@ class _MyRAppBarState extends State<MyRAppBar> {
                       padding: EdgeInsets.only(
                         left: sW/35,
                         right: sW/25,
-                        bottom: 10
                       ),
                       child: TextButton(
                         style: TextButton.styleFrom(
@@ -110,11 +109,14 @@ class _MyRAppBarState extends State<MyRAppBar> {
                                     style: GoogleFonts.reemKufi(color: MyColors().colorAzulClaro(), fontSize: 24, fontWeight: FontWeight.w600)
                                   ),
                                 ),
-                                Container(
-                                  constraints: BoxConstraints(maxHeight: 30),
-                                  child: Text(
-                                    "Juntos",
-                                    style: GoogleFonts.reemKufi(color: Color(0xFFE9FFF3), fontSize: 24, fontWeight: FontWeight.w700)
+                                Transform.translate(
+                                  offset: Offset(0, -8),
+                                  child: Container(
+                                    constraints: BoxConstraints(maxHeight: 30),
+                                    child: Text(
+                                      "Juntos",
+                                      style: GoogleFonts.reemKufi(color: Color(0xFFE9FFF3), fontSize: 24, fontWeight: FontWeight.w700)
+                                    ),
                                   ),
                                 )
                               ],
@@ -133,7 +135,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
                     ),
                     //Nosotros Planes dentales
                     HideIf(
-                      minWidth: widthToHide,
+                      minWidth: mediumScreenSize,
                       child: Row(children: [
                         TextButton(
                           style: TextButton.styleFrom(

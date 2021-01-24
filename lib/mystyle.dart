@@ -15,6 +15,7 @@ Color _colorAzulMedioBajo = Color(0xFF8CA5FF);
 Color _colorAppBar = Color(0xFFC2DAFF);
 Color _colorVerde = Color(0xFFC7F3DB);
 Color _colorVerdeOscuro = Color(0xFF83C6A2);
+Color _colorGrisClaro = Color(0xFFF5f5f5);
 Color _colorGris = Color(0xFFbebebe);
 Color _colorGrisOscuro = Color(0xFFababab);
 Color _colorHome = Color(0xFFEEF9FF);
@@ -58,6 +59,10 @@ class MyColors{
 
   Color colorVerdeOscuro(){
     return _colorVerdeOscuro;
+  }
+
+  Color colorGrisClaro(){
+    return _colorGrisClaro;
   }
 
   Color colorGris(){
@@ -222,7 +227,7 @@ class MyRButton extends StatelessWidget {
     print("Height actual: " + screenS.height.toString());
 
     double horizontalPadding = lerpDouble(8, 15, sW/width);
-    double verticalPadding = lerpDouble(4, 10, sW/width);
+    double verticalPadding = lerpDouble(4, 11, sW/width);
 
     return Container(
       //height: 24+verticalPadding*2,
@@ -262,8 +267,11 @@ class MyRTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType keyboardType;
   final bool obscureText;
+  final Color textColor;
+  final Color formColor;
+  final Function onTap;
 
-  const MyRTextFormField({Key key, this.controller, this.initialValue, this.hintText, this.keyboardType, this.obscureText}) : super(key: key);
+  const MyRTextFormField({Key key, this.controller, this.initialValue, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -277,6 +285,7 @@ class MyRTextFormField extends StatelessWidget {
     double fontSize = lerpDouble(12, 16, sW/width);
 
     return TextFormField(
+      onTap: onTap,
       cursorHeight: fontSize*1.5,
       cursorColor: MyColors().colorOscuro(),
       obscureText: obscureText,
@@ -289,13 +298,16 @@ class MyRTextFormField extends StatelessWidget {
         fontWeight: FontWeight.w400
       ),
       decoration: InputDecoration(
+        filled: true,
+        fillColor: formColor,
+        hoverColor: formColor,
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: MyColors().colorGris(), width: 1),
-          borderRadius: BorderRadius.zero
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedL)
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: MyColors().colorGris(), width: 1),
-          borderRadius: BorderRadius.zero
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(roundedL)
         ),
         hintText: hintText,
         contentPadding: EdgeInsets.symmetric(
@@ -304,7 +316,7 @@ class MyRTextFormField extends StatelessWidget {
         ),
         hintStyle: GoogleFonts.poppins(
           fontSize: fontSize,
-          color: MyColors().colorGris(),
+          color: textColor,
           fontWeight: FontWeight.w400
         ),
       ),
