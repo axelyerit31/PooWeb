@@ -31,7 +31,7 @@ AlertDialog rowAlert(String mensaje, BuildContext context){
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MyRText(text: "Ha ocurrido un error", tipo: "body", color: MyColors().colorOscuro(), bold: 6),
+            MyRText(text: "¡Ha ocurrido un error!", tipo: "body", color: MyColors().colorOscuro(), bold: 6),
             Transform.translate(
               offset: Offset(20, -20),
               child: Container(
@@ -73,13 +73,27 @@ Future<List> login(BuildContext context) async{
 
   var resultado =  jsonDecode(response.body);
 
-  if(resultado == "no existe"){
+  if(resultado[0] == "no existe"){
     rowAlert("El correo electrónico ingresado no se encuentra registrado.", context);
-  }else if(resultado == "contrasena incorrecta"){
-    rowAlert("La contraseña ingresada es incorecta.", context);
+  }else if(resultado[0] == "contrasena incorrecta"){
+    rowAlert("La contraseña ingresada es incorrecta.", context);
   }else{
-    rolGlobal = resultado;
-    print("Inicio de sesión exitoso, bienvenido $rolGlobal");
+    rolGlobal = resultado[0];
+    print("Inicio de sesión exitoso, bienvenido $rolGlobal.");
+    if(resultado[0] == "paciente"){
+      datosPersonales = {
+        "dni" : resultado[1],
+        "nombres" : resultado[2],
+        "apellidos" : resultado[3],
+        "correo" : resultado[4],
+        "celular" : resultado[5],
+        "sexo" : resultado[6],
+        "direccion" : resultado[7],
+      };
+      Navigator.of(context).pushAndRemoveUntil(
+        CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false
+      );
+    }
   }
 }
 

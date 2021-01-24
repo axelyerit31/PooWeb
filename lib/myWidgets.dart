@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poo_web/pages/datos.dart';
 import 'package:poo_web/pages/usuarios/nosotros.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
@@ -135,7 +136,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
                     ),
                     //Nosotros Planes dentales
                     HideIf(
-                      minWidth: mediumScreenSize,
+                      minWidth: mediumScreenSize + 120,
                       child: Row(children: [
                         TextButton(
                           style: TextButton.styleFrom(
@@ -186,10 +187,8 @@ class _MyRAppBarState extends State<MyRAppBar> {
                         ),
                       ],),
                     ),
-                    //Separador
-                    //Acciones Logeo
                     Container(
-                      width: sW > mediumScreenSize ? (sW*5/16) : (sW*8/16),
+                      width: sW > mediumScreenSize+120 ? (sW*5/16) : (sW*8/16),
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.only(right: sW/40),
                       child: acciones()
@@ -283,7 +282,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
           ),
           SizedBox(width: 25),
           MyRText(
-            text: "John Doe",
+            text: datosPersonales["nombres"],
             tipo: "bodyL",
             color: Colors.white,
             bold: 6

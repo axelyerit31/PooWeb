@@ -40,7 +40,7 @@ String nombresVertical(){
     resultado += "\n";
   }
 
-  return resultado.trim();
+  return resultado.toUpperCase().trim();
 }
 
 //Widget para almacenar el ultimo widget mostrado antes de presionar "Cerrar Sesion", el cual no devuelve ni un widget
@@ -76,7 +76,7 @@ class _MaquetaState extends State<Maqueta> {
 
   void obtenerImagenes(){
     if(widget.rol == "paciente"){
-      if(datosPersonales["sexo"] == "hombre"){
+      if(datosPersonales["sexo"] == "Masculino"){
         imagePerfil = "assets/perfil-hombre.png";
         imagePerfilCerca = "assets/perfil-hombre-cerca.png";
       }else{
