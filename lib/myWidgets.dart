@@ -9,7 +9,6 @@ import 'package:poo_web/pages/usuarios/nosotros.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
 import 'mystyle.dart';
-import 'pages/maquetaPerfil.dart';
 import 'pages/pacientes/homePacientes.dart';
 import 'pages/pacientes/pacientesPerfil.dart';
 import 'pages/personal/personalPerfil.dart';

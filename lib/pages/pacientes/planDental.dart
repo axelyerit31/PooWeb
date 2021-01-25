@@ -15,10 +15,11 @@ class _PlanDentalState extends State<PlanDental> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _header(),
-        _tiempoAfiliado()
+        _tiempoAfiliado(context)
       ],
     );
   }
@@ -61,11 +62,21 @@ Widget _planDental(String plan, String precio){
 
   Widget planAfiliado(){
     if(plan == datosPlan["plan"]){
-      return MyRText(
-        text: "Plan Actual",
-        tipo: "bodyLLL",
-        color: Colors.white,
-        bold: 7
+      return TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 6
+          ),
+          primary: Colors.white
+        ),
+        child: MyRText(
+          text: "Desafiliarme",
+          tipo: "bodyLLL",
+          color: Colors.white,
+          bold: 7
+        ),
+        onPressed: () {},
       );
     }else{
       return TextButton(
@@ -180,8 +191,9 @@ Widget _estadoPlan(){
   );
 }
 
-Widget _tiempoAfiliado(){
+Widget _tiempoAfiliado(BuildContext context){
 
+  double sW = MediaQuery.of(context).size.width;
   double alturaBarra = 40;
 
   return Container(
@@ -207,7 +219,7 @@ Widget _tiempoAfiliado(){
                 children: [
                   Container(
                     height: alturaBarra,
-                    width: 570,
+                    width: sW / 1.7,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(roundedB)

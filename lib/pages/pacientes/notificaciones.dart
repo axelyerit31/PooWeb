@@ -16,17 +16,31 @@ class Notificaciones extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    double sW = MediaQuery.of(context).size.width;
+
     return Container(
       alignment: Alignment.center,
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _header(),
+          Container(
+            height: 520,
+            width: sW/4,
+            child: perfilCerca()
+          ),
           Column(          
             children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Datos(),
+                  SizedBox(height: separador),
+                  PlanDentalFicha()
+                ],
+              ),
               SizedBox(
                 height: separador
-                 ,
               ),
               Container(
                 height: 247,
@@ -58,48 +72,27 @@ class Notificaciones extends StatelessWidget {
     );
   }
 }
-Widget _header (){
-  return Container(
-    alignment: Alignment.center,
-    child: Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          height: 250,
-          width: 190,
-          child: perfilCerca()
-        ),
-        SizedBox(width: separador),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Datos(),
-            SizedBox(height: separador),
-            PlanDentalFicha()
-          ],
-        )
-      ],
-    ),
-  );
-}
+
 var noti1 = {
   "notificacion":"¡Hey! No olvides tu cita",
-  "comentario":"John Doe, tienes una cita hoy a las 10:50 a.m. ¡No la olvides!"
-  
+  "comentario":"${datosPersonales["nombres"]}, tienes una cita hoy a las 10:50 a.m. ¡No la olvides!"
 };
+
 var noti2 = {
   "notificacion":"Tu dentista te ofrece estas recomendaciones",
-  "comentario":"John Doe, cuidar más el consumo de azúcar, pues hay aparición de caries."
+  "comentario":"${datosPersonales["nombres"]}, cuidar más el consumo de azúcar, pues hay aparición de caries."
 };
+
 var noti3 = {
   "notificacion":"Tu cita fue creada",
-  "comentario":"John Doe, tu cita para el día 27 de Agosto a las 4:30 p.m. fue creada con éxito."
+  "comentario":"${datosPersonales["nombres"]}, tu cita para el día 27 de Agosto a las 4:30 p.m. fue creada con éxito."
 };
+
 var noti4 = {
   "notificacion":"¡Tus dientes te lo agradecerán!",
-  "comentario":"John Doe, agradadecemos que te hayas unido."
+  "comentario":"${datosPersonales["nombres"]}, agradadecemos que te hayas unido."
 };
+
 List notificaciones= [
   noti1,
   noti2,
@@ -124,7 +117,7 @@ class _Notificaciones extends StatelessWidget {
       margin: EdgeInsets.only(
         top:0,
         right: separador,
-        bottom: 15,
+        bottom: 17,
         left: separador
       ),
       padding: EdgeInsets.symmetric(horizontal:sangria-5, vertical: sangria-5),
