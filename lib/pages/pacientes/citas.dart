@@ -16,6 +16,7 @@ class _CitasState extends State<Citas> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _header(),
         Column(

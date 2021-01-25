@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../maquetaPerfil.dart';
-import 'citas.dart';
-import 'fichaPersonal.dart';
-import 'notificaciones.dart';
-import 'planDental.dart';
-
-List<Widget> pantallas = [
-  FichaPersonal(),
-  Citas(),
-  PlanDental(),
-  Notificaciones(),
-  Container(),
-];
 
 List<String> opciones = [
   "Ficha Personal",
@@ -37,7 +25,6 @@ class PacientesPerfil extends StatelessWidget {
   Widget build(BuildContext context) {
     return Maqueta(
       rol: "paciente",
-      pantallas: pantallas,
       opciones: opciones,
       iconosOpciones: iconos,
     );

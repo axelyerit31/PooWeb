@@ -20,6 +20,7 @@ class FichaPersonal extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
@@ -28,18 +29,16 @@ class FichaPersonal extends StatelessWidget {
                 child: perfil()
               ),
               SizedBox(width: separador),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Datos(),
-                    SizedBox(height: separador),
-                    PlanDentalFicha(),
-                    SizedBox(height: separador),
-                    _Recomendaciones()
-                  ]
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Datos(),
+                  SizedBox(height: separador),
+                  PlanDentalFicha(),
+                  SizedBox(height: separador),
+                  _Recomendaciones()
+                ]
               )
             ],
           ),
@@ -87,24 +86,12 @@ class Datos extends StatelessWidget {
             ],
           ),
         ),
-      ],
-    );
-  }
-}
-
-class PlanDentalFicha extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MyRText(text: "Plan Dental", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
         Padding(
           padding: EdgeInsets.only(left: sangria),
           child: Row(
             children: [
-              MyRText(text: "Plan ${datosPlan["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
-              MyRText(text: "S/. ${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              MyRText(text: "Dirección: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+              MyRText(text: "${datosPersonales["direccion"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
             ],
           ),
         ),
@@ -113,18 +100,43 @@ class PlanDentalFicha extends StatelessWidget {
   }
 }
 
+class PlanDentalFicha extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MyRText(text: "Plan Dental", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: Row(
+              children: [
+                MyRText(text: "Plan ${datosPlan["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                MyRText(text: "S/. ${datosPlan["precio"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _Recomendaciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        MyRText(text: "Recomendaciones", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
-        Padding(
-          padding: EdgeInsets.only(left: sangria),
-          child: MyRText(text: "Cuidar más el consumo de azúcar, pues hay aparición de caries.", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-        ),
-      ], 
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MyRText(text: "Recomendaciones", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: MyRText(text: "Cuidar más el consumo de azúcar, pues hay aparición de caries.", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+          ),
+        ], 
+      ),
     );
   }
 }

@@ -1,9 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:poo_web/mystyle.dart';
 
 import '../myWidgets.dart';
+import 'pacientes/citas.dart';
+import 'pacientes/editarPerfil.dart';
+import 'pacientes/fichaPersonal.dart';
+import 'pacientes/notificaciones.dart';
+import 'pacientes/planDental.dart';
 import 'datos.dart';
+import 'personal/pacientes.dart';
+import 'usuarios/home.dart';
 
 //funcion para obtner el primer nombre y primer apellido de forma vertical
 String nombresVertical(){
@@ -40,7 +48,7 @@ String nombresVertical(){
     resultado += "\n";
   }
 
-  return resultado.toUpperCase().trim();
+  return resultado.trim();
 }
 
 //Widget para almacenar el ultimo widget mostrado antes de presionar "Cerrar Sesion", el cual no devuelve ni un widget
@@ -48,14 +56,17 @@ Widget ultimoWidget;
 String imagePerfil;
 String imagePerfilCerca;
 
+//index para el manejo de pantallas de los perfiles
+int indexSeleccionado = 0;
+int indexApuntado = 10;
+
 class Maqueta extends StatefulWidget {
 
   final String rol;
-  final List<Widget> pantallas;
   final List<String> opciones;
   final List<String> iconosOpciones;
 
-  const Maqueta({Key key, this.rol, this.pantallas, this.opciones, this.iconosOpciones}) : super(key: key);
+  const Maqueta({Key key, this.rol, this.opciones, this.iconosOpciones}) : super(key: key);
 
   @override
   _MaquetaState createState() => _MaquetaState();
@@ -69,7 +80,23 @@ class _MaquetaState extends State<Maqueta> {
 
   //Obtener los datos de que pantallas, opciones e iconos habran, dados desde [rol]Perfil
   void obtenerDatos(){
-    pantallas = widget.pantallas;
+    if(widget.rol == "paciente"){
+      pantallas = [
+        FichaPersonal(),
+        Citas(),
+        PlanDental(),
+        Notificaciones(),
+        EditarPerfil(state: opcionSeleccionada)
+      ];
+    }else if(widget.rol == "personal"){
+      pantallas = [
+        Container(),
+        Container(),
+        Pacientes(),
+        Container(),
+        Container(),
+      ];
+    }
     opciones = widget.opciones;
     iconos = widget.iconosOpciones;
   }
@@ -174,6 +201,7 @@ class _MaquetaState extends State<Maqueta> {
                 width: sW/20,
                 alignment: Alignment.center,
                 child: MyRText(
+                  textAlign: TextAlign.center,
                   text: nombresVertical(),
                   tipo: "subtitle",
                   color: MyColors().colorOscuro(),
@@ -203,9 +231,6 @@ class _MaquetaState extends State<Maqueta> {
       ],
     );
   }
-
-  int indexSeleccionado = 0;
-  int indexApuntado = 10;
   double alturaOpcion = 55;
 
   void opcionApuntada(int valor){
@@ -214,6 +239,7 @@ class _MaquetaState extends State<Maqueta> {
     });
   }
   void opcionSeleccionada(int valor){
+    obtenerPaciente(datosPersonales["dni"]);
     setState(() {
       indexSeleccionado = valor;
     });
@@ -283,7 +309,58 @@ class _MaquetaState extends State<Maqueta> {
     }
 
     return GestureDetector(
-      onTap: () {opcionSeleccionada(valor);},
+      onTap: () {
+        opcionSeleccionada(valor);
+        if(valor == opciones.length-1){
+          showDialog(
+            context: context,
+            builder: (context){
+              return AlertDialog(
+                title: MyRText(
+                  text: "¿Está seguro de que desea cerrar sesión?",
+                  tipo: "body", color: MyColors().colorOscuro(),
+                  bold: 6
+                ),
+                content: MyRText(
+                  text: "Estamos aquí siempre para ayudarle, regrese cuando quiera.",
+                  tipo: "bodyLL", color: MyColors().colorAzulMedio(),
+                  bold: 5
+                ),
+                actions: [
+                  MyROutlineButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: MyRText(
+                      text: "Cancelar",
+                      tipo: "bodyLL",
+                      color: MyColors().colorOscuro(),
+                      bold: 5
+                    ),
+                    color: MyColors().colorOscuro(),
+                  ),
+                  MyRButton(
+                    onPressed: () {
+                      rolGlobal = "usuario";
+                      datosPersonales.clear();
+                      opcionSeleccionada(0);
+                      Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
+                      );
+                    },
+                    child: MyRText(
+                      text: "Cerrar Sesión",
+                      tipo: "bodyLL",
+                      color: Colors.white,
+                      bold: 5
+                    )
+                  )
+                ],
+              );
+            }
+          );
+        }
+      },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onHover: (_) {opcionApuntada(valor);},

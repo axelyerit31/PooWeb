@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 
 import 'baseDatos/bdUsuario.dart';
@@ -68,9 +70,40 @@ var cita4 = {
 
 //metodo para obtenerusuarios
 
-final urlUsuarios = "http://192.168.18.3/PooWeb/verUsuarios.php";
+final urlUsuarios = "http://192.168.18.3/PooWeb/obtenerPacientesUsuarios.php";
 
 Future<List<Usuario>> obtenerUsuarios() async{
   final resp = await http.get(urlUsuarios);
   return usuarioFromJson( resp.body );
+}
+
+
+final urlObtenerPaciente = "http://192.168.18.3/PooWeb/obtenerPaciente.php";
+
+Future<List> obtenerPacienteFicha(String identificador) async{
+  final resp = await http.post(urlObtenerPaciente, body: {
+    "dni": identificador
+  });
+
+  var resultado = jsonDecode(resp.body);
+
+  return resultado;
+}
+
+void obtenerPaciente(String identificador) async{
+  final resp = await http.post(urlObtenerPaciente, body: {
+    "dni": identificador
+  });
+
+  var resultado = jsonDecode(resp.body);
+  
+  datosPersonales = {
+    "dni" : resultado[0]["dni"],
+    "nombres" : resultado[0]["nombres_usuario"],
+    "apellidos" : resultado[0]["apellidos_usuario"],
+    "correo" : resultado[0]["email"],
+    "celular" : resultado[0]["telefono"],
+    "sexo" : resultado[0]["sexo"],
+    "direccion" : resultado[0]["direccion"],
+  };
 }

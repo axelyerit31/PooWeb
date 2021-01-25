@@ -22,48 +22,6 @@ TextEditingController controlContrasena = new TextEditingController();
 
 var urlLogin = "http://192.168.18.3/PooWeb/login.php";
 
-//Alerta para mostrar cuando algo va mal
-AlertDialog rowAlert(String mensaje, BuildContext context){
-  showDialog(
-    context: context,
-    builder: (BuildContext context){
-      return AlertDialog(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            MyRText(text: "¡Ha ocurrido un error!", tipo: "body", color: MyColors().colorOscuro(), bold: 6),
-            Transform.translate(
-              offset: Offset(20, -20),
-              child: Container(
-                child: IconButton(
-                  splashRadius: 15,
-                  icon: Icon(Icons.close, color: MyColors().colorAzulMedio()),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }
-                ),
-              ),
-            )
-          ],
-        ),
-        content: MyRText(
-          text: mensaje,
-          tipo: "bodyLL", color: MyColors().colorAzulMedio(),
-          bold: 5
-        ),
-        actions: [
-          MyRButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: MyRText(text: "Aceptar", tipo: "bodyLLL", color: Colors.white, bold: 5)
-          )
-        ],
-      );
-    }
-  );
-}
-
 Future<List> login(BuildContext context) async{
 
   final response = await http.post(urlLogin, body: {
@@ -81,14 +39,9 @@ Future<List> login(BuildContext context) async{
     rolGlobal = resultado[0];
     print("Inicio de sesión exitoso, bienvenido $rolGlobal.");
     if(resultado[0] == "paciente"){
+      obtenerPaciente(resultado[1]);
       datosPersonales = {
-        "dni" : resultado[1],
-        "nombres" : resultado[2],
-        "apellidos" : resultado[3],
-        "correo" : resultado[4],
-        "celular" : resultado[5],
-        "sexo" : resultado[6],
-        "direccion" : resultado[7],
+        "dni" : resultado[1]
       };
       Navigator.of(context).pushAndRemoveUntil(
         CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false

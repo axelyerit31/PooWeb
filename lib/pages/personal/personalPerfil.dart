@@ -3,14 +3,6 @@ import 'package:poo_web/pages/personal/pacientes.dart';
 
 import '../maquetaPerfil.dart';
 
-List<Widget> pantallas = [
-  Container(),
-  Container(),
-  Pacientes(),
-  Container(),
-  Container(),
-];
-
 List<String> opciones = [
   "Perfil",
   "Citas",
@@ -34,7 +26,6 @@ class PersonalPerfil extends StatelessWidget {
   Widget build(BuildContext context) {
     return Maqueta(
       rol: "personal",
-      pantallas: pantallas,
       opciones: opciones,
       iconosOpciones: iconos,
     );

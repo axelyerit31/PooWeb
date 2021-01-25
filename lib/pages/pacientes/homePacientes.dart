@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:poo_web/pages/datos.dart';
 import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 
 import '../../mystyle.dart';
@@ -27,8 +28,7 @@ class _HomePacientesState extends State<HomePacientes> {
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
         child: MyRAppBar(
-          tipo: "paciente",
-          myRoute: PacientesPerfil()
+          tipo: rolGlobal,
         )
       ),
       body: MyRHome(),

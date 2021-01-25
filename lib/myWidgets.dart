@@ -9,7 +9,10 @@ import 'package:poo_web/pages/usuarios/nosotros.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
 import 'mystyle.dart';
+import 'pages/maquetaPerfil.dart';
 import 'pages/pacientes/homePacientes.dart';
+import 'pages/pacientes/pacientesPerfil.dart';
+import 'pages/personal/personalPerfil.dart';
 import 'pages/usuarios/home.dart';
 import 'pages/usuarios/login.dart';
 import 'pages/usuarios/registro.dart';
@@ -21,9 +24,8 @@ int indicePantallaHome = 0;
 class MyRAppBar extends StatefulWidget {
 
   final String tipo;
-  final Widget myRoute;
 
-  const MyRAppBar({Key key, this.tipo, this.myRoute}) : super(key: key);
+  const MyRAppBar({Key key, this.tipo}) : super(key: key);
 
   @override
   _MyRAppBarState createState() => _MyRAppBarState();
@@ -281,18 +283,35 @@ class _MyRAppBarState extends State<MyRAppBar> {
             backgroundColor: Colors.white, 
           ),
           SizedBox(width: 25),
-          MyRText(
-            text: datosPersonales["nombres"],
-            tipo: "bodyL",
-            color: Colors.white,
-            bold: 6
+          FutureBuilder<List>(
+            future: obtenerPacienteFicha(datosPersonales["dni"]),
+            builder: (context, snapshot) {
+              if(snapshot.hasError) print(snapshot.error);
+              return snapshot.hasData
+              ? MyRText(
+                  text: datosPersonales["nombres"],
+                  tipo: "bodyL",
+                  color: Colors.white,
+                  bold: 6
+                )
+              : Container(width: 30);
+            }
           ),
         ],
       ),
       color: MyColors().colorOscuro(),
       onPressed: () {
-        Navigator.pushReplacement(context,
-          new CupertinoPageRoute(builder: (context) => widget.myRoute));},
+        if(widget.tipo == "paciente"){
+          Navigator.pushReplacement(context,
+          new CupertinoPageRoute(builder: (context) => PacientesPerfil()));
+        }else if(widget.tipo == "personal"){
+          Navigator.pushReplacement(context,
+          new CupertinoPageRoute(builder: (context) => PersonalPerfil()));
+        }else if(widget.tipo == "admin"){
+          Navigator.pushReplacement(context,
+          new CupertinoPageRoute(builder: (context) => PersonalPerfil()));
+        }
+      }
     );
   }
 
@@ -684,4 +703,47 @@ class Footer extends StatelessWidget {
       ),
     );
   }
+}
+
+
+//Alerta para mostrar cuando algo va mal
+AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, String boton, Function function]){
+  showDialog(
+    context: context,
+    builder: (BuildContext context){
+      return AlertDialog(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            MyRText(text: encabezado == null ? "¡Ha ocurrido un error!" : encabezado, tipo: "body", color: MyColors().colorOscuro(), bold: 6),
+            Transform.translate(
+              offset: Offset(20, -20),
+              child: Container(
+                child: IconButton(
+                  splashRadius: 15,
+                  icon: Icon(Icons.close, color: MyColors().colorAzulMedio()),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }
+                ),
+              ),
+            )
+          ],
+        ),
+        content: MyRText(
+          text: mensaje,
+          tipo: "bodyLL", color: MyColors().colorAzulMedio(),
+          bold: 5
+        ),
+        actions: [
+          MyRButton(
+            onPressed: () {
+              function == null ? Navigator.pop(context) : function();
+            },
+            child: MyRText(text: boton == null ? "Aceptar" : boton, tipo: "bodyLLL", color: Colors.white, bold: 5)
+          )
+        ],
+      );
+    }
+  );
 }

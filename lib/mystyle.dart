@@ -263,15 +263,15 @@ class MyRButton extends StatelessWidget {
 
 class MyRTextFormField extends StatelessWidget {
   final TextEditingController controller;
-  final String initialValue;
   final String hintText;
   final TextInputType keyboardType;
   final bool obscureText;
   final Color textColor;
   final Color formColor;
   final Function onTap;
+  final Function onFieldSubmitted;
 
-  const MyRTextFormField({Key key, this.controller, this.initialValue, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap}) : super(key: key);
+  const MyRTextFormField({Key key, this.controller, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap, this.onFieldSubmitted}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +290,6 @@ class MyRTextFormField extends StatelessWidget {
       cursorColor: MyColors().colorOscuro(),
       obscureText: obscureText,
       controller: controller,
-      initialValue: initialValue,
       keyboardType: keyboardType,
       style: GoogleFonts.poppins(
         fontSize: fontSize,

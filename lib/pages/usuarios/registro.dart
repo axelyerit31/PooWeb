@@ -1,18 +1,27 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:poo_web/pages/datos.dart';
+import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
+import 'package:poo_web/pages/usuarios/login.dart';
+
+import 'package:http/http.dart' as http;
 
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
 
-List<String> formHints = [
+List<String> formHintsRegistro = [
   "Correo electrónico",
   "Ingrese una contraseña",
   "Nombres",
   "Apellidos",
   "Dni",
-  "Número celular"
+  "Número celular",
+  "Sexo",
+  "Dirección"
 ];
 
 //Variables a enviar a php
@@ -22,19 +31,49 @@ TextEditingController controlNombres = new TextEditingController();
 TextEditingController controlApellidos = new TextEditingController();
 TextEditingController controlDni = new TextEditingController();
 TextEditingController controlCelular = new TextEditingController();
+String controlSexo;
+TextEditingController controlDireccion = new TextEditingController();
 
-
-
-List<TextEditingController> formControllers = [
+List formControllersRegistro = [
   controlCorreo,
   controlContrasena,
   controlNombres,
   controlApellidos,
   controlDni,
-  controlCelular
+  controlCelular,
+  controlSexo,
+  controlDireccion
 ];
 
-class Registro extends StatelessWidget {
+var urlRegistro = "http://192.168.18.3/PooWeb/registro.php";
+
+void registroPaciente(){
+  http.post(urlRegistro, body: {
+    "correo": controlCorreo.text,
+    "contrasena": controlContrasena.text,
+    "nombres": controlNombres.text,
+    "apellidos": controlApellidos.text,
+    "dni": controlDni.text,
+    "celular": controlCelular.text,
+    "sexo": controlSexo,
+    "direccion": controlDireccion.text,
+  });
+}
+
+class Registro extends StatefulWidget {
+  @override
+  _RegistroState createState() => _RegistroState();
+}
+
+class _RegistroState extends State<Registro> {
+
+  void dropDownButton(value){
+    setState(() {
+      controlSexo = value;
+    });
+  }
+
+
  @override
   Widget build(BuildContext context) {
 
@@ -105,6 +144,7 @@ class Registro extends StatelessWidget {
                       tipo: "title",
                       bold: 7
                     ),
+                    
                     Container(height: separador * 0.7),
 
                     _formFields(sW),
@@ -114,7 +154,40 @@ class Registro extends StatelessWidget {
                     Container(
                       constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
                       child: MyRButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          bool vacio = false;
+                          for (var i = 0; i < formControllersRegistro.length; i++) {
+                            if(i == 6){
+                              if(controlSexo == ""){
+                                vacio = true;
+                                print("controlSexo esta vacio");
+                              }
+                            }else{
+                              if(formControllersRegistro[i].text == ""){
+                                vacio = true;
+                                print("${formHintsRegistro[i]} esta vacío");
+                              }
+                            }
+                          }
+                          if(vacio){
+                            rowAlert("Hay uno o más campos vacíos, asegúrese de llenar todos.", context);
+                          }else{
+                            registroPaciente();
+                            datosPersonales = {
+                              "dni" : controlDni.text,
+                              "nombres" : controlNombres.text,
+                              "apellidos" : controlApellidos.text,
+                              "correo" : controlCorreo.text,
+                              "celular" : controlCelular.text,
+                              "sexo" : controlSexo,
+                              "direccion" : controlDireccion.text,
+                            };
+                            rolGlobal = "paciente";
+                            Navigator.of(context).pushAndRemoveUntil(
+                              CupertinoPageRoute(builder: (context) => PacientesPerfil()),(Route<dynamic> route) => false
+                            );
+                          }
+                        },
                         child: MyRText(
                           text: "Registrarse",
                           tipo: "buttonContent",
@@ -149,11 +222,13 @@ class Registro extends StatelessWidget {
     );
   }
 
- Container _formFields(double sW) {
+  Container _formFields(double sW) {
   
-  double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
+    double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
+    
+    double formW = sW > maxScreenSize ? sW : minScreenSize;
 
-  double separador = lerpDouble(10, 16, sW/width);
+    double separador = lerpDouble(10, 16, sW/width);
 
    return Container(
     child: Column(
@@ -161,34 +236,38 @@ class Registro extends StatelessWidget {
         Container(height: separador),
 
         MyRTextFormField(
-          hintText: formHints[0],
-          controller: formControllers[0],
+          hintText: formHintsRegistro[0],
+          controller: formControllersRegistro[0],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
+          formColor: MyColors().colorGrisClaro()
         ),
         Container(height: separador),
 
         MyRTextFormField(
-          hintText: formHints[1],
-          controller: formControllers[1],
+          hintText: formHintsRegistro[1],
+          controller: formControllersRegistro[1],
           keyboardType: TextInputType.text,
           obscureText: true,
+          formColor: MyColors().colorGrisClaro()
         ),
         Container(height: separador),
         
         MyRTextFormField(
-          hintText: formHints[2],
-          controller: formControllers[2],
+          hintText: formHintsRegistro[2],
+          controller: formControllersRegistro[2],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
+          formColor: MyColors().colorGrisClaro()
         ),
         Container(height: separador),
         
         MyRTextFormField(
-          hintText: formHints[3],
-          controller: formControllers[3],
+          hintText: formHintsRegistro[3],
+          controller: formControllersRegistro[3],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
+          formColor: MyColors().colorGrisClaro()
         ),
         Container(height: separador),
 
@@ -200,19 +279,21 @@ class Registro extends StatelessWidget {
                 Container(
                   width: (constraints.maxWidth/2 - separador/2),
                   child: MyRTextFormField(
-                    hintText: formHints[4],
-                    controller: formControllers[4],
+                    hintText: formHintsRegistro[4],
+                    controller: formControllersRegistro[4],
                     keyboardType: TextInputType.number,
                     obscureText: false,
+                    formColor: MyColors().colorGrisClaro()
                   ),
                 ),
                 Container(
                   width: (constraints.maxWidth/2 - separador/2),
                   child: MyRTextFormField(
-                    hintText: formHints[5],
-                    controller: formControllers[5],
+                    hintText: formHintsRegistro[5],
+                    controller: formControllersRegistro[5],
                     keyboardType: TextInputType.phone,
                     obscureText: false,
+                    formColor: MyColors().colorGrisClaro()
                   ),
                 ),
               ] 
@@ -220,6 +301,46 @@ class Registro extends StatelessWidget {
           }
         ),
         Container(height: separador),
+
+        Container(
+          constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
+          child: DropdownButton<String>(
+            dropdownColor: MyColors().colorGrisClaro(),
+            elevation: 0,
+            items: <String>['Masculino', 'Femenino']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: MyColors().colorOscuro(),
+              fontWeight: FontWeight.w400
+            ),
+            value: controlSexo,
+            hint: MyRText(
+              text: "Seleccione su sexo",
+              tipo: "bodyLL",
+              color: MyColors().colorGris()
+            ),
+            onChanged: (String newValue) {
+              dropDownButton(newValue);
+            },
+          ),
+        ),
+      
+
+        Container(height: separador),
+        
+        MyRTextFormField(
+          hintText: formHintsRegistro[7],
+          controller: formControllersRegistro[7],
+          keyboardType: TextInputType.text,
+          obscureText: false,
+          formColor: MyColors().colorGrisClaro()
+        ),
       ]
     )
   );

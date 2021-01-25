@@ -19,6 +19,7 @@ class Notificaciones extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _header(),
           Column(          
