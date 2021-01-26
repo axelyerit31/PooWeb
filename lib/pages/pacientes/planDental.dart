@@ -14,13 +14,18 @@ class PlanDental extends StatefulWidget {
 class _PlanDentalState extends State<PlanDental> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _header(),
-        _tiempoAfiliado(context)
-      ],
+    return Expanded(
+      child: Container(
+        alignment: Alignment.center,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _header(),
+            _tiempoAfiliado(context)
+          ],
+        ),
+      ),
     );
   }
 }
@@ -40,13 +45,11 @@ Widget _header(){
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _planDental("${planExperto["plan"]}", "${planExperto["precio"]}"),
+              _planDental("${datosPlanes[2]["plan"]}", "${datosPlanes[2]["costo"]}0"),
               SizedBox(height: separador/4),
-              _planDental("${planInicial["plan"]}", "${planInicial["precio"]}"),
+              _planDental("${datosPlanes[1]["plan"]}", "${datosPlanes[1]["costo"]}0"),
               SizedBox(height: separador/4),
-              _planDental("${planCero["plan"]}", "${planCero["precio"]}"),
-              SizedBox(height: separador*1.5),
-              _estadoPlan()
+              _planDental("${datosPlanes[0]["plan"]}", "${datosPlanes[0]["costo"]}0"),
             ],
           )
         )
@@ -58,10 +61,10 @@ Widget _header(){
 Widget _planDental(String plan, String precio){
 
   double alturaPlan = 40;
-  double anchoPlan = 350;
+  double anchoPlan = 400;
 
   Widget planAfiliado(){
-    if(plan == datosPlan["plan"]){
+    if(plan == datosPersonales["plan"]){
       return TextButton(
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(
@@ -99,7 +102,7 @@ Widget _planDental(String plan, String precio){
   }
 
   return Container(
-    width: 300,
+    width: anchoPlan,
     child: Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -109,6 +112,16 @@ Widget _planDental(String plan, String precio){
               color: Colors.transparent,
               width: anchoPlan,
               height: alturaPlan,
+              padding: EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 4
+              ),
+              child: MyRText(
+                text: "Plan",
+                tipo: "subtitleL",
+                color: MyColors().colorOscuro(),
+                bold: 7
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -117,18 +130,47 @@ Widget _planDental(String plan, String precio){
               ),
               width: anchoPlan,
               height: alturaPlan,
-              alignment: Alignment.bottomRight,
-              child: Container(
-                width: anchoPlan * 0.55,
-                height: alturaPlan,
-                decoration: BoxDecoration(
-                  color: Color(0xFF9AC1FC),
-                  borderRadius: BorderRadius.circular(roundedB)
-                ),
+              padding: EdgeInsets.only(left: 12),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyRText(
+                    text: plan,
+                    tipo: "subtitleL",
+                    color: Colors.white,
+                    bold: 7
+                  ),
+                  Container(
+                    width: anchoPlan * 0.55,
+                    height: alturaPlan,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF9AC1FC),
+                      borderRadius: BorderRadius.circular(roundedB)
+                    ),
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: planAfiliado()
+                        ),
+                        MyRText(
+                          text: "S/. $precio",
+                          tipo: "bodyLL",
+                          color: MyColors().colorAzulClaro(),
+                          bold: 7
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             )
           ],
-        ),
+        ),/* 
         Container(
           padding: EdgeInsets.only(
             left: 12,
@@ -172,7 +214,7 @@ Widget _planDental(String plan, String precio){
               ),
             ],
           ),
-        ),
+        ), */
       ],
     )
   );
@@ -219,7 +261,7 @@ Widget _tiempoAfiliado(BuildContext context){
                 children: [
                   Container(
                     height: alturaBarra,
-                    width: sW / 1.7,
+                    width: sW / 1.8 ,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(roundedB)
@@ -238,7 +280,7 @@ Widget _tiempoAfiliado(BuildContext context){
                         child: MyRText(
                           text: "1 mes",
                           tipo: "bodyLL",
-                          color: MyColors().colorAzulMedioBajo(),
+                          color: MyColors().colorAzulClaro(),
                           bold: 6
                         ),
                       ),

@@ -414,7 +414,7 @@ class Header extends StatelessWidget {
           Hero(
             tag: "tagImagenDentista",
             child: Transform.translate(
-              offset: Offset(100, 0),
+              offset: Offset(120, 0),
               child: Transform.scale(
                 scale: 1.7,
                 alignment: Alignment.centerRight,

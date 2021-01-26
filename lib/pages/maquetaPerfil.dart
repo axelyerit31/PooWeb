@@ -58,6 +58,7 @@ String imagePerfilCerca;
 
 //index para el manejo de pantallas de los perfiles
 int indexSeleccionado = 0;
+int ultimoIndexSeleccionado;
 int indexApuntado = 10;
 
 class Maqueta extends StatefulWidget {
@@ -216,6 +217,7 @@ class _MaquetaState extends State<Maqueta> {
                   child: Builder(
                     builder: (BuildContext context){
                       if(indexSeleccionado < iconos.length-1){
+                        ultimoIndexSeleccionado = indexSeleccionado;
                         ultimoWidget = pantallas[indexSeleccionado];
                         return pantallas[indexSeleccionado];
                       }else{
@@ -330,6 +332,7 @@ class _MaquetaState extends State<Maqueta> {
                   MyROutlineButton(
                     onPressed: (){
                       Navigator.pop(context);
+                      indexSeleccionado = ultimoIndexSeleccionado;
                     },
                     child: MyRText(
                       text: "Cancelar",
@@ -343,7 +346,8 @@ class _MaquetaState extends State<Maqueta> {
                     onPressed: () {
                       rolGlobal = "usuario";
                       datosPersonales.clear();
-                      opcionSeleccionada(0);
+                      datosCitas.clear();
+                      indexSeleccionado = ultimoIndexSeleccionado;
                       Navigator.of(context).pushAndRemoveUntil(
                         CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
                       );

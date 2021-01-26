@@ -63,7 +63,7 @@ class _Header extends StatelessWidget {
             decoration: BoxDecoration(
               //color: Colors.red,
               image: DecorationImage(
-                image: AssetImage("assets/dentistas-dibujo.png"),
+                image: AssetImage("assets/nosotros-dibujo.png"),
                 fit: BoxFit.contain
               )
             ),

@@ -112,26 +112,27 @@ class _TablaCitasState extends State<TablaCitas> {
 
   @override
   Widget build(BuildContext context) {
+
+    obtenerCitas();
+
     return Container(
       child: DataTable(
         showCheckboxColumn: false,
         dividerThickness: 2,
         sortColumnIndex: 0,
         sortAscending: true,
-        columnSpacing: 30,
+        columnSpacing: 50,
         horizontalMargin: 0,
         columns: [
           DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
           DataColumn(label: MyRText(text: "Especialidad", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
           DataColumn(label: MyRText(text: "Fecha", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
           DataColumn(label: MyRText(text: "Hora", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: MyRText(text: "Dentista", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: MyRText(text: "Costo", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6), numeric: true),
           DataColumn(label: MyRText(text: "Estado", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
           DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
         ],
         rows: [
-          for (var i = 0; i < citas.length; i++)
+          for (var i = 0; i < datosCitas.length; i++)
             DataRow(
               onSelectChanged: (selected) {
                 if(selected){
@@ -140,25 +141,10 @@ class _TablaCitasState extends State<TablaCitas> {
               },
               cells: [
                 DataCell(Container(width: anchoSeparador, color: colorSeparador)),
-                DataCell(MyRText(text: "${citas[i]["especialidad"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["fecha"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["hora"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["dentista"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "S/. ${citas[i]["costo"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["estado"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(Container(width: anchoSeparador, color: colorSeparador)),
-              ]
-            ),
-          for (var i = 0; i < citas.length; i++)
-            DataRow(
-              cells: [
-                DataCell(Container(width: anchoSeparador, color: colorSeparador)),
-                DataCell(MyRText(text: "${citas[i]["especialidad"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["fecha"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["hora"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["dentista"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "S/. ${citas[i]["costo"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${citas[i]["estado"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                DataCell(MyRText(text: "${datosEspecialidades[int.parse(datosCitas[i]["especialidad"])]["nombre"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                DataCell(MyRText(text: "${datosCitas[i]["fecha"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                DataCell(MyRText(text: "${datosCitas[i]["hora"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                DataCell(MyRText(text: "${datosCitas[i]["estado"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
                 DataCell(Container(width: anchoSeparador, color: colorSeparador)),
               ]
             ),

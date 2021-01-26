@@ -99,6 +99,7 @@ class _LoginState extends State<Login> {
                       child: Transform.scale(
                         scale: 1.10,
                         child: Container(
+                          margin: EdgeInsets.only(top: 18),
                           height: sW * 1 / 3,
                           width: sW * 2 / 4,
                           decoration: BoxDecoration(
@@ -162,6 +163,8 @@ class _LoginState extends State<Login> {
                               }else{
                                 login(context);
                               }
+                              controlCorreo.clear();
+                              controlContrasena.clear();
                             },
                             child: MyRText(
                               text: "Iniciar Sesión",

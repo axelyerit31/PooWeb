@@ -278,9 +278,9 @@ class __PlanesState extends State<_Planes> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _TarjetaDental(planCero, beneficiosCero, MyColors().colorPlanDentalCero(), "assets/planDental/diente-bad.png", 0, tarjetaApuntada),
-                      _TarjetaDental(planInicial, beneficiosInicial, MyColors().colorPlanDentalInicial(), "assets/planDental/diente-low.png", 1, tarjetaApuntada),
-                      _TarjetaDental(planExperto, beneficiosExperto, MyColors().colorPlanDentalExperto(), "assets/planDental/diente-high.png", 2, tarjetaApuntada),
+                      _TarjetaDental(datosPlanes[0], beneficiosCero, MyColors().colorPlanDentalCero(), "assets/planDental/diente-bad.png", 0, tarjetaApuntada),
+                      _TarjetaDental(datosPlanes[1], beneficiosInicial, MyColors().colorPlanDentalInicial(), "assets/planDental/diente-low.png", 1, tarjetaApuntada),
+                      _TarjetaDental(datosPlanes[2], beneficiosExperto, MyColors().colorPlanDentalExperto(), "assets/planDental/diente-high.png", 2, tarjetaApuntada),
                     ],
                   ),
                 ),
@@ -356,140 +356,171 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyRText(
-              text: "S/. ${widget.datos["precio"]}",
+              text: "S/. ${widget.datos["costo"]}",
               tipo: "precio",
               color: Color(0xFF4568E7),
               bold: 7
             ),
             SizedBox(height: separador/3),
-            Container(height: _alturaPlan, width: _anchoPlan,)
+            Container(
+              height: _alturaPlan,
+              width: _anchoPlan,
+              alignment: Alignment.bottomCenter,
+              child: AnimatedContainer(
+                duration: _duracion,
+                padding: EdgeInsets.only(bottom: _indexApuntado == widget.indice ? 20 : 15),
+                child: MyRButton(
+                  onPressed: () {},
+                  child: MyRText(
+                    text: "Afiliarme",
+                    tipo: "bodyLL",
+                    color: Colors.white,
+                    bold: 5
+                  ),
+                ),
+              )
+            )
           ]
         ),
-        MouseRegion(
-          onEnter: (_) {widget.tarjetaApuntada(widget.indice);},
-          onExit: (_) {widget.tarjetaApuntada(10);},
-          cursor: SystemMouseCursors.click,
-          child: AnimatedContainer(
-            curve: Curves.easeInOutSine,
-            duration: _duracion,
-            margin: EdgeInsets.only(top: _indexApuntado == widget.indice ? 0 : margin*2),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
+        GestureDetector(
+          onTap: (){
+            print("Afiliarme a ${widget.indice} fue tocado");
+          },
+          child: MouseRegion(
+            onEnter: (_) {widget.tarjetaApuntada(widget.indice);},
+            onExit: (_) {widget.tarjetaApuntada(10);},
+            cursor: SystemMouseCursors.click,
+            child: AnimatedContainer(
+              curve: Curves.easeInOutSine,
+              duration: _duracion,
+              margin: EdgeInsets.only(top: _indexApuntado == widget.indice ? 0 : margin*2),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
 
-                //Fondo de color
-                Container(
-                  height: _alturaPlan,
-                  width: _anchoPlan,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(roundedB*2),
-                    gradient: LinearGradient(
-                      colors: widget.colores,
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight
-                    ),
+                  //Container que crece cuando el plan se eleva, manteniendo clicable el campo por debajo del plan
+                  AnimatedContainer(
+                    duration: _duracion,
+                    height: _indexApuntado == widget.indice ? _alturaPlan + margin*2 + 10 : _alturaPlan,
+                    width: _anchoPlan,
+                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.only(),
                   ),
-                  padding: EdgeInsets.only(top: 15),
-                  alignment: Alignment.topCenter,
-                  child: RichText(
-                    text: TextSpan(
-                      style: GoogleFonts.poppins(fontSize: 36, color: Colors.white, fontWeight: FontWeight.w600),
-                      children: [
-                        TextSpan(text: "Plan "),
-                        TextSpan(text: widget.datos["plan"], style: GoogleFonts.poppins(fontSize: 36, color: Color(0xFF274879), fontWeight: FontWeight.w600)),
-                      ]
-                    ),
-                  ),
-                ),
 
-                //Imagen del diente
-                Container(
-                  height: _alturaPlan,
-                  width: _anchoPlan,
-                  child: Column(
-                    children: [
-                      AnimatedContainer(
-                        curve: Curves.easeInOutSine,
-                        duration: _duracion,
-                        height: _alturaPlan/1.75,
-                        width: _anchoPlan/1.6,
-                        margin: EdgeInsets.only(
-                          top: _indexApuntado == widget.indice ? 0 : margin,
-                        ),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(widget.image),
-                            fit: BoxFit.fitWidth,
-                          )
-                        ),
-                      ),
-                      Expanded(child: Container(),)
-                    ],
-                  ),
-                ),
-
-                //Titulo, manos y textos
-                Container(
-                  height: _alturaPlan,
-                  width: _anchoPlan,
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
+                  //Fondo de color
+                  Container(
+                    height: _alturaPlan,
+                    width: _anchoPlan,
                     decoration: BoxDecoration(
-                      color: Color(0xFF9AC1FC),
-                      borderRadius: BorderRadius.circular(roundedB*2)
+                      borderRadius: BorderRadius.circular(roundedB*2),
+                      gradient: LinearGradient(
+                        colors: widget.colores,
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight
+                      ),
                     ),
-                    height: _alturaPlan * 11/18,
+                    padding: EdgeInsets.only(top: 15),
+                    alignment: Alignment.topCenter,
+                    child: RichText(
+                      text: TextSpan(
+                        style: GoogleFonts.poppins(fontSize: 36, color: Colors.white, fontWeight: FontWeight.w600),
+                        children: [
+                          TextSpan(text: "Plan "),
+                          TextSpan(text: widget.datos["plan"], style: GoogleFonts.poppins(fontSize: 36, color: Color(0xFF274879), fontWeight: FontWeight.w600)),
+                        ]
+                      ),
+                    ),
+                  ),
+
+                  //Imagen del diente
+                  Container(
+                    height: _alturaPlan,
                     width: _anchoPlan,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Transform.translate(
-                          offset: Offset(0, -10),
-                          child: Row(
-                            children: [
-                              Expanded(child: Container(),),
-                              Container(
-                                height: 35,
-                                width: 35,
-                                child: Image.asset(
-                                  widget.indice == 0
-                                  ? "assets/planDental/dientes-manos-bad.png"
-                                  : "assets/planDental/dientes-manos.png"
-                                )
-                              ),
-                              SizedBox(width: _anchoPlan/8),
-                              Container(
-                                height: 35,
-                                width: 35,
-                                child: Image.asset(
-                                  widget.indice == 0
-                                  ? "assets/planDental/dientes-manos-bad.png"
-                                  : "assets/planDental/dientes-manos.png"
-                                )
-                              ),
-                              Expanded(child: Container(),),
-                            ]
+                        AnimatedContainer(
+                          curve: Curves.easeInOutSine,
+                          duration: _duracion,
+                          height: _alturaPlan/1.75,
+                          width: _anchoPlan/1.6,
+                          margin: EdgeInsets.only(
+                            top: _indexApuntado == widget.indice ? 0 : margin,
+                          ),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(widget.image),
+                              fit: BoxFit.fitWidth,
+                            )
                           ),
                         ),
-                        Expanded(child: Container(),),
-                        for (var i = 0; i < widget.beneficios.length; i++)
-                          Padding(
-                            padding: EdgeInsets.only(
-                              right: separador/2,
-                            ),
-                            child: MyRText(
-                              text: widget.beneficios[i],
-                              tipo: "bodyB",
-                              color: Colors.white,
-                              bold: 6
-                            ),
-                          ),
-                        SizedBox(height: separador/4)
-                      ]
+                        Expanded(child: Container(),)
+                      ],
                     ),
                   ),
-                )
-              ],
+
+                  //Titulo, manos y textos
+                  Container(
+                    height: _alturaPlan,
+                    width: _anchoPlan,
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFF9AC1FC),
+                        borderRadius: BorderRadius.circular(roundedB*2)
+                      ),
+                      height: _alturaPlan * 11/18,
+                      width: _anchoPlan,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Transform.translate(
+                            offset: Offset(0, -10),
+                            child: Row(
+                              children: [
+                                Expanded(child: Container(),),
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  child: Image.asset(
+                                    widget.indice == 0
+                                    ? "assets/planDental/dientes-manos-bad.png"
+                                    : "assets/planDental/dientes-manos.png"
+                                  )
+                                ),
+                                SizedBox(width: _anchoPlan/8),
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  child: Image.asset(
+                                    widget.indice == 0
+                                    ? "assets/planDental/dientes-manos-bad.png"
+                                    : "assets/planDental/dientes-manos.png"
+                                  )
+                                ),
+                                Expanded(child: Container(),),
+                              ]
+                            ),
+                          ),
+                          Expanded(child: Container(),),
+                          for (var i = 0; i < widget.beneficios.length; i++)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: separador/2,
+                              ),
+                              child: MyRText(
+                                text: widget.beneficios[i],
+                                tipo: "bodyB",
+                                color: Colors.white,
+                                bold: 6
+                              ),
+                            ),
+                          SizedBox(height: separador/4)
+                        ]
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

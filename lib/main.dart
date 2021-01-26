@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poo_web/pages/datos.dart';
 import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 import 'package:poo_web/pages/usuarios/home.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
@@ -17,6 +18,10 @@ double maxHeight = 0;
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    obtenerPlanes();
+    obtenerEspecialidades();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Centro Dental Web',

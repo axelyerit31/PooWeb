@@ -27,9 +27,10 @@ class Notificaciones extends StatelessWidget {
           Container(
             height: 520,
             width: sW/4,
-            child: perfilCerca()
+            child: perfil()
           ),
-          Column(          
+          Column(    
+            crossAxisAlignment: CrossAxisAlignment.start,      
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,6 +44,7 @@ class Notificaciones extends StatelessWidget {
                 height: separador
               ),
               Container(
+                width: sW/3,
                 height: 247,
                 child: SingleChildScrollView(
                   child: Builder(
@@ -126,7 +128,6 @@ class _Notificaciones extends StatelessWidget {
           Palito(), 
           Campanita(),
           TextNotificacion(notificacion, comentario),
-          SizedBox(height: separador)  
         ],
       )
     );

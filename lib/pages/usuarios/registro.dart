@@ -92,7 +92,7 @@ class _RegistroState extends State<Registro> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 34),
+          padding: EdgeInsets.only(top: 15),
           child: Row(
             mainAxisAlignment: sW > maxScreenSize ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,6 +186,13 @@ class _RegistroState extends State<Registro> {
                             Navigator.of(context).pushAndRemoveUntil(
                               CupertinoPageRoute(builder: (context) => PacientesPerfil()),(Route<dynamic> route) => false
                             );
+                            for (var i = 0; i < formControllersRegistro.length; i++) {
+                              if(i == 6){
+                                controlSexo = "";
+                              }else{
+                                formControllersRegistro[i].clear();
+                              }
+                            }
                           }
                         },
                         child: MyRText(
@@ -240,7 +247,8 @@ class _RegistroState extends State<Registro> {
           controller: formControllersRegistro[0],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
-          formColor: MyColors().colorGrisClaro()
+          formColor: MyColors().colorGrisClaro(),
+          textColor: MyColors().colorGris(),
         ),
         Container(height: separador),
 
@@ -249,7 +257,8 @@ class _RegistroState extends State<Registro> {
           controller: formControllersRegistro[1],
           keyboardType: TextInputType.text,
           obscureText: true,
-          formColor: MyColors().colorGrisClaro()
+          formColor: MyColors().colorGrisClaro(),
+          textColor: MyColors().colorGris(),
         ),
         Container(height: separador),
         
@@ -258,7 +267,8 @@ class _RegistroState extends State<Registro> {
           controller: formControllersRegistro[2],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
-          formColor: MyColors().colorGrisClaro()
+          formColor: MyColors().colorGrisClaro(),
+          textColor: MyColors().colorGris(),
         ),
         Container(height: separador),
         
@@ -267,7 +277,8 @@ class _RegistroState extends State<Registro> {
           controller: formControllersRegistro[3],
           keyboardType: TextInputType.emailAddress,
           obscureText: false,
-          formColor: MyColors().colorGrisClaro()
+          formColor: MyColors().colorGrisClaro(),
+          textColor: MyColors().colorGris(),
         ),
         Container(height: separador),
 
@@ -283,7 +294,8 @@ class _RegistroState extends State<Registro> {
                     controller: formControllersRegistro[4],
                     keyboardType: TextInputType.number,
                     obscureText: false,
-                    formColor: MyColors().colorGrisClaro()
+                    formColor: MyColors().colorGrisClaro(),
+                    textColor: MyColors().colorGris(),
                   ),
                 ),
                 Container(
@@ -293,7 +305,8 @@ class _RegistroState extends State<Registro> {
                     controller: formControllersRegistro[5],
                     keyboardType: TextInputType.phone,
                     obscureText: false,
-                    formColor: MyColors().colorGrisClaro()
+                    formColor: MyColors().colorGrisClaro(),
+                    textColor: MyColors().colorGris(),
                   ),
                 ),
               ] 
@@ -303,31 +316,33 @@ class _RegistroState extends State<Registro> {
         Container(height: separador),
 
         Container(
-          constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
-          child: DropdownButton<String>(
-            dropdownColor: MyColors().colorGrisClaro(),
-            elevation: 0,
-            items: <String>['Masculino', 'Femenino']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              color: MyColors().colorOscuro(),
-              fontWeight: FontWeight.w400
+          constraints: BoxConstraints(minWidth: sW > maxScreenSize ? (formW * 1 / 4) - 40 : (formW * 7/10) - 40),
+          child: Center(
+            child: DropdownButton<String>(
+              dropdownColor: MyColors().colorGrisClaro(),
+              elevation: 0,
+              items: <String>['Masculino', 'Femenino']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              style: GoogleFonts.poppins(
+                fontSize: 14,
+                color: MyColors().colorOscuro(),
+                fontWeight: FontWeight.w400
+              ),
+              value: controlSexo,
+              hint: MyRText(
+                text: "Seleccione su sexo",
+                tipo: "bodyLL",
+                color: MyColors().colorGris()
+              ),
+              onChanged: (String newValue) {
+                dropDownButton(newValue);
+              },
             ),
-            value: controlSexo,
-            hint: MyRText(
-              text: "Seleccione su sexo",
-              tipo: "bodyLL",
-              color: MyColors().colorGris()
-            ),
-            onChanged: (String newValue) {
-              dropDownButton(newValue);
-            },
           ),
         ),
       
@@ -339,7 +354,8 @@ class _RegistroState extends State<Registro> {
           controller: formControllersRegistro[7],
           keyboardType: TextInputType.text,
           obscureText: false,
-          formColor: MyColors().colorGrisClaro()
+          formColor: MyColors().colorGrisClaro(),
+          textColor: MyColors().colorGris(),
         ),
       ]
     )

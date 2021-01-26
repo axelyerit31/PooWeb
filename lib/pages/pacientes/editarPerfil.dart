@@ -10,13 +10,13 @@ import '../../myWidgets.dart';
 import '../maquetaPerfil.dart';
 
 
-TextEditingController _controlNombres = new TextEditingController(text: _formInitial[0]);
-TextEditingController _controlApellidos = new TextEditingController(text: _formInitial[1]);
-TextEditingController _controlCorreo = new TextEditingController(text: _formInitial[2]);
+TextEditingController _controlNombres = new TextEditingController();
+TextEditingController _controlApellidos = new TextEditingController();
+TextEditingController _controlCorreo = new TextEditingController();
 TextEditingController _controlContrasena = new TextEditingController();
 TextEditingController _controlConfirmarContrasena = new TextEditingController();
-TextEditingController _controlCelular = new TextEditingController(text: _formInitial[5]);
-TextEditingController _controlDireccion = new TextEditingController(text: _formInitial[6]);
+TextEditingController _controlCelular = new TextEditingController();
+TextEditingController _controlDireccion = new TextEditingController();
 
 List<TextEditingController> _formControllers = [
   _controlNombres,
@@ -29,13 +29,13 @@ List<TextEditingController> _formControllers = [
 ];
 
 List<String> _formHints = [
-  "Nombres",
-  "Apellidos",
-  "Correo electrónico",
+  datosPersonales["nombres"],
+  datosPersonales["apellidos"],
+  datosPersonales["correo"],
   "Nueva contraseña",
   "Confirme su contraseña",
-  "Número celular",
-  "Dirección",
+  datosPersonales["celular"],
+  datosPersonales["direccion"],
 ];
 
 List<String> _formInitial = [
@@ -89,6 +89,7 @@ class EditarPerfil extends StatelessWidget {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             height: 520,
@@ -99,9 +100,9 @@ class EditarPerfil extends StatelessWidget {
           Column(
             children: [
               Container(
-                constraints: BoxConstraints(minWidth: sW/6),
+                width: 350,
                 child: _forms()
-              ),
+                ),
               MyRButton(
                 onPressed: () {
                   for (var i = 0; i < _formControllers.length; i++) {
@@ -117,6 +118,9 @@ class EditarPerfil extends StatelessWidget {
                   if(_controlContrasena.text == _controlConfirmarContrasena.text){
                     editarPaciente();
                     obtenerPaciente(datosPersonales["dni"]);
+                    for (var i = 0; i < _formControllers.length; i++) {
+                      _formControllers[i].clear();
+                    }
                     rowAlert("El cambio de datos se realizó exitosamente.", context, "¡Hecho!", "Ir a Ficha Personal", (){
                       Navigator.pop(context);
                       state(0);
@@ -141,27 +145,20 @@ class EditarPerfil extends StatelessWidget {
 }
 
 Widget _forms(){
-  return Container(
-    child: Column(
-      children: [
-        for (var i = 0; i < _formControllers.length; i++)
-          Builder(
-            builder: (context) {
-              print("Iteracion numero $i");
-              return Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: MyRTextFormField(
-                  controller: _formControllers[i],
-                  hintText: _formHints[i],
-                  textColor: MyColors().colorGris(),
-                  formColor: Colors.white,
-                  obscureText: i == 3 || i == 4 ? true : false,
-                  keyboardType: _formKeyboard[i],
-                ),
-              );
-            }
+  return Column(
+    children: [
+      for (var i = 0; i < _formControllers.length; i++)
+        Padding(
+          padding: EdgeInsets.only(bottom: 15),
+          child: MyRTextFormField(
+            controller: _formControllers[i],
+            hintText: _formHints[i],
+            textColor: MyColors().colorGris(),
+            formColor: Colors.white,
+            obscureText: i == 3 || i == 4 ? true : false,
+            keyboardType: _formKeyboard[i],
           ),
-      ],
-    ),
+        )
+    ],
   );
 }
