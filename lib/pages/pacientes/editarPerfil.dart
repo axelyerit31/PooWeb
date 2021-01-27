@@ -72,6 +72,14 @@ Future<List> editarPaciente() async{
     "telefono": _controlCelular.text,
     "sexo": datosPersonales["sexo"]
   });
+
+  datosPersonales = {
+    "nombres": _controlNombres.text,
+    "apellidos": _controlApellidos.text,
+    "correo": _controlCorreo.text,
+    "direccion": _controlDireccion.text,
+    "celular": _controlCelular.text,
+  };
 }
 
 
@@ -98,6 +106,7 @@ class EditarPerfil extends StatelessWidget {
           ),
           SizedBox(width: separador),
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 350,
@@ -119,6 +128,7 @@ class EditarPerfil extends StatelessWidget {
                     editarPaciente();
                     obtenerPaciente(datosPersonales["dni"]);
                     for (var i = 0; i < _formControllers.length; i++) {
+                      print("Se limpio _${_formControllers[i].text}");
                       _formControllers[i].clear();
                     }
                     rowAlert("El cambio de datos se realizó exitosamente.", context, "¡Hecho!", "Ir a Ficha Personal", (){

@@ -16,6 +16,7 @@ class Usuario {
         this.telefono,
         this.email,
         this.sexo,
+        this.direccion,
     });
 
     String identificador;
@@ -24,22 +25,25 @@ class Usuario {
     String telefono;
     String email;
     String sexo;
+    String direccion;
 
     factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
-        identificador: json["identificador"],
-        nombresUsuario: json["nombres_usuario"],
-        apellidosUsuario: json["apellidos_usuario"],
-        telefono: json["telefono"],
-        email: json["email"],
-        sexo: json["sexo"],
+        identificador: json["dni_usu"],
+        nombresUsuario: json["nombres_usu"],
+        apellidosUsuario: json["apellidos_usu"],
+        telefono: json["telefono_usu"],
+        email: json["correo_usu"],
+        sexo: json["sexo_usu"],
+        direccion: json["direcciona_pac"],
     );
 
     Map<String, dynamic> toJson() => {
-        "identificador": identificador,
-        "nombres_usuario": nombresUsuario,
-        "apellidos_usuario": apellidosUsuario,
-        "telefono": telefono,
-        "email": email,
-        "sexo": sexo,
+        "dni_usu": identificador,
+        "nombres_usu": nombresUsuario,
+        "apellidos_usu": apellidosUsuario,
+        "telefono_usu": telefono,
+        "correo_usu": email,
+        "sexo_usu": sexo,
+        "direccion_pac": direccion,
     };
 }

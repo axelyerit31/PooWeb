@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poo_web/pages/datos.dart';
-import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 import 'package:poo_web/pages/usuarios/home.dart';
-import 'package:poo_web/pages/usuarios/planesDentales.dart';
-
-import 'pages/pacientes/homePacientes.dart';
-import 'pages/personal/personalPerfil.dart';
 
 
 void main() {
@@ -19,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    obtenerPlanes();
-    obtenerEspecialidades();
+    //obtenerPlanes();
+    //obtenerEspecialidades();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

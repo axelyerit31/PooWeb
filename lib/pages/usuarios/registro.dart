@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -83,7 +84,7 @@ class _RegistroState extends State<Registro> {
     double formW = sW > maxScreenSize ? sW : minScreenSize;
   
     double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
-    double separador = lerpDouble(10, 16, sW/width);
+    double _separador = lerpDouble(10, 16, sW/width);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -104,6 +105,7 @@ class _RegistroState extends State<Registro> {
                   child: Transform.scale(
                     scale: 1.15,
                     child: Container(
+                      margin: EdgeInsets.only(bottom: 30),
                       height: sW * 1 / 3,
                       width: sW * 2 / 4,
                       decoration: BoxDecoration(
@@ -145,11 +147,11 @@ class _RegistroState extends State<Registro> {
                       bold: 7
                     ),
                     
-                    Container(height: separador * 0.7),
+                    Container(height: 0),
 
                     _formFields(sW),
 
-                    Container(height: separador),
+                    Container(height: _separador),
                     
                     Container(
                       constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
@@ -171,6 +173,8 @@ class _RegistroState extends State<Registro> {
                           }
                           if(vacio){
                             rowAlert("Hay uno o más campos vacíos, asegúrese de llenar todos.", context);
+                          }else if(controlDni.text.length > 8){
+                            rowAlert("Su dni tiene mas de 8 dígitos, asegúrese de escribirlo correctamente.", context);
                           }else{
                             registroPaciente();
                             datosPersonales = {
@@ -203,7 +207,7 @@ class _RegistroState extends State<Registro> {
                         ),
                       ),
                     ),
-                    Container(height: separador),
+                    Container(height: _separador/1.5),
 
                     Container(
                       constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
@@ -235,12 +239,12 @@ class _RegistroState extends State<Registro> {
     
     double formW = sW > maxScreenSize ? sW : minScreenSize;
 
-    double separador = lerpDouble(10, 16, sW/width);
+    double _separador = lerpDouble(10, 16, sW/width);
 
    return Container(
     child: Column(
       children: [
-        Container(height: separador),
+        Container(height: _separador),
 
         MyRTextFormField(
           hintText: formHintsRegistro[0],
@@ -250,7 +254,7 @@ class _RegistroState extends State<Registro> {
           formColor: MyColors().colorGrisClaro(),
           textColor: MyColors().colorGris(),
         ),
-        Container(height: separador),
+        Container(height: _separador),
 
         MyRTextFormField(
           hintText: formHintsRegistro[1],
@@ -260,7 +264,7 @@ class _RegistroState extends State<Registro> {
           formColor: MyColors().colorGrisClaro(),
           textColor: MyColors().colorGris(),
         ),
-        Container(height: separador),
+        Container(height: _separador),
         
         MyRTextFormField(
           hintText: formHintsRegistro[2],
@@ -270,7 +274,7 @@ class _RegistroState extends State<Registro> {
           formColor: MyColors().colorGrisClaro(),
           textColor: MyColors().colorGris(),
         ),
-        Container(height: separador),
+        Container(height: _separador),
         
         MyRTextFormField(
           hintText: formHintsRegistro[3],
@@ -280,7 +284,7 @@ class _RegistroState extends State<Registro> {
           formColor: MyColors().colorGrisClaro(),
           textColor: MyColors().colorGris(),
         ),
-        Container(height: separador),
+        Container(height: _separador),
 
         LayoutBuilder(
           builder: (context, constraints) {
@@ -288,7 +292,7 @@ class _RegistroState extends State<Registro> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:[
                 Container(
-                  width: (constraints.maxWidth/2 - separador/2),
+                  width: (constraints.maxWidth/2 - _separador/2),
                   child: MyRTextFormField(
                     hintText: formHintsRegistro[4],
                     controller: formControllersRegistro[4],
@@ -299,7 +303,7 @@ class _RegistroState extends State<Registro> {
                   ),
                 ),
                 Container(
-                  width: (constraints.maxWidth/2 - separador/2),
+                  width: (constraints.maxWidth/2 - _separador/2),
                   child: MyRTextFormField(
                     hintText: formHintsRegistro[5],
                     controller: formControllersRegistro[5],
@@ -313,7 +317,7 @@ class _RegistroState extends State<Registro> {
             );
           }
         ),
-        Container(height: separador),
+        Container(height: _separador),
 
         Container(
           constraints: BoxConstraints(minWidth: sW > maxScreenSize ? (formW * 1 / 4) - 40 : (formW * 7/10) - 40),
@@ -347,7 +351,7 @@ class _RegistroState extends State<Registro> {
         ),
       
 
-        Container(height: separador),
+        Container(height: _separador),
         
         MyRTextFormField(
           hintText: formHintsRegistro[7],

@@ -41,7 +41,26 @@ Future<List> login(BuildContext context) async{
     if(resultado[0] == "paciente"){
       obtenerPaciente(resultado[1]);
       datosPersonales = {
-        "dni" : resultado[1]
+        "dni" : resultado[1],
+        "nombres" : resultado[2]
+      };
+      Navigator.of(context).pushAndRemoveUntil(
+        CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false
+      );
+    }else if(resultado[0] == "personal"){
+      datosPersonales = {
+        "nro" : resultado[1],
+        "nombres" : resultado[2]
+      };
+      obtenerPersonal(datosPersonales["nro"]);
+      Navigator.of(context).pushAndRemoveUntil(
+        CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false
+      );
+    }else if(resultado[0] == "admin"){
+      obtenerAdmin(resultado[1]);
+      datosPersonales = {
+        "id" : resultado[1],
+        "nombres" : resultado[2]
       };
       Navigator.of(context).pushAndRemoveUntil(
         CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false
@@ -97,7 +116,7 @@ class _LoginState extends State<Login> {
                     child: Hero(
                       tag: "tagImagenDentista",
                       child: Transform.scale(
-                        scale: 1.10,
+                        scale: 1.15,
                         child: Container(
                           margin: EdgeInsets.only(top: 18),
                           height: sW * 1 / 3,
@@ -174,7 +193,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        Container(height: separador),
+                        Container(height: separador/1.5),
 
                         Container(
                           constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),

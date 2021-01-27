@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/datos.dart';
@@ -22,6 +21,7 @@ class Notificaciones extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -29,6 +29,7 @@ class Notificaciones extends StatelessWidget {
             width: sW/4,
             child: perfil()
           ),
+          SizedBox(width: separador),
           Column(    
             crossAxisAlignment: CrossAxisAlignment.start,      
             children: [
@@ -43,27 +44,30 @@ class Notificaciones extends StatelessWidget {
               SizedBox(
                 height: separador
               ),
-              Container(
-                width: sW/3,
-                height: 247,
-                child: SingleChildScrollView(
-                  child: Builder(
-                    builder: (BuildContext context){
-                      return Column(
-                        children:[
-                          for (var i = 0; i <notificaciones.length; i++)
-                            new _Notificaciones(
-                              notificacion: notificaciones[i]["notificacion"],
-                              comentario: notificaciones[i]["comentario"],
-                            ),
-                          for (var i = 0; i <notificaciones.length; i++)
-                            new _Notificaciones(
-                              notificacion: notificaciones[i]["notificacion"],
-                              comentario: notificaciones[i]["comentario"],
-                            ),
-                        ]
-                      );
-                    } 
+              Expanded(
+                child: Container(
+                  height: 247,
+                  alignment: Alignment.centerLeft,
+                  child: SingleChildScrollView(
+                    child: Builder(
+                      builder: (BuildContext context){
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:[
+                            for (var i = 0; i <notificaciones.length; i++)
+                              new _Notificaciones(
+                                notificacion: notificaciones[i]["notificacion"],
+                                comentario: notificaciones[i]["comentario"],
+                              ),
+                            for (var i = 0; i <notificaciones.length; i++)
+                              new _Notificaciones(
+                                notificacion: notificaciones[i]["notificacion"],
+                                comentario: notificaciones[i]["comentario"],
+                              ),
+                          ]
+                        );
+                      } 
+                    ),
                   ),
                 ),
               )
@@ -111,23 +115,24 @@ class _Notificaciones extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    double sW = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(roundedL),
         color: Colors.white
       ),
       margin: EdgeInsets.only(
-        top:0,
-        right: separador,
         bottom: 17,
-        left: separador
       ),
       padding: EdgeInsets.symmetric(horizontal:sangria-5, vertical: sangria-5),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Palito(), 
           Campanita(),
-          TextNotificacion(notificacion, comentario),
+          TextNotificacion(notificacion, comentario, sW),
         ],
       )
     );
@@ -155,7 +160,7 @@ Widget Campanita(){
     margin: EdgeInsets.only(right:sangria), 
   ); 
 }
-Widget TextNotificacion (String notificacion, String comentario){
+Widget TextNotificacion (String notificacion, String comentario, double sW){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children:[
@@ -165,11 +170,14 @@ Widget TextNotificacion (String notificacion, String comentario){
         bold: 6,
         tipo: "bodyL",
       ),
-      MyRText(
-      text: comentario,
-      color: MyColors().colorAzulClaro(),
-      bold: 6,
-      tipo: "bodyLLL",
+      Container(
+        width: sW/3,
+        child: MyRText(
+        text: comentario,
+        color: MyColors().colorAzulClaro(),
+        bold: 6,
+        tipo: "bodyLLL",
+        ),
       )
         
     ]

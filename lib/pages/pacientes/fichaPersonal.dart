@@ -35,8 +35,21 @@ class FichaPersonal extends StatelessWidget {
                 children: [
                   Datos(),
                   SizedBox(height: separador),
-                  PlanDentalFicha(),
-                  SizedBox(height: separador),
+                  Builder(
+                    builder: (context){
+                      if(datosPersonales.length > largoDatosConPlan){
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            PlanDentalFicha(),
+                            SizedBox(height: separador),
+                          ]
+                        );
+                      }else{
+                        return Container();
+                      }
+                    }
+                  ),
                   _Recomendaciones()
                 ]
               )
@@ -60,6 +73,16 @@ class Datos extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MyRText(text: "Datos", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+        if(rolGlobal == "personal")
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: Row(
+              children: [
+                MyRText(text: "Colegiado: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                MyRText(text: "${datosPersonales["nro"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              ],
+            ),
+          ),
         Padding(
           padding: EdgeInsets.only(left: sangria),
           child: MyRText(text: "${datosPersonales["nombres"]} ${datosPersonales["apellidos"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
@@ -68,33 +91,36 @@ class Datos extends StatelessWidget {
           padding: EdgeInsets.only(left: sangria),
           child: MyRText(text: "${datosPersonales["correo"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
         ),
-        Padding(
-          padding: EdgeInsets.only(left: sangria),
-          child: Row(
-            children: [
-              MyRText(text: "DNI: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
-              MyRText(text: "${datosPersonales["dni"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-            ],
+        if (rolGlobal == "paciente" || rolGlobal == "personal")
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: Row(
+              children: [
+                MyRText(text: "DNI: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                MyRText(text: "${datosPersonales["dni"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: sangria),
-          child: Row(
-            children: [
-              MyRText(text: "Celular: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
-              MyRText(text: "${datosPersonales["celular"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-            ],
+        if(rolGlobal == "paciente")
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: Row(
+              children: [
+                MyRText(text: "Celular: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                MyRText(text: "${datosPersonales["celular"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: sangria),
-          child: Row(
-            children: [
-              MyRText(text: "Dirección: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
-              MyRText(text: "${datosPersonales["direccion"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-            ],
+        if(rolGlobal == "paciente")
+          Padding(
+            padding: EdgeInsets.only(left: sangria),
+            child: Row(
+              children: [
+                MyRText(text: "Dirección: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                MyRText(text: "${datosPersonales["direccion"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+              ],
+            ),
           ),
-        ),
       ],
     );
   }

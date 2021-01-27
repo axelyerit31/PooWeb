@@ -1,13 +1,10 @@
 
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
-
-import 'baseDatos/bdUsuario.dart';
 import 'package:http/http.dart' as http;
 
 double sangria = 10;
 double separador = 40;
+int largoDatosConPlan = 8;
 
 String rolGlobal = "usuario";
 
@@ -19,54 +16,35 @@ var datosCitas = [];
 var datosPlanes = [];
 var datosEspecialidades = [];
 
-var cita1 = {
-  "especialidad": "Endodoncia",
-  "fecha": "Dic, 06",
-  "hora": "6:40 p.m.",
-  "dentista": "Nilton Salinas",
-  "costo": "----",
-  "estado": "En Espera",
-};
+final url = "http://192.168.18.3/PooWeb/";
 
-var cita2 = {
-  "especialidad": "Implante Dental",
-  "fecha": "Set, 22",
-  "hora": "10:50 a.m.",
-  "dentista": "Nilton Salinas",
-  "costo": "----",
-  "estado": "En Espera",
-};
+//URL para obtener datos de MySql
+final urlUsuarios = url + "obtenerPacientesUsuarios.php";
+final urlObtenerPaciente = url + "obtenerPaciente.php";
+final urlObtenerPersonal = url + "obtenerPersonal.php";
+final urlObtenerAdmin = url + "obtenerAdmin.php";
+final urlObtenerPlanes = url + "obtenerPlanesDentales.php";
+final urlObtenerCitas  = url + "obtenerCitas.php";
+final urlObtenerEspecialidades = url + "obtenerEspecialidades.php";
 
-var cita3 = {
-  "especialidad": "Limpieza Rutinaria",
-  "fecha": "Ago, 30",
-  "hora": "5:00 p.m.",
-  "dentista": "Nilton Salinas",
-  "costo": "0.00",
-  "estado": "Faltó",
-};
+//URL para insertar datos en MySql
+final urlInsertarUsuarioPaciente = url + "insertarUsuarioPaciente.php";
+final urlInsertarEspecialidad = url + "insertarEspecialidad.php";
 
-var cita4 = {
-  "especialidad": "Endodoncia",
-  "fecha": "Ago, 27",
-  "hora": "4:30 p.m.",
-  "dentista": "Nilton Salinas",
-  "costo": "80.00",
-  "estado": "Asistió",
-};
+//URL para borrar datos de MySql
+final urlBorrarCita = url + "borrarCita.php";
+final urlBorrarEspecialidad = url + "borrarEspecialidad.php";
+final urlBorrarPacienteUsuario = url + "borrarPaciente.php";
 
-//metodo para obtenerusuarios
-
-final urlUsuarios = "http://192.168.18.3/PooWeb/obtenerPacientesUsuarios.php";
-final urlObtenerPaciente = "http://192.168.18.3/PooWeb/obtenerPaciente.php";
-final urlObtenerPlanes = "http://192.168.18.3/PooWeb/obtenerPlanesDentales.php";
-final urlObtenerCitas  = "http://192.168.18.3/PooWeb/obtenerCitas.php";
-final urlObtenerEspecialidades = "http://192.168.18.3/PooWeb/obtenerEspecialidades.php";
+//URL para editar datos de MySql
+final urlEditarEspecialidad = url + "editarEspecialidad.php";
 
 
-Future<List<Usuario>> obtenerUsuarios() async{
+//Funciones para obtener datos de MySql
+
+Future<List> obtenerUsuarios() async{
   final resp = await http.get(urlUsuarios);
-  return usuarioFromJson( resp.body );
+  return jsonDecode(resp.body);
 }
 
 Future<List> obtenerPacienteFicha(String identificador) async{
@@ -86,17 +64,61 @@ void obtenerPaciente(String identificador) async{
 
   var resultado = jsonDecode(resp.body);
   
+  if (resultado[0].length > largoDatosConPlan){
+    datosPersonales = {
+      "dni" : resultado[0]["dni_usu"],
+      "nombres" : resultado[0]["nombres_usu"],
+      "apellidos" : resultado[0]["apellidos_usu"],
+      "correo" : resultado[0]["correo_usu"],
+      "celular" : resultado[0]["telefono_usu"],
+      "sexo" : resultado[0]["sexo_usu"],
+      "direccion" : resultado[0]["direccion_pac"],
+      "idPlan" : resultado[0]["id_plan"],
+      "plan" : resultado[0]["nombre_plan"],
+      "afiliacionPlan" : resultado[0]["fecha_afiliacion_plan"],
+    };
+  }else{
+    datosPersonales = {
+      "dni" : resultado[0]["dni_usu"],
+      "nombres" : resultado[0]["nombres_usu"],
+      "apellidos" : resultado[0]["apellidos_usu"],
+      "correo" : resultado[0]["correo_usu"],
+      "celular" : resultado[0]["telefono_usu"],
+      "sexo" : resultado[0]["sexo_usu"],
+      "direccion" : resultado[0]["direccion_pac"],
+    };
+  }
+}
+
+void obtenerPersonal(String identificador) async{
+  final resp = await http.post(urlObtenerPersonal, body: {
+    "nro_colegiado": identificador
+  });
+
+  var resultado = jsonDecode(resp.body);
+  
   datosPersonales = {
-    "dni" : resultado[0]["dni_usu"],
-    "nombres" : resultado[0]["nombres_usu"],
-    "apellidos" : resultado[0]["apellidos_usu"],
-    "correo" : resultado[0]["correo_usu"],
-    "celular" : resultado[0]["telefono_usu"],
-    "sexo" : resultado[0]["sexo_usu"],
-    "direccion" : resultado[0]["direccion_pac"],
-    "idPlan" : resultado[0]["id_plan"],
-    "plan" : resultado[0]["nombre_plan"],
-    "afiliacionPlan" : resultado[0]["fecha_afiliacion_plan"],
+    "nro" : resultado[0]["nro_colegiado"],
+    "dni" : resultado[0]["dni_den"],
+    "nombres" : resultado[0]["nombres_den"],
+    "apellidos" : resultado[0]["apellidos_den"],
+    "correo" : resultado[0]["correo_den"],
+    "universidad" : resultado[0]["casa_estudio"],
+  };
+}
+
+void obtenerAdmin(String identificador) async{
+  final resp = await http.post(urlObtenerAdmin, body: {
+    "id": identificador
+  });
+
+  var resultado = jsonDecode(resp.body);
+  
+  datosPersonales = {
+    "id" : resultado[0]["id_adm"],
+    "nombres" : resultado[0]["nombres_adm"],
+    "apellidos" : resultado[0]["apellidos_adm"],
+    "correo" : resultado[0]["correo_adm"],
   };
 }
 
@@ -105,6 +127,7 @@ void obtenerPlanes() async{
 
   var resultado = jsonDecode(resp.body);
   
+  datosPlanes.clear();
   datosPlanes = [
     {
       "plan" : resultado[0]["nombre_plan"],
@@ -127,7 +150,8 @@ void obtenerCitas() async{
   });
 
   var resultado = jsonDecode(resp.body);
-  
+
+  datosCitas.clear();
   for (var i = 0; i < resultado.length; i++) {
     datosCitas.add(
       {
@@ -146,6 +170,8 @@ void obtenerEspecialidades() async{
   final res = await http.post(urlObtenerEspecialidades);
   
   final u = jsonDecode(res.body);
+
+  datosEspecialidades.clear();
   for (var i = 0; i < u.length; i++) {
     datosEspecialidades.add({
       "id" : u[i]["id_esp"],
@@ -153,4 +179,63 @@ void obtenerEspecialidades() async{
       "descripcion" : u[i]["descripcion_esp"],
     });
   }
+}
+
+Future<List> obtenerEspecialiadesFuture() async{
+  final res = await http.post(urlObtenerEspecialidades);
+  
+  final u = jsonDecode(res.body);
+
+  return u;
+}
+
+
+//Funciones para insertar datos en MySql
+
+//Funcion para convertir usuario en paciente
+void insertarUsuarioPaciente(String dni, String direccion, String contrasena) async{
+  http.post(urlInsertarUsuarioPaciente, body: {
+    "dni": dni,
+    "direccion": direccion,
+    "contrasena": contrasena,
+  });
+}
+
+void insertarEspecialidad(String nombre, String descripcion) async{
+  http.post(urlInsertarEspecialidad, body: {
+    "nombre": nombre,
+    "descripcion": descripcion,
+  });
+}
+
+
+//Funciones para eliminar datos de MySql
+
+void borrarCita(int id) async{
+  http.post(urlBorrarCita, body: {
+    "id_cita": id.toString()
+  });
+}
+
+void borrarEspecialidad(int id) async{
+  http.post(urlBorrarEspecialidad, body: {
+    "id_esp": id.toString()
+  });
+}
+
+//Funcion para borrar a usuario o paciente
+void borrarPacienteUsuario(int id) async{
+  http.post(urlBorrarPacienteUsuario, body: {
+    "dni": id.toString()
+  });
+}
+
+
+//Funcion para editar datos de MySql
+void editarEspecialidad(String id, String nombre, String descripcion) async{
+  http.post(urlEditarEspecialidad, body: {
+    "id_esp": id,
+    "nombre_esp" : nombre,
+    "descripcion_esp" : descripcion
+  });
 }

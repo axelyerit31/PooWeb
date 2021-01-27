@@ -356,7 +356,7 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyRText(
-              text: "S/. ${widget.datos["costo"]}",
+              text: "S/. ${widget.datos["costo"]}0",
               tipo: "precio",
               color: Color(0xFF4568E7),
               bold: 7
@@ -384,7 +384,11 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
         ),
         GestureDetector(
           onTap: (){
-            print("Afiliarme a ${widget.indice} fue tocado");
+            if(datosPersonales["dni"] == null){
+              print("No hay cuenta");
+            }else{
+              print("Hay cuenta");
+            }
           },
           child: MouseRegion(
             onEnter: (_) {widget.tarjetaApuntada(widget.indice);},

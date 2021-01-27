@@ -10,7 +10,8 @@ import 'pacientes/fichaPersonal.dart';
 import 'pacientes/notificaciones.dart';
 import 'pacientes/planDental.dart';
 import 'datos.dart';
-import 'personal/pacientes.dart';
+import 'personal/clientes.dart';
+import 'personal/especialidades.dart';
 import 'usuarios/home.dart';
 
 //funcion para obtner el primer nombre y primer apellido de forma vertical
@@ -75,6 +76,8 @@ class Maqueta extends StatefulWidget {
 
 class _MaquetaState extends State<Maqueta> {
 
+  
+
   List<Widget> pantallas;
   List<String> opciones;
   List<String> iconos;
@@ -84,17 +87,26 @@ class _MaquetaState extends State<Maqueta> {
     if(widget.rol == "paciente"){
       pantallas = [
         FichaPersonal(),
-        Citas(),
+        Citas(state: opcionSeleccionada),
         PlanDental(),
-        Notificaciones(),
+        //Notificaciones(),
         EditarPerfil(state: opcionSeleccionada)
       ];
     }else if(widget.rol == "personal"){
       pantallas = [
         Container(),
         Container(),
-        Pacientes(),
+        Clientes(),
+        EspecialidadesPersonal(),
         Container(),
+      ];
+    }else if(widget.rol == "admin"){
+      pantallas = [
+        Container(),
+        Container(),
+        Clientes(),
+        Clientes(),
+        EspecialidadesPersonal(),
         Container(),
       ];
     }
@@ -114,6 +126,9 @@ class _MaquetaState extends State<Maqueta> {
     }else if(widget.rol == "personal"){
       imagePerfil = "assets/perfil-dentista.png";
       imagePerfilCerca = "assets/perfil-dentista-cerca.png";
+    }else if(widget.rol == "admin"){
+      imagePerfil = "assets/perfil-hombre.png";
+      imagePerfilCerca = "assets/perfil-hombre-cerca.png";
     }
   }
 
@@ -121,6 +136,12 @@ class _MaquetaState extends State<Maqueta> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.rol == "paciente"){
+      //Llamando funciones que obtendran datos privados del cliente, se llaman aqui para que entonce ya esten cargadas
+      obtenerCitas();
+    }
+
     obtenerDatos();
     obtenerImagenes();
 
@@ -241,7 +262,14 @@ class _MaquetaState extends State<Maqueta> {
     });
   }
   void opcionSeleccionada(int valor){
-    obtenerPaciente(datosPersonales["dni"]);
+    if(widget.rol == "paciente"){
+      obtenerPaciente(datosPersonales["dni"]);
+    }else if (widget.rol == "personal"){
+      obtenerPersonal(datosPersonales["nro"]);
+    }else{
+      obtenerAdmin(datosPersonales["id"]);
+    }
+    
     setState(() {
       indexSeleccionado = valor;
     });
@@ -332,7 +360,7 @@ class _MaquetaState extends State<Maqueta> {
                   MyROutlineButton(
                     onPressed: (){
                       Navigator.pop(context);
-                      indexSeleccionado = ultimoIndexSeleccionado;
+                      opcionSeleccionada(ultimoIndexSeleccionado);
                     },
                     child: MyRText(
                       text: "Cancelar",
@@ -347,7 +375,7 @@ class _MaquetaState extends State<Maqueta> {
                       rolGlobal = "usuario";
                       datosPersonales.clear();
                       datosCitas.clear();
-                      indexSeleccionado = ultimoIndexSeleccionado;
+                      indexSeleccionado = 0;
                       Navigator.of(context).pushAndRemoveUntil(
                         CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
                       );

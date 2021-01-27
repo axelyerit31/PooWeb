@@ -33,7 +33,8 @@ class _PlanDentalState extends State<PlanDental> {
 Widget _header(){
   return Container(
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           height: 380,
@@ -49,7 +50,7 @@ Widget _header(){
               SizedBox(height: separador/4),
               _planDental("${datosPlanes[1]["plan"]}", "${datosPlanes[1]["costo"]}0"),
               SizedBox(height: separador/4),
-              _planDental("${datosPlanes[0]["plan"]}", "${datosPlanes[0]["costo"]}0"),
+              _planDental("${datosPlanes[0]["plan"]}", "${datosPlanes[0]["costo"]}.00"),
             ],
           )
         )
@@ -113,7 +114,7 @@ Widget _planDental(String plan, String precio){
               width: anchoPlan,
               height: alturaPlan,
               padding: EdgeInsets.symmetric(
-                horizontal: 12,
+                horizontal: 20,
                 vertical: 4
               ),
               child: MyRText(
@@ -130,7 +131,7 @@ Widget _planDental(String plan, String precio){
               ),
               width: anchoPlan,
               height: alturaPlan,
-              padding: EdgeInsets.only(left: 12),
+              padding: EdgeInsets.only(left: 20),
               alignment: Alignment.center,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,15 +154,15 @@ Widget _planDental(String plan, String precio){
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: planAfiliado()
-                        ),
                         MyRText(
                           text: "S/. $precio",
                           tipo: "bodyLL",
                           color: MyColors().colorAzulClaro(),
                           bold: 7
+                        ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: planAfiliado()
                         ),
                       ],
                     ),
@@ -170,51 +171,7 @@ Widget _planDental(String plan, String precio){
               ),
             )
           ],
-        ),/* 
-        Container(
-          padding: EdgeInsets.only(
-            left: 12,
-            right: 12,
-            bottom: 4
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MyRText(
-                text: "Plan",
-                tipo: "subtitleL",
-                color: MyColors().colorOscuro(),
-                bold: 7
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: MyRText(
-                      text: plan,
-                      tipo: "subtitleL",
-                      color: Colors.white,
-                      bold: 7
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: MyRText(
-                        text: "S/. $precio",
-                        tipo: "bodyLL",
-                        color: MyColors().colorAzulClaro(),
-                        bold: 7
-                      ),
-                    ),
-                  ),
-                  Expanded(child: Container(alignment: Alignment.centerRight, child: planAfiliado()))
-                ],
-              ),
-            ],
-          ),
-        ), */
+        ),
       ],
     )
   );
@@ -258,6 +215,7 @@ Widget _tiempoAfiliado(BuildContext context){
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
                     height: alturaBarra,

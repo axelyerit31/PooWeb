@@ -189,9 +189,9 @@ class MyROutlineButton extends StatelessWidget {
     double verticalPadding = lerpDouble(4, 8.7, sW/width);
 
     return FlatButton(
-      shape: ContinuousRectangleBorder(
+      shape: RoundedRectangleBorder(
         side: BorderSide(color: color),
-        borderRadius: BorderRadius.circular(roundedL+3)
+        borderRadius: BorderRadius.circular(roundedL)
       ),
       color: Colors.white.withOpacity(0.3),
       hoverColor: Colors.white.withOpacity(0.8),
@@ -223,11 +223,8 @@ class MyRButton extends StatelessWidget {
 
     double width = sW > maxScreenSize ? sW : maxScreenSize + 1/sW;
 
-    print("Width actual: " + sW.toString());
-    print("Height actual: " + screenS.height.toString());
-
     double horizontalPadding = lerpDouble(8, 15, sW/width);
-    double verticalPadding = lerpDouble(4, 11, sW/width);
+    double verticalPadding = lerpDouble(4, 8.7, sW/width);
 
     return Container(
       //height: 24+verticalPadding*2,
@@ -270,8 +267,9 @@ class MyRTextFormField extends StatelessWidget {
   final Color formColor;
   final Function onTap;
   final Function onFieldSubmitted;
+  final int maxLines;
 
-  const MyRTextFormField({Key key, this.controller, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap, this.onFieldSubmitted}) : super(key: key);
+  const MyRTextFormField({Key key, this.controller, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap, this.onFieldSubmitted, this.maxLines}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -285,6 +283,7 @@ class MyRTextFormField extends StatelessWidget {
     double fontSize = lerpDouble(12, 16, sW/width);
 
     return TextFormField(
+      maxLines: maxLines == null ? 1 : maxLines,
       onTap: onTap,
       cursorHeight: fontSize*1.5,
       cursorColor: MyColors().colorOscuro(),

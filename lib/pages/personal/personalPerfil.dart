@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:poo_web/pages/personal/pacientes.dart';
+import 'package:poo_web/pages/personal/clientes.dart';
 
 import '../maquetaPerfil.dart';
 
 List<String> opciones = [
   "Perfil",
   "Citas",
-  "Pacientes",
+  "Clientes",
   "Especialidades",
   "Editar Perfil",
   "Cerrar Sesión"

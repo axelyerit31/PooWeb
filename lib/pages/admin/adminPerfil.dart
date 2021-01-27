@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:poo_web/pages/personal/clientes.dart';
 
 import '../maquetaPerfil.dart';
 
 List<String> opciones = [
-  "Ficha Personal",
-  "Cita",
-  "Plan Dental",
-  //"Notificaciones",
+  "Perfil",
+  "Citas",
+  "Clientes",
+  "Dentistas",
+  "Especialidades",
   "Editar Perfil",
   "Cerrar Sesión"
 ];
@@ -14,20 +16,20 @@ List<String> opciones = [
 List<String> iconos = [
   "assets/iconos/perfil.png",
   "assets/iconos/citas.png",
-  "assets/iconos/citas.png",
+  "assets/iconos/clientes.png",
+  "assets/iconos/dentistas.png",
+  "assets/iconos/notificacion.png",
   "assets/iconos/editar_perfil.png",
-  //"assets/iconos/notificacion.png",
   "assets/iconos/cerrar_sesion.png",
 ];
 
-class PacientesPerfil extends StatelessWidget {
+class PersonalPerfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Maqueta(
-      rol: "paciente",
+      rol: "admin",
       opciones: opciones,
       iconosOpciones: iconos,
     );
   }
 }
-

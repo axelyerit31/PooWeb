@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:poo_web/myWidgets.dart';
 import 'package:poo_web/mystyle.dart';
 
+import '../datos.dart';
+
 
 class Home extends StatefulWidget {
 
@@ -15,6 +17,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
+    obtenerPlanes();
+    obtenerEspecialidades();
+
     var screenS = MediaQuery.of(context).size;
     var sW = screenS.width;
 
@@ -24,7 +29,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: new Size.fromHeight(sizeAppBar),
-        child: MyRAppBar(tipo: "usuario")
+        child: MyRAppBar(tipo: rolGlobal)
       ),
       body: MyRHome(),
     );

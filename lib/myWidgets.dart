@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:poo_web/pages/datos.dart';
+import 'package:poo_web/pages/maquetaPerfil.dart';
 import 'package:poo_web/pages/usuarios/nosotros.dart';
 import 'package:poo_web/pages/usuarios/planesDentales.dart';
 
@@ -58,6 +60,9 @@ class _MyRAppBarState extends State<MyRAppBar> {
 
     var screenS = MediaQuery.of(context).size;
     var sW = screenS.width;
+
+    print("Width actual: " + sW.toString());
+    print("Height actual: " + screenS.height.toString());
 
     bool _cursorNosotros = false;
     bool _cursorPlanes = false;
@@ -149,9 +154,9 @@ class _MyRAppBarState extends State<MyRAppBar> {
                           },
                           child: MyRText(
                             text: "Nosotros",
-                            tipo: "body",
+                            tipo: "bodyL",
                             color: _cursorNosotros ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                            bold: 5
+                            bold: 6
                           ),
                         ),
                         SizedBox(width: sW/30),
@@ -165,9 +170,9 @@ class _MyRAppBarState extends State<MyRAppBar> {
                           },
                           child: MyRText(
                             text: "Planes Dentales",
-                            tipo: "body",
+                            tipo: "bodyL",
                             color: _cursorPlanes ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                            bold: 5
+                            bold: 6
                           ),
                         ),
                         SizedBox(width: sW/30),
@@ -176,14 +181,12 @@ class _MyRAppBarState extends State<MyRAppBar> {
                             primary: Colors.white
                           ),
                           onPressed: (){
-                            Navigator.push(context,
-                              new CupertinoPageRoute(builder: (context) => Container(child: Text("Contacto")),));
                           },
                           child: MyRText(
                             text: "Contacto",
-                            tipo: "body",
+                            tipo: "bodyL",
                             color: _cursorContacto ? MyColors().colorClaro() : MyColors().colorOscuro(),
-                            bold: 5
+                            bold: 6
                           ),
                         ),
                       ],),
@@ -282,20 +285,12 @@ class _MyRAppBarState extends State<MyRAppBar> {
             backgroundColor: Colors.white, 
           ),
           SizedBox(width: 25),
-          FutureBuilder<List>(
-            future: obtenerPacienteFicha(datosPersonales["dni"]),
-            builder: (context, snapshot) {
-              if(snapshot.hasError) print(snapshot.error);
-              return snapshot.hasData
-              ? MyRText(
-                  text: datosPersonales["nombres"],
-                  tipo: "bodyL",
-                  color: Colors.white,
-                  bold: 6
-                )
-              : Container(width: 30);
-            }
-          ),
+          MyRText(
+            text: datosPersonales["nombres"],
+            tipo: "bodyL",
+            color: Colors.white,
+            bold: 6
+          )
         ],
       ),
       color: MyColors().colorOscuro(),
@@ -327,7 +322,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
         //bool regreso = Navigator.canPop(context);
         if(true){
           Navigator.of(context).pushAndRemoveUntil(
-            CupertinoPageRoute(builder: (context) => HomePacientes()),(Route<dynamic> route) => false
+            CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
           );
         }
       }
@@ -404,10 +399,13 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //Texto
-          Container(
-            margin: EdgeInsets.only(right: 100),
-            width: sW * 2/6,
-            child: _contentText(sW),
+          FadeInUp(
+            duration: Duration(milliseconds: 2400),
+            child: Container(
+              margin: EdgeInsets.only(right: 100),
+              width: sW * 2/6,
+              child: _contentText(sW),
+            ),
           ),
           
           //Imagen
@@ -458,7 +456,7 @@ class Header extends StatelessWidget {
     );
   }
 
-  Container _contentImage() {
+  Widget _contentImage() {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -518,30 +516,222 @@ class Header extends StatelessWidget {
   }
 }
 
-class Content extends StatelessWidget {
+class Content extends StatefulWidget {
 
-  final List<String> especialidadesNombres = [
-    "Ortodoncia",
-    "Periodoncia",
-    "Limpieza dental",
-    "Implantes"
-  ];
+  @override
+  _ContentState createState() => _ContentState();
+}
 
-  final List<String> especialidadesImages = [
-    "especialidad2.jpg",
-    "especialidad3.jpg",
-    "especialidad4.jpg",
-    "especialidad5.jpg",
-  ];
+class _ContentState extends State<Content> {
+    
+  double _alturaOpcion = 45;
+  double _anchoOpcion = 200;
+  double _divisionPadding = 8;
+  double _anchoPuntero = 2;
+  int _indiceSeleccionado = 0;
+  int _indiceApuntado = -1;
+
+  void opcionApuntada(int valor){
+    setState(() {
+      _indiceApuntado = valor;
+    });
+  }
+
+  void opcionSeleccionada(int valor){
+    setState(() {
+      _indiceSeleccionado = valor;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    
+
     var screenS = MediaQuery.of(context).size;
     var sW = screenS.width;
-    return Container(
-      height: 100,
+
+    return Stack(
       alignment: Alignment.center,
-      child: Text("Container"),
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 10),
+          height: sizeMiPantalla - sizeAppBar - 40,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/fondo-especialidades.png"),
+              fit: BoxFit.fitHeight,
+              alignment:Alignment.centerRight 
+            )
+          ),
+        ),
+        FutureBuilder<List>(
+          future: obtenerEspecialiadesFuture(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError){print(snapshot.error);}
+            return snapshot.hasData
+              ? Container(
+                  width: sW / 1.3,
+                  padding: EdgeInsets.symmetric(vertical: 100),
+                  height: sizeMiPantalla - sizeAppBar,
+                  alignment: Alignment.center,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyRText(
+                            text: "Agendar una cita es completamente gratis",
+                            tipo: "bodyB2",
+                            color: MyColors().colorVerdeOscuro(),
+                            bold: 5
+                          ),
+                          MyRText(
+                            text: "Especialidades",
+                            tipo: "title",
+                            color: MyColors().colorOscuro(),
+                            bold: 7
+                          ),
+                          SizedBox(height: separador/3),
+                          Stack(
+                            alignment: Alignment.topLeft,
+                            children: [
+                              AnimatedContainer(
+                                curve: Curves.easeInOutCirc,
+                                duration: Duration(milliseconds: 300),
+                                margin: EdgeInsets.only(top: _indiceSeleccionado * _alturaOpcion),
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(
+                                  left: _anchoOpcion/_divisionPadding/1.3 - (_anchoPuntero/2),
+                                  top: _alturaOpcion / 4.5
+                                 ),
+                                child: Container(
+                                  height: _alturaOpcion / 2,
+                                  width: _anchoPuntero,
+                                  decoration: BoxDecoration(
+                                    color: MyColors().colorOscuro(),
+                                    borderRadius: BorderRadius.circular(roundedB)
+                                  ),
+                                )
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  for (var i = 0; i < snapshot.data.length; i++)
+                                    _opcion(snapshot.data[i]["nombre_esp"], i)
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(width: separador*4),
+                      Container(
+                        margin: EdgeInsets.only(top: 25),
+                        child: _especialidad(sW, snapshot.data[_indiceSeleccionado]["descripcion_esp"])
+                      )
+                    ]        
+                  ),
+                )
+              : Center(child: CircularProgressIndicator());
+          }
+        ),
+      ],
+    );
+  }
+
+  Widget _opciones(double sW){
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (var i = 0; i < datosEspecialidades.length; i++)
+          _opcion(datosEspecialidades[i]["nombre"], i)
+      ],
+    );
+  }
+
+  Widget _especialidad(double sW, String descripcion){
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AnimatedSwitcher(
+          duration: Duration(milliseconds: 200),
+          child: Container(
+            key: Key("$_indiceSeleccionado"),
+            height: 250,
+            width: 550,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(roundedL),
+              image: DecorationImage(
+                image: AssetImage("assets/especialidades/especialidad$_indiceSeleccionado.png"),
+                fit: BoxFit.fitWidth
+              )
+            )
+          ),
+        ),
+        SizedBox(height: 15),
+        Container(
+          width: 580,
+          child: MyRText(
+            textAlign: TextAlign.justify,
+            text: descripcion,
+            tipo: "body",
+            color: MyColors().colorOscuro(),
+            bold:  5
+          )
+        ),
+      ],
+    );
+  }
+
+  Widget _opcion(String especialidad, int indice){
+
+    Color logicaColor(){
+      if (_indiceSeleccionado == indice){
+        return MyColors().colorAzulClaro();
+      }else if(_indiceApuntado == indice && _indiceSeleccionado != indice){
+        return MyColors().colorGrisOscuro();
+      }else{
+        return MyColors().colorGris();
+      }
+    }
+
+    return Container(
+      height: _alturaOpcion,
+      width: _anchoOpcion,
+      padding: EdgeInsets.only(left: _anchoOpcion/_divisionPadding),
+      alignment: Alignment.centerLeft,
+      child: MouseRegion(
+        onEnter: (_) {
+          opcionApuntada(indice);
+        },
+        onExit: (_) {
+          opcionApuntada(-1);
+        },
+        child: TextButton(
+          style: TextButton.styleFrom(
+            primary: Colors.white,
+            padding: EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 8
+            )
+          ),
+          onPressed: () {
+            print("Se toco $especialidad");
+            opcionSeleccionada(indice);
+          },
+          child: MyRText(
+            text: especialidad,
+            color: logicaColor(),
+            tipo: "bodyL",
+            bold: _indiceSeleccionado == indice ? 6 : 5
+          )
+        ),
+      )
     );
   }
 }
@@ -706,7 +896,7 @@ class Footer extends StatelessWidget {
 
 
 //Alerta para mostrar cuando algo va mal
-AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, String boton, Function function]){
+AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, String boton, Function function, bool admin, String boton2, Function function2]){
   showDialog(
     context: context,
     builder: (BuildContext context){
@@ -735,6 +925,14 @@ AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, S
           bold: 5
         ),
         actions: [
+          if (function2 != null && admin)
+            MyROutlineButton(
+              color: MyColors().colorOscuro(),
+              onPressed: () {
+                function2();
+              },
+              child: MyRText(text: boton2, tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)
+            ),
           MyRButton(
             onPressed: () {
               function == null ? Navigator.pop(context) : function();

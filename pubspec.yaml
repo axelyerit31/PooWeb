@@ -31,6 +31,7 @@ dependencies:
   google_fonts: ^1.1.1
   font_awesome_flutter: ^8.11.0
   http: ^0.12.2
+  animate_do: ^1.7.5
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,8 @@ flutter:
     - assets/mejorsonrisa.png
     - assets/dentista-loading.png
     - assets/nosotros-dibujo.png
+    - assets/fondo-cita.png
+    - assets/fondo-especialidades.png
     - assets/perfil-bottomLeft.png
     - assets/perfil-hombre.png
     - assets/perfil-hombre-cerca.png
@@ -73,6 +76,7 @@ flutter:
     - assets/footer/bottomLeft.png
     - assets/iconos/
     - assets/planDental/
+    - assets/especialidades/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

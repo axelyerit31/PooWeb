@@ -6,6 +6,11 @@ import '../maquetaPerfil.dart';
 import 'fichaPersonal.dart';
 
 class Citas extends StatefulWidget {
+
+  final ValueChanged<int> state;
+
+  const Citas({this.state});
+
   @override
   _CitasState createState() => _CitasState();
 }
@@ -48,7 +53,7 @@ class _CitasState extends State<Citas> {
                 color: Colors.white
               ),
               padding: EdgeInsets.symmetric(horizontal: 0),
-              child: SingleChildScrollView(child: TablaCitas())
+              child: SingleChildScrollView(child: TablaCitas(state: widget.state))
             ),
           ],
         )
@@ -83,15 +88,12 @@ Widget _header(){
   );
 }
 
-
-List citas = [
-  cita1,
-  cita2,
-  cita3,
-  cita4
-];
-
 class TablaCitas extends StatefulWidget {
+
+  final ValueChanged<int> state;
+
+  const TablaCitas({this.state});
+
   @override
   _TablaCitasState createState() => _TablaCitasState();
 }
@@ -136,7 +138,7 @@ class _TablaCitasState extends State<TablaCitas> {
             DataRow(
               onSelectChanged: (selected) {
                 if(selected){
-                  rowSelected(i, selected);
+                  rowSelected(int.parse(datosCitas[i]["id"]), selected);
                 }
               },
               cells: [
@@ -181,21 +183,24 @@ class _TablaCitasState extends State<TablaCitas> {
         bold: 5
       ),
       actions: [
+        MyRButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: MyRText(text: "Cancelar", tipo: "bodyLLL", color: Colors.white, bold: 5)
+        ),
         MyROutlineButton(
           onPressed: () {
-            if(selected){
-              setState(() {
-                citas.removeAt(indice);
-              });
-            }
+            borrarCita(indice);
+            widget.state(1);
+            setState(() {
+              obtenerCitas();
+            });
             Navigator.pop(context);
           },
           color: MyColors().colorOscuro(),
-          child: MyRText(text: "Eliminar Cita", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)
+          child: MyRText(text: "Anular Cita", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)
         ),
-        MyRButton(
-          onPressed: () {},
-          child: MyRText(text: "Postergar Cita", tipo: "bodyLLL", color: Colors.white, bold: 5))
       ],
     );
   }
