@@ -15,7 +15,7 @@ Color _colorAzulMedioBajo = Color(0xFF8CA5FF);
 Color _colorAppBar = Color(0xFFC2DAFF);
 Color _colorVerde = Color(0xFFC7F3DB);
 Color _colorVerdeOscuro = Color(0xFF83C6A2);
-Color _colorGrisClaro = Color(0xFFF5f5f5);
+Color _colorGrisClaro = Color(0xFFF9f9f9);
 Color _colorGris = Color(0xFFbebebe);
 Color _colorGrisOscuro = Color(0xFFababab);
 Color _colorHome = Color(0xFFEEF9FF);
@@ -23,9 +23,6 @@ Color _colorFooter = Color(0xff90A8FF);
 double roundedL = 7;
 double roundedM = 11;
 double roundedB = 15;
-
-String codigoImagen = "https://drive.google.com/uc?id=";
-String imageHome = codigoImagen + "1pJFsMGZEkuBFky0WwVlhKGafgDIwFF-b";
 
 class MyColors{
 
