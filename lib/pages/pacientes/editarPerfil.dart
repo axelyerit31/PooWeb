@@ -10,6 +10,8 @@ import '../../myWidgets.dart';
 import '../maquetaPerfil.dart';
 
 
+var urlEditarPaciente = "http://192.168.18.3//PooWeb/editarPaciente.php";
+
 TextEditingController _controlNombres = new TextEditingController();
 TextEditingController _controlApellidos = new TextEditingController();
 TextEditingController _controlCorreo = new TextEditingController();
@@ -18,47 +20,6 @@ TextEditingController _controlConfirmarContrasena = new TextEditingController();
 TextEditingController _controlCelular = new TextEditingController();
 TextEditingController _controlDireccion = new TextEditingController();
 
-List<TextEditingController> _formControllers = [
-  _controlNombres,
-  _controlApellidos,
-  _controlCorreo,
-  _controlContrasena,
-  _controlConfirmarContrasena,
-  _controlCelular,
-  _controlDireccion 
-];
-
-List<String> _formHints = [
-  datosPersonales["nombres"],
-  datosPersonales["apellidos"],
-  datosPersonales["correo"],
-  "Nueva contraseña",
-  "Confirme su contraseña",
-  datosPersonales["celular"],
-  datosPersonales["direccion"],
-];
-
-List<String> _formInitial = [
-  datosPersonales["nombres"],
-  datosPersonales["apellidos"],
-  datosPersonales["correo"],
-  "",
-  "",
-  datosPersonales["celular"],
-  datosPersonales["direccion"],
-];
-
-List<TextInputType> _formKeyboard = [
-  TextInputType.text,
-  TextInputType.text,
-  TextInputType.emailAddress,
-  TextInputType.text,
-  TextInputType.text,
-  TextInputType.phone,
-  TextInputType.text,
-];
-
-var urlEditarPaciente = "http://192.168.18.3//PooWeb/editarPaciente.php";
 
 Future<List> editarPaciente() async{
   http.post(urlEditarPaciente, body: {
@@ -74,6 +35,11 @@ Future<List> editarPaciente() async{
   });
 }
 
+List<TextEditingController> _formControllers;
+List<String> _formHints;
+List<String> _formInitial;
+List<TextInputType> _formKeyboard;
+
 
 class EditarPerfil extends StatelessWidget {
 
@@ -83,6 +49,46 @@ class EditarPerfil extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    _formControllers = [
+      _controlNombres,
+      _controlApellidos,
+      _controlCorreo,
+      _controlContrasena,
+      _controlConfirmarContrasena,
+      _controlCelular,
+      _controlDireccion 
+    ];
+
+    _formHints = [
+      datosPersonales["nombres"],
+      datosPersonales["apellidos"],
+      datosPersonales["correo"],
+      "Nueva contraseña",
+      "Confirme su contraseña",
+      datosPersonales["celular"],
+      datosPersonales["direccion"],
+    ];
+
+    _formInitial = [
+      datosPersonales["nombres"],
+      datosPersonales["apellidos"],
+      datosPersonales["correo"],
+      "",
+      "",
+      datosPersonales["celular"],
+      datosPersonales["direccion"],
+    ];
+
+    _formKeyboard = [
+      TextInputType.text,
+      TextInputType.text,
+      TextInputType.emailAddress,
+      TextInputType.text,
+      TextInputType.text,
+      TextInputType.phone,
+      TextInputType.text,
+    ];
     
     double sW = MediaQuery.of(context).size.width;
 
@@ -132,6 +138,7 @@ class EditarPerfil extends StatelessWidget {
                     }
                     rowAlert("El cambio de datos se realizó exitosamente.", context, "¡Hecho!", "Ir a Ficha Personal", (){
                       Navigator.pop(context);
+                      state(3);
                       state(0);
                     });
                   }else{

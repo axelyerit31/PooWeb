@@ -25,24 +25,29 @@ String nombresVertical(){
   //Obtengo solo el primer nombre
   for (var i = 0; i < nombres.length; i++) {
     if(true){
-      nombre += nombres.substring(i, i+1);
       if(nombres.substring(i, i+1) == " "){
         break;
+      }else{
+        nombre += nombres.substring(i, i+1);
       }
+      
     }
   }
 
   //Obtengo el primer apellido
   for (var i = 0; i < apellidos.length; i++) {
     if(true){
-      apellido += apellidos.substring(i, i+1);
       if(apellidos.substring(i, i+1) == " "){
         break;
+      }else{
+        apellido += apellidos.substring(i, i+1);
       }
     }
   }
-
-  String nombreApellido = nombre + apellido;
+ 
+  String nombreApellido = datosPersonales["nombres"] == "Carlos Eduardo"
+    ? datosPersonales["nombres"]
+    : nombre + " " + apellido;
 
   for (var i = 0; i < nombreApellido.length; i++) {
     resultado += nombreApellido.substring(i, i+1);
@@ -62,6 +67,8 @@ int indexSeleccionado = 0;
 int ultimoIndexSeleccionado;
 int indexApuntado = 10;
 
+List<Widget> pantallas;
+
 class Maqueta extends StatefulWidget {
 
   final String rol;
@@ -75,44 +82,6 @@ class Maqueta extends StatefulWidget {
 }
 
 class _MaquetaState extends State<Maqueta> {
-
-  
-
-  List<Widget> pantallas;
-  List<String> opciones;
-  List<String> iconos;
-
-  //Obtener los datos de que pantallas, opciones e iconos habran, dados desde [rol]Perfil
-  void obtenerDatos(){
-    if(widget.rol == "paciente"){
-      pantallas = [
-        FichaPersonal(),
-        Citas(state: opcionSeleccionada),
-        PlanDental(),
-        //Notificaciones(),
-        EditarPerfil(state: opcionSeleccionada)
-      ];
-    }else if(widget.rol == "personal"){
-      pantallas = [
-        Container(),
-        Container(),
-        Clientes(),
-        EspecialidadesPersonal(),
-        Container(),
-      ];
-    }else if(widget.rol == "admin"){
-      pantallas = [
-        Container(),
-        Container(),
-        Clientes(),
-        Clientes(),
-        EspecialidadesPersonal(),
-        Container(),
-      ];
-    }
-    opciones = widget.opciones;
-    iconos = widget.iconosOpciones;
-  }
 
   void obtenerImagenes(){
     if(widget.rol == "paciente"){
@@ -138,11 +107,9 @@ class _MaquetaState extends State<Maqueta> {
   Widget build(BuildContext context) {
 
     if(widget.rol == "paciente"){
-      //Llamando funciones que obtendran datos privados del cliente, se llaman aqui para que entonce ya esten cargadas
+      //Llamando funciones que obtendran datos privados del cliente, se llaman aqui para que entonces ya esten cargadas
       obtenerCitas();
     }
-
-    obtenerDatos();
     obtenerImagenes();
 
     double sW = MediaQuery.of(context).size.width;
@@ -162,11 +129,23 @@ class _MaquetaState extends State<Maqueta> {
           padding: EdgeInsets.symmetric(vertical: separador, horizontal: separador),
           child: Row(
             children: [
-              Container(height: altura, width: sWActual * 7/43, child: DrawBar(sW)),
-              //Expanded(flex: 7, child: DrawBar(sW),),
+
+              //DrweBar
+              Container(
+                height: altura,
+                width: sWActual * 7/43,
+                child: DrawBar(
+                  sW: sW, 
+                  state: opcionSeleccionada,
+                  rol: widget.rol,
+                  opciones: widget.opciones,
+                  iconos: widget.iconosOpciones
+                ),
+              ),
               SizedBox(width: separador),
+              
+              //Main
               Container(height: altura, width: sWActual * 36/43, child: Main(sW)),
-              //Expanded(flex: 24, child: Main(sW),),
               //SizedBox(width: separador),
               //Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
               //Expanded(flex: 12, child: Placeholder(),),
@@ -210,6 +189,7 @@ class _MaquetaState extends State<Maqueta> {
           height: double.infinity,
           child: Row(
             children: [
+
               //Barra Verde
               Container(
                 decoration: BoxDecoration(
@@ -237,7 +217,7 @@ class _MaquetaState extends State<Maqueta> {
                   margin: EdgeInsets.all(separador+13),
                   child: Builder(
                     builder: (BuildContext context){
-                      if(indexSeleccionado < iconos.length-1){
+                      if(indexSeleccionado < widget.iconosOpciones.length-1){
                         ultimoIndexSeleccionado = indexSeleccionado;
                         ultimoWidget = pantallas[indexSeleccionado];
                         return pantallas[indexSeleccionado];
@@ -254,13 +234,7 @@ class _MaquetaState extends State<Maqueta> {
       ],
     );
   }
-  double alturaOpcion = 55;
 
-  void opcionApuntada(int valor){
-    /* setState(() {
-      indexApuntado = valor;
-    }); */
-  }
   void opcionSeleccionada(int valor){
     if(widget.rol == "paciente"){
       obtenerPaciente(datosPersonales["dni"]);
@@ -274,10 +248,81 @@ class _MaquetaState extends State<Maqueta> {
       indexSeleccionado = valor;
     });
   }
+}
 
-  Widget DrawBar(double sW){
 
-    double separador = sW/50;
+class DrawBar extends StatefulWidget {
+
+  final ValueChanged<int> state;
+  final double sW;
+  final List<String> opciones;
+  final List<String> iconos;
+  final String rol;
+
+  const DrawBar({
+    Key key, this.state,
+    this.sW,
+    this.opciones,
+    this.iconos,
+    this.rol
+  }) : super(key: key);
+  
+
+  @override
+  _DrawBarState createState() => _DrawBarState();
+}
+
+class _DrawBarState extends State<DrawBar> {
+  List<String> opciones;
+  List<String> iconos;
+
+  //Obtener los datos de que pantallas, opciones e iconos habran, dados desde [rol]Perfil
+  void obtenerDatos(){
+    if(widget.rol == "paciente"){
+      pantallas = [
+        FichaPersonal(),
+        Citas(state: widget.state),
+        PlanDental(state: widget.state),
+        //Notificaciones(),
+        EditarPerfil(state: widget.state)
+      ];
+    }else if(widget.rol == "personal"){
+      pantallas = [
+        Container(),
+        Container(),
+        Clientes(),
+        EspecialidadesPersonal(state: widget.state),
+        Container(),
+      ];
+    }else if(widget.rol == "admin"){
+      pantallas = [
+        Container(),
+        Container(),
+        Clientes(),
+        Clientes(),
+        EspecialidadesPersonal(state: widget.state),
+        Container(),
+      ];
+    }
+    opciones = widget.opciones;
+    iconos = widget.iconos;
+  }
+
+
+  
+  void opcionApuntada(int valor){
+    setState(() {
+      indexApuntado = valor;
+      print("EL index $valor fue apuntado");
+    });
+  }
+
+  double alturaOpcion = 55;
+
+  @override
+  Widget build(BuildContext context) {
+
+    obtenerDatos();
 
     return Container(
       child: Stack(
@@ -295,7 +340,7 @@ class _MaquetaState extends State<Maqueta> {
           ),
           Column(
             children: [
-              for (var i = 0; i < opciones.length; i++)
+              for (var i = 0; i < widget.opciones.length; i++)
                 opcionDraw(separador, i)
             ],
           ),
@@ -340,8 +385,8 @@ class _MaquetaState extends State<Maqueta> {
 
     return GestureDetector(
       onTap: () {
-        opcionSeleccionada(valor);
-        if(valor == opciones.length-1){
+        widget.state(valor);
+        if(valor == widget.opciones.length-1){
           showDialog(
             context: context,
             builder: (context){
@@ -360,7 +405,7 @@ class _MaquetaState extends State<Maqueta> {
                   MyROutlineButton(
                     onPressed: (){
                       Navigator.pop(context);
-                      opcionSeleccionada(ultimoIndexSeleccionado);
+                      widget.state(ultimoIndexSeleccionado);
                     },
                     child: MyRText(
                       text: "Cancelar",
@@ -395,7 +440,7 @@ class _MaquetaState extends State<Maqueta> {
       },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        onHover: (_) {opcionApuntada(valor);},
+        onEnter: (_) {opcionApuntada(valor);},
         onExit: (_) {opcionApuntada(10);},
         child: Container(
           height: alturaOpcion,
@@ -414,13 +459,13 @@ class _MaquetaState extends State<Maqueta> {
                   height: 14,
                   width: 16,
                   child: Image.asset(
-                    iconos[valor],
+                    widget.iconos[valor],
                     color: logicaIcono(),
                     alignment: Alignment.center,
                   )
                 ),
                 SizedBox(width: separador * 3/5),
-                MyRText(text: opciones[valor], color: logicaLetra(), tipo: "bodyL", bold: 5,),
+                MyRText(text: widget.opciones[valor], color: logicaLetra(), tipo: "bodyL", bold: 5,),
               ],
             ),
           )
@@ -429,6 +474,8 @@ class _MaquetaState extends State<Maqueta> {
     );
   }
 }
+
+
 
 //Widget con la imagen del perfil cerca, que usare para todas las pantallas donde vaya imagen de perfil cerca
 Widget perfilCerca(){

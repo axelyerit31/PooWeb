@@ -6,15 +6,23 @@ import '../../mystyle.dart';
 import 'clientes.dart';
 
 class EspecialidadesPersonal extends StatelessWidget {
+
+  final ValueChanged<int> state;
+  const EspecialidadesPersonal({this.state});
+
   @override
   Widget build(BuildContext context) {
+
+    print("Se cargo EspecialidadesPersonal");
+
     return Container(
       child: Column(
         children: [
           header(),
+          SizedBox(height: 20),
           TextButton(
             onPressed: (){
-              editarEspecialidadAlert("", "", "", "Agregar", context);
+              editarEspecialidadAlert("", "", "", "Agregar", context, state);
             },
             child: MyRText(
               text: "+ Agregar Especialidad",
@@ -30,7 +38,7 @@ class EspecialidadesPersonal extends StatelessWidget {
               color: Colors.white
             ),
             padding: EdgeInsets.symmetric(horizontal: 0),
-            child: SingleChildScrollView(child: TablaEspecialidades())
+            child: SingleChildScrollView(child: TablaEspecialidades(state: state))
           ),
         ],
       )
@@ -39,11 +47,18 @@ class EspecialidadesPersonal extends StatelessWidget {
 }
 
 class TablaEspecialidades extends StatelessWidget {
-  Color colorSeparador = Colors.transparent;
-  double anchoSeparador = 15;
+  
+  final ValueChanged<int> state;
+
+  const TablaEspecialidades({this.state});
 
   @override
   Widget build(BuildContext context) {
+
+    
+  Color colorSeparador = Colors.transparent;
+  double anchoSeparador = 15;
+
     return Container(
       child: FutureBuilder(
         future: obtenerEspecialiadesFuture(),
@@ -52,6 +67,7 @@ class TablaEspecialidades extends StatelessWidget {
             return Center(child: CircularProgressIndicator(),);
           }else{
             return DataTable(
+              dataRowHeight: 70,
               showCheckboxColumn: false,
               dividerThickness: 2,
               sortColumnIndex: 0,
@@ -74,7 +90,7 @@ class TablaEspecialidades extends StatelessWidget {
                         "Editar",
                         (){
                           Navigator.pop(context);
-                          editarEspecialidadAlert(snapshot.data[i]["id_esp"], snapshot.data[i]["nombre_esp"], snapshot.data[i]["descripcion_esp"], "Editar", context);
+                          editarEspecialidadAlert(snapshot.data[i]["id_esp"], snapshot.data[i]["nombre_esp"], snapshot.data[i]["descripcion_esp"], "Editar", context, state);
                         },
                         rolGlobal == "admin",
                         "Eliminar",
@@ -88,6 +104,7 @@ class TablaEspecialidades extends StatelessWidget {
                               Navigator.pop(context);
                               borrarEspecialidad(snapshot.data[i]["id_esp"]);
                               rowAlert("La especialidad se eliminó exitosamente.", context, "¡Hecho!");
+                              state(3);
                             },
                             true,
                             "Cancelar",
@@ -118,7 +135,8 @@ class TablaEspecialidades extends StatelessWidget {
 
 
 //Alerta para mostrar cuando un usuario se convierta en paciente
-AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion, String accion, BuildContext context){
+AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion, String accion, BuildContext context, ValueChanged<int> state){
+  
   showDialog(
     context: context,
     builder: (BuildContext context){
@@ -174,6 +192,7 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
                 if(_controlNombreEsp.text != "" && _controlDescripcionEsp.text != ""){
                   editarEspecialidad(id, _controlNombreEsp.text, _controlDescripcionEsp.text);
                   Navigator.pop(context);
+                  state(3);
                   _controlDescripcionEsp.clear();
                   _controlNombreEsp.clear();
                   rowAlert("La especialidad se editó exitosamente.", context, "¡Hecho!");
@@ -184,6 +203,7 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
                 if(_controlNombreEsp.text != "" && _controlDescripcionEsp.text != ""){
                   insertarEspecialidad(_controlNombreEsp.text, _controlDescripcionEsp.text);
                   Navigator.pop(context);
+                  state(3);
                   _controlDescripcionEsp.clear();
                   _controlNombreEsp.clear();
                   rowAlert("La especialidad se agregó exitosamente.", context, "¡Hecho!");
@@ -191,6 +211,7 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
                   rowAlert("Asegúrese de llenar todos los campos.", context);
                 }
               }
+              
             },
             child: MyRText(text: accion, tipo: "bodyLLL", color: Colors.white, bold: 5)
           )

@@ -745,6 +745,8 @@ class Footer extends StatelessWidget {
 
     return Stack(
       children: [
+
+        //Armando el fondo
         Container(
           alignment: Alignment.center,
           width: double.infinity,
@@ -782,6 +784,8 @@ class Footer extends StatelessWidget {
             ],
           ),
         ),
+
+        //
         Container(
           height: hFooter,
           width: double.infinity,
@@ -796,7 +800,8 @@ class Footer extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/footer/bottomLeft.png"),
-                      alignment: Alignment.bottomLeft
+                      alignment: Alignment.bottomLeft,
+                      scale: 0.1
                     ),
                   ),
                 ),

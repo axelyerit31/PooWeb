@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poo_web/myWidgets.dart';
 import 'package:poo_web/pages/pacientes/fichaPersonal.dart';
 
 import '../../mystyle.dart';
@@ -7,6 +8,11 @@ import '../maquetaPerfil.dart';
 import 'citas.dart';
 
 class PlanDental extends StatefulWidget {
+
+  final ValueChanged<int> state;
+
+  const PlanDental({this.state});
+
   @override
   _PlanDentalState createState() => _PlanDentalState();
 }
@@ -21,7 +27,7 @@ class _PlanDentalState extends State<PlanDental> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _header(),
+            _header(context, widget.state),
             _tiempoAfiliado(context)
           ],
         ),
@@ -30,7 +36,7 @@ class _PlanDentalState extends State<PlanDental> {
   }
 }
 
-Widget _header(){
+Widget _header(BuildContext context, ValueChanged<int> state){
   return Container(
     child: Row(
       mainAxisSize: MainAxisSize.min,
@@ -46,11 +52,11 @@ Widget _header(){
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _planDental("${datosPlanes[2]["plan"]}", "${datosPlanes[2]["costo"]}0"),
+              _planDental("${datosPlanes[2]["id"]}", "${datosPlanes[2]["plan"]}", "${datosPlanes[2]["costo"]}0", context, state),
               SizedBox(height: separador/4),
-              _planDental("${datosPlanes[1]["plan"]}", "${datosPlanes[1]["costo"]}0"),
+              _planDental("${datosPlanes[1]["id"]}", "${datosPlanes[1]["plan"]}", "${datosPlanes[1]["costo"]}0", context, state),
               SizedBox(height: separador/4),
-              _planDental("${datosPlanes[0]["plan"]}", "${datosPlanes[0]["costo"]}.00"),
+              _planDental("${datosPlanes[0]["id"]}", "${datosPlanes[0]["plan"]}", "${datosPlanes[0]["costo"]}.00", context, state),
             ],
           )
         )
@@ -59,13 +65,12 @@ Widget _header(){
   );
 }
 
-Widget _planDental(String plan, String precio){
+Widget _planDental(String id, String plan, String precio, BuildContext context, ValueChanged<int> state){
 
   double alturaPlan = 40;
   double anchoPlan = 400;
 
   Widget planAfiliado(){
-
     if(plan == datosPersonales["plan"]){
       return TextButton(
         style: TextButton.styleFrom(
@@ -81,7 +86,30 @@ Widget _planDental(String plan, String precio){
           color: Colors.white,
           bold: 7
         ),
-        onPressed: () {},
+        onPressed: () {
+          if(id == "0"){
+            rowAlert(
+              "Este plan no es pagado, lo usamos para concientizar a nuestros clientes sobre todos los problemas que puede tener sin un seguro dental.", context,
+              "El Plan Cero es un recordatorio"
+            );
+          }else{
+            rowAlert("¿Está seguro que desea desafiliarse?", context,
+              "Desafiliarse de Plan $plan",
+              "Desafiliarme",
+              (){
+                Navigator.pop(context);
+                editarActualizarPlan("0", datosPersonales["dni"]);
+                state(2);
+              },
+              true,
+              "Cancelar",
+              (){
+                Navigator.pop(context);
+              }
+            );
+            
+          }
+        },
       );
     }else{
       return TextButton(
@@ -98,7 +126,41 @@ Widget _planDental(String plan, String precio){
           color: MyColors().colorOscuro(),
           bold: 7
         ),
-        onPressed: () {},
+        onPressed: () {
+          rowAlert("¿Desea hacer el pago en Sonríamos Juntos, o procederá de forma virtual?", context,
+            datosPersonales["sexo"] == "Masculino" ? "Bienvenido al Plan $plan" : "Bienvenida al Plan $plan",
+            "Pago Virtual",
+            (){
+              Navigator.pop(context);
+              rowAlert("Pago por método virtual.", context,
+                "Pasarela de pago",
+                "Pagar",
+                (){
+                  Navigator.pop(context);
+                  editarActualizarPlan(id, datosPersonales["dni"]);
+                  state(2);
+                  state(2);
+                }
+              );
+              print("Paso a pasarela");
+            },
+            true,
+            "Pago en local",
+            (){
+              Navigator.pop(context);
+              rowAlert("Te esperamos en Sonríamos Juntos, nos encontramos en Av. Calderon Espino, cdra. 5, frente al restaurante NhGozu. ¡Ven cuando quieras!", context,
+                "Gracias por afiliarte al Plan $plan",
+                "Aceptar",
+                (){
+                  Navigator.pop(context);
+                  editarActualizarPlan(id, datosPersonales["dni"]);
+                  state(2);
+                  state(2);
+                }
+              );
+            }
+          );
+        },
       );
     }
   }

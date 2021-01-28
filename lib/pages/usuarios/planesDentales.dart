@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
 import '../datos.dart';
+import 'registro.dart';
 
 
 double _separador = 20;
@@ -18,6 +22,9 @@ class _PlanesDentalesHomeState extends State<PlanesDentalesHome> {
   @override
   Widget build(BuildContext context) {
 
+    obtenerPlanes();
+    obtenerEspecialidades();
+
     var sW = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -27,17 +34,41 @@ class _PlanesDentalesHomeState extends State<PlanesDentalesHome> {
           tipo: rolGlobal,
         )
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              _Razones(sW),
-              _MejorSonrisa(sW),
-              _Planes(sW),
-              Footer()
-            ],
-          )
-        ),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [
+                  _Razones(sW),
+                  _MejorSonrisa(sW),
+                  _Planes(sW),
+                  Footer()
+                ],
+              )
+            ),
+          ),
+          Container(
+            width: sW,
+            height: 700,
+            alignment: Alignment.centerRight,
+            //padding: EdgeInsets.only(left: sW/2),
+            child: Container(
+              width: 150,
+              height: 300,
+              alignment: Alignment.centerRight,
+              child: Transform.rotate(
+                angle: pi*1/2,
+                child: MyRText(
+                  text: "Contáctanos",
+                  tipo: "bodyL",
+                  color: MyColors().colorOscuro(),
+                  bold: 5,
+                )
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -143,58 +174,79 @@ class _Razones extends StatelessWidget {
 }
 
 Widget _MejorSonrisa(double sW){
-  return Container(
-    color: MyColors().colorClaro(),
-    height: sizeMiPantalla - sizeAppBar,
-    width: double.infinity,
-    child: Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          margin: EdgeInsets.only(right: 0),
-          height: sizeMiPantalla - sizeAppBar - 120,
-          width: sW/1.3,
+  return Stack(
+    children: [
+      Container(
+        height: sizeMiPantalla - sizeAppBar,
+        width: sW,
+        color: MyColors().colorClaro(),
+      ),/* 
+      Opacity(
+        opacity: 0.12,
+        child: Container(
+          height: sizeMiPantalla - sizeAppBar,
+          width: sW,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/mejorsonrisa.png"),
-              fit: BoxFit.contain,
-              alignment: Alignment.centerRight
+              image: AssetImage("assets/clinica-dental.png"),
+              fit: BoxFit.fitWidth
             )
           ),
         ),
-        Container(
-          height: sizeMiPantalla - sizeAppBar,
-          width: sW/1.3,
-          alignment: Alignment.centerLeft,
-          child: Container(
-            width: 450,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.poppins(color: MyColors().colorOscuro(), fontWeight: FontWeight.w500, fontSize: 28),
-                    children: [
-                      TextSpan(text: "Nuestros planes le ofrecen "),
-                      TextSpan(text: "completa protección ", style: GoogleFonts.poppins(color: MyColors().colorVerdeOscuro(), fontWeight: FontWeight.w500, fontSize: 28)),
-                      TextSpan(text: "frente a los problemas dentales que pudieran afectarle a usted o a su familia, desde una limpieza rutinaria hasta cirugías bucales. No espere a estar en problemas para buscarnos."),
-                    ]
-                  )
-                ),
-                SizedBox(height: _separador),
-                MyRText(
-                  text: "Protégete ya.",
-                  tipo: "subtitle",
-                  color: MyColors().colorVerdeOscuro(),
-                  bold: 5
-                ),
-              ],
+      ), */
+      Container(
+        height: sizeMiPantalla - sizeAppBar,
+        width: double.infinity,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 0),
+              height: sizeMiPantalla - sizeAppBar - 120,
+              width: sW/1.3,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/mejorsonrisa.png"),
+                  fit: BoxFit.contain,
+                  alignment: Alignment.centerRight
+                )
+              ),
             ),
-          ),
-        )
-      ],
-    ),
+            Container(
+              height: sizeMiPantalla - sizeAppBar,
+              width: sW/1.3,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                width: 450,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        style: GoogleFonts.poppins(color: MyColors().colorOscuro(), fontWeight: FontWeight.w500, fontSize: 26),
+                        children: [
+                          TextSpan(text: "Nuestros planes le ofrecen "),
+                          TextSpan(text: "completa protección ", style: GoogleFonts.poppins(color: MyColors().colorVerdeOscuro(), fontWeight: FontWeight.w500, fontSize: 26)),
+                          TextSpan(text: "frente a los problemas dentales que pudieran afectarle a usted o a su familia, desde una limpieza rutinaria hasta cirugías bucales. No espere a estar en problemas para buscarnos."),
+                        ]
+                      )
+                    ),
+                    SizedBox(height: _separador),
+                    MyRText(
+                      text: "Protégete ya.",
+                      tipo: "subtitle",
+                      color: MyColors().colorVerdeOscuro(),
+                      bold: 5
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    ],
   );
 }
 
@@ -343,7 +395,7 @@ class _TarjetaDental extends StatefulWidget {
 class __TarjetaDentalState extends State<_TarjetaDental> {
 
   double _anchoPlan = 300;
-  double _alturaPlan =  400;  
+  double _alturaPlan =  400;
 
   double margin = 30;
   Duration _duracion = Duration(milliseconds: 250);
@@ -372,7 +424,7 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
                 child: MyRButton(
                   onPressed: () {},
                   child: MyRText(
-                    text: "Afiliarme",
+                    text: widget.indice != 0 ? "Afiliarme" : "¿Qué es el Plan Cero?",
                     tipo: "bodyLL",
                     color: Colors.white,
                     bold: 5
@@ -384,10 +436,48 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
         ),
         GestureDetector(
           onTap: (){
-            if(datosPersonales["dni"] == null){
-              print("No hay cuenta");
+            if(widget.indice == 0){
+              rowAlert(
+                "Este plan no es pagado, lo usamos para concientizar a nuestros clientes sobre todos los problemas que puede tener sin un seguro dental.", context,
+                "El Plan Cero es un recordatorio"
+              );
             }else{
-              print("Hay cuenta");
+              if(datosPersonales["dni"] == null){
+                rowAlert("Solo hace falta un paso más. Regístrate para poder acceder a tu ficha personal, y desde ahí manejar todos tus beneficios.", context,
+                  "Tu sonrisa te lo agradecerá",
+                  "Registrarme",
+                  () {
+                    planDentalDefecto = widget.indice;
+                    planDentalFecha = "0";
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                      new CupertinoPageRoute(builder: (context) => Registro()));
+                  },
+                  true,
+                  "Cancelar",
+                  (){
+                    Navigator.pop(context);
+                  }
+                );
+              }else{
+                rowAlert("¿Desea hacer el pago en Sonríamos Juntos, o procederá de forma virtual?", context,
+                  "Bienvenido al Plan ${widget.datos["plan"]}",
+                  "Pago Virtual",
+                  (){
+                    print("Paso a pasarela");
+                    editarActualizarPlan(widget.datos["id"], datosPersonales["dni"]);
+                  },
+                  true,
+                  "Pago en local",
+                  (){
+                    Navigator.pop(context);
+                    rowAlert("Te esperamos en Sonríamos Juntos, nos encontramos en Av. Calderon Espino, cdra. 5, frente al restaurante NhGozu. ¡Ven cuando quieras!", context,
+                      "Gracias por afiliarte al Plan ${widget.datos["plan"]}"
+                    );
+                    editarActualizarPlan(widget.datos["id"], datosPersonales["dni"]);
+                  }
+                );
+              }
             }
           },
           child: MouseRegion(

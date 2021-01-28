@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
+import 'planesDentales.dart';
 
 List<String> formHintsRegistro = [
   "Correo electrónico",
@@ -46,6 +47,9 @@ List formControllersRegistro = [
   controlDireccion
 ];
 
+int planDentalDefecto = 0;
+String planDentalFecha = "0";
+
 var urlRegistro = "http://192.168.18.3/PooWeb/registro.php";
 
 void registroPaciente(){
@@ -58,6 +62,8 @@ void registroPaciente(){
     "celular": controlCelular.text,
     "sexo": controlSexo,
     "direccion": controlDireccion.text,
+    "id_plan" : "$planDentalDefecto",
+    "fecha" : planDentalFecha
   });
 }
 

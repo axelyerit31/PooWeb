@@ -56,6 +56,15 @@ class Datos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    if(rolGlobal == "paciente"){
+      obtenerPaciente(datosPersonales["dni"]);
+    }else if(rolGlobal == "personal"){
+      obtenerPersonal(datosPersonales["nro"]);
+    }else if(rolGlobal == "admin"){
+      obtenerAdmin(datosPersonales["id"]);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

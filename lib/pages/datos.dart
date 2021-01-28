@@ -38,6 +38,7 @@ final urlBorrarPacienteUsuario = url + "borrarPaciente.php";
 
 //URL para editar datos de MySql
 final urlEditarEspecialidad = url + "editarEspecialidad.php";
+final urlActualizarPlan = url + "actualizarPlan.php";
 
 
 //Funciones para obtener datos de MySql
@@ -118,14 +119,17 @@ void obtenerPlanes() async{
   datosPlanes.clear();
   datosPlanes = [
     {
+      "id" : resultado[0]["id_plan"],
       "plan" : resultado[0]["nombre_plan"],
       "costo" : resultado[0]["costo_plan"],
     },
     {
+      "id" : resultado[1]["id_plan"],
       "plan" : resultado[1]["nombre_plan"],
       "costo" : resultado[1]["costo_plan"],
     },
     {
+      "id" : resultado[2]["id_plan"],
       "plan" : resultado[2]["nombre_plan"],
       "costo" : resultado[2]["costo_plan"],
     },
@@ -205,16 +209,16 @@ void borrarCita(int id) async{
   });
 }
 
-void borrarEspecialidad(int id) async{
+void borrarEspecialidad(String id) async{
   http.post(urlBorrarEspecialidad, body: {
-    "id_esp": id.toString()
+    "id_esp": id
   });
 }
 
 //Funcion para borrar a usuario o paciente
-void borrarPacienteUsuario(int id) async{
+void borrarPacienteUsuario(String id) async{
   http.post(urlBorrarPacienteUsuario, body: {
-    "dni": id.toString()
+    "dni": id
   });
 }
 
@@ -225,5 +229,12 @@ void editarEspecialidad(String id, String nombre, String descripcion) async{
     "id_esp": id,
     "nombre_esp" : nombre,
     "descripcion_esp" : descripcion
+  });
+}
+
+void editarActualizarPlan(String id, String dni) async{
+  http.post(urlActualizarPlan, body: {
+    "id_plan": id,
+    "dni_pac" : dni
   });
 }
