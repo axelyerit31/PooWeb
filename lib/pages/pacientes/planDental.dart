@@ -93,7 +93,7 @@ Widget _planDental(String id, String plan, String precio, BuildContext context, 
               "El Plan Cero es un recordatorio"
             );
           }else{
-            rowAlert("¿Está seguro que desea desafiliarse?", context,
+            rowAlert("¿Está seguro que desea desafiliarse? Perderá todos sus beneficios y la posibilidad a un descuento del 25% de por vida.", context,
               "Desafiliarse de Plan $plan",
               "Desafiliarme",
               (){
@@ -237,19 +237,6 @@ Widget _planDental(String id, String plan, String precio, BuildContext context, 
         ),
       ],
     )
-  );
-}
-
-Widget _estadoPlan(){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      MyRText(text: "Estado", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
-      Padding(
-        padding: EdgeInsets.only(left: sangria),
-        child: MyRText(text: "Pagado", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-      ),
-    ], 
   );
 }
 
