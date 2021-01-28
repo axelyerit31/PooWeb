@@ -904,7 +904,15 @@ AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, S
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            MyRText(text: encabezado == null ? "¡Ha ocurrido un error!" : encabezado, tipo: "body", color: MyColors().colorOscuro(), bold: 6),
+            Container(
+              width: 300,
+              child: MyRText(
+                text: encabezado == null ? "¡Ha ocurrido un error!" : encabezado,
+                tipo: "body",
+                color: MyColors().colorOscuro(),
+                bold: 6
+              )
+            ),
             Transform.translate(
               offset: Offset(20, -20),
               child: Container(
@@ -919,10 +927,13 @@ AlertDialog rowAlert(String mensaje, BuildContext context, [String encabezado, S
             )
           ],
         ),
-        content: MyRText(
-          text: mensaje,
-          tipo: "bodyLL", color: MyColors().colorAzulMedio(),
-          bold: 5
+        content: Container(
+          width: 300,
+          child: MyRText(
+            text: mensaje,
+            tipo: "bodyLL", color: MyColors().colorAzulMedio(),
+            bold: 5
+          ),
         ),
         actions: [
           if (function2 != null && admin)

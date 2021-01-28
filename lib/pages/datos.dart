@@ -64,30 +64,18 @@ void obtenerPaciente(String identificador) async{
 
   var resultado = jsonDecode(resp.body);
   
-  if (resultado[0].length > largoDatosConPlan){
-    datosPersonales = {
-      "dni" : resultado[0]["dni_usu"],
-      "nombres" : resultado[0]["nombres_usu"],
-      "apellidos" : resultado[0]["apellidos_usu"],
-      "correo" : resultado[0]["correo_usu"],
-      "celular" : resultado[0]["telefono_usu"],
-      "sexo" : resultado[0]["sexo_usu"],
-      "direccion" : resultado[0]["direccion_pac"],
-      "idPlan" : resultado[0]["id_plan"],
-      "plan" : resultado[0]["nombre_plan"],
-      "afiliacionPlan" : resultado[0]["fecha_afiliacion_plan"],
-    };
-  }else{
-    datosPersonales = {
-      "dni" : resultado[0]["dni_usu"],
-      "nombres" : resultado[0]["nombres_usu"],
-      "apellidos" : resultado[0]["apellidos_usu"],
-      "correo" : resultado[0]["correo_usu"],
-      "celular" : resultado[0]["telefono_usu"],
-      "sexo" : resultado[0]["sexo_usu"],
-      "direccion" : resultado[0]["direccion_pac"],
-    };
-  }
+  datosPersonales = {
+    "dni" : resultado[0]["dni_usu"],
+    "nombres" : resultado[0]["nombres_usu"],
+    "apellidos" : resultado[0]["apellidos_usu"],
+    "correo" : resultado[0]["correo_usu"],
+    "celular" : resultado[0]["telefono_usu"],
+    "sexo" : resultado[0]["sexo_usu"],
+    "direccion" : resultado[0]["direccion_pac"],
+    "idPlan" : resultado[0]["id_plan"],
+    "plan" : resultado[0]["nombre_plan"],
+    "afiliacionPlan" : resultado[0]["fecha_afiliacion_plan"],
+  };
 }
 
 void obtenerPersonal(String identificador) async{

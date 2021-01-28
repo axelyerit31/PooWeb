@@ -65,6 +65,7 @@ Widget _planDental(String plan, String precio){
   double anchoPlan = 400;
 
   Widget planAfiliado(){
+
     if(plan == datosPersonales["plan"]){
       return TextButton(
         style: TextButton.styleFrom(
@@ -226,7 +227,7 @@ Widget _tiempoAfiliado(BuildContext context){
                     ),
                     alignment: Alignment.centerLeft,
                     child: FractionallySizedBox(
-                      widthFactor: 1/7,
+                      widthFactor: datosPersonales["plan"] == datosPlanes[0]["plan"] ? 0 : 1/7,
                       child: Container(
                         height: alturaBarra,
                         decoration: BoxDecoration(

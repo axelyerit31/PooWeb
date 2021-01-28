@@ -72,14 +72,6 @@ Future<List> editarPaciente() async{
     "telefono": _controlCelular.text,
     "sexo": datosPersonales["sexo"]
   });
-
-  datosPersonales = {
-    "nombres": _controlNombres.text,
-    "apellidos": _controlApellidos.text,
-    "correo": _controlCorreo.text,
-    "direccion": _controlDireccion.text,
-    "celular": _controlCelular.text,
-  };
 }
 
 
@@ -127,6 +119,13 @@ class EditarPerfil extends StatelessWidget {
                   if(_controlContrasena.text == _controlConfirmarContrasena.text){
                     editarPaciente();
                     obtenerPaciente(datosPersonales["dni"]);
+                    datosPersonales = {
+                      "nombres": _controlNombres.text,
+                      "apellidos": _controlApellidos.text,
+                      "correo": _controlCorreo.text,
+                      "direccion": _controlDireccion.text,
+                      "celular": _controlCelular.text,
+                    };
                     for (var i = 0; i < _formControllers.length; i++) {
                       print("Se limpio _${_formControllers[i].text}");
                       _formControllers[i].clear();

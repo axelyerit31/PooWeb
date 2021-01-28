@@ -35,21 +35,8 @@ class FichaPersonal extends StatelessWidget {
                 children: [
                   Datos(),
                   SizedBox(height: separador),
-                  Builder(
-                    builder: (context){
-                      if(datosPersonales.length > largoDatosConPlan){
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            PlanDentalFicha(),
-                            SizedBox(height: separador),
-                          ]
-                        );
-                      }else{
-                        return Container();
-                      }
-                    }
-                  ),
+                  PlanDentalFicha(),
+                  SizedBox(height: separador),
                   _Recomendaciones()
                 ]
               )
@@ -140,8 +127,8 @@ class PlanDentalFicha extends StatelessWidget {
               children: [
                 MyRText(text: "Plan ${datosPersonales["plan"]} ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
                 MyRText(text: "S/. ${datosPlanes[int. parse(datosPersonales["idPlan"])]["costo"]}0", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
-              ],
-            ),
+              ]
+            )
           ),
         ],
       ),

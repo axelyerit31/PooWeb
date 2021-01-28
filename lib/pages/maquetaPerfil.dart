@@ -257,9 +257,9 @@ class _MaquetaState extends State<Maqueta> {
   double alturaOpcion = 55;
 
   void opcionApuntada(int valor){
-    setState(() {
+    /* setState(() {
       indexApuntado = valor;
-    });
+    }); */
   }
   void opcionSeleccionada(int valor){
     if(widget.rol == "paciente"){

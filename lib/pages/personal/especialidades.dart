@@ -131,14 +131,14 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: 400,
+              width: 300,
               child: MyRTextFormField(
                 textColor: MyColors().colorGris(),
                 hintText: "Nombre",
                 controller: _controlNombreEsp,
                 keyboardType: TextInputType.text,
                 obscureText: false,
-                formColor: MyColors().colorGrisClaro()
+                formColor: MyColors().colorClaro()
               ),
             ),
             Transform.translate(
@@ -155,14 +155,17 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
             )
           ],
         ),
-        content: MyRTextFormField(
-          maxLines: 5,
-          textColor: MyColors().colorGris(),
-          hintText: "Descripción",
-          controller: _controlDescripcionEsp,
-          keyboardType: TextInputType.text,
-          obscureText: false,
-          formColor: MyColors().colorGrisClaro()
+        content: Container(
+          width: 300,
+          child: MyRTextFormField(
+            maxLines: 5,
+            textColor: MyColors().colorGris(),
+            hintText: "Descripción",
+            controller: _controlDescripcionEsp,
+            keyboardType: TextInputType.text,
+            obscureText: false,
+            formColor: MyColors().colorClaro()
+          ),
         ),
         actions: [
           MyRButton(

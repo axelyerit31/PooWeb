@@ -3,9 +3,17 @@ import 'package:poo_web/myWidgets.dart';
 import 'package:poo_web/pages/baseDatos/bdUsuario.dart';
 import 'package:poo_web/pages/pacientes/fichaPersonal.dart';
 
+import 'package:time_machine/time_machine.dart' as time;
+
 import '../../mystyle.dart';
 import '../datos.dart';
 import '../maquetaPerfil.dart';
+
+
+void datosPacienteActual(){
+  var now = time.Instant.now();
+}
+
 
 
 class Clientes extends StatefulWidget {
