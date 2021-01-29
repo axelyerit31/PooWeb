@@ -30,7 +30,6 @@ String nombresVertical(){
       }else{
         nombre += nombres.substring(i, i+1);
       }
-      
     }
   }
 

@@ -14,6 +14,7 @@ import 'mystyle.dart';
 import 'pages/pacientes/homePacientes.dart';
 import 'pages/pacientes/pacientesPerfil.dart';
 import 'pages/personal/personalPerfil.dart';
+import 'pages/usuarios/cita.dart';
 import 'pages/usuarios/home.dart';
 import 'pages/usuarios/login.dart';
 import 'pages/usuarios/registro.dart';
@@ -404,7 +405,7 @@ class Header extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(right: 100),
               width: sW * 2/6,
-              child: _contentText(sW),
+              child: _contentText(sW, context),
             ),
           ),
           
@@ -442,7 +443,7 @@ class Header extends StatelessWidget {
             alignment: Alignment.centerLeft,
             width: sW * 3/3.5,
             padding: EdgeInsets.only(left: sW/20),
-            child: _contentText(sW),
+            child: _contentText(sW, context),
           ),
           SizedBox(height: separador),
           Container(
@@ -467,7 +468,7 @@ class Header extends StatelessWidget {
     );
   }
 
-  Column _contentText(double sW) {
+  Column _contentText(double sW, BuildContext context) {
 
     double separador = 15;
 
@@ -498,7 +499,10 @@ class Header extends StatelessWidget {
             tipo: "buttonContent",
             bold: 5
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+              new CupertinoPageRoute(builder: (context) => CrearCita(),));
+          },
         ),
         SizedBox(height: separador),
         MyROutlineButton(

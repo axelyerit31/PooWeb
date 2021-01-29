@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:poo_web/pages/datos.dart';
 
 import '../../myWidgets.dart';
@@ -137,6 +138,7 @@ class TablaEspecialidades extends StatelessWidget {
 //Alerta para mostrar cuando un usuario se convierta en paciente
 AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion, String accion, BuildContext context, ValueChanged<int> state){
   
+  
   showDialog(
     context: context,
     builder: (BuildContext context){
@@ -150,14 +152,38 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
           children: [
             Container(
               width: 300,
-              child: MyRTextFormField(
-                textColor: MyColors().colorGris(),
-                hintText: "Nombre",
+              child: TextFormField(
+                //enabled: false,
+                cursorHeight: 20,
+                cursorColor: MyColors().colorOscuro(),
                 controller: _controlNombreEsp,
                 keyboardType: TextInputType.text,
-                obscureText: false,
-                formColor: MyColors().colorClaro()
-              ),
+                style: GoogleFonts.poppins(
+                  fontSize: 18,
+                  color: MyColors().colorOscuro(),
+                  fontWeight: FontWeight.w600
+                ),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hoverColor: Colors.white,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(roundedL)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(roundedL)
+                  ),
+                  hintText: "Nombre",
+                  contentPadding: EdgeInsets.zero,
+                  hintStyle: GoogleFonts.poppins(
+                    fontSize: 18,
+                    color: MyColors().colorGris(),
+                    fontWeight: FontWeight.w400
+                  ),
+                ),
+              )
             ),
             Transform.translate(
               offset: Offset(20, -20),
@@ -174,23 +200,51 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
           ],
         ),
         content: Container(
+          padding: EdgeInsets.only(top:5),
           width: 300,
-          child: MyRTextFormField(
+          child: TextFormField(
+            //enabled: false,
             maxLines: 5,
-            textColor: MyColors().colorGris(),
-            hintText: "Descripción",
+            cursorHeight: 20,
+            cursorColor: MyColors().colorOscuro(),
             controller: _controlDescripcionEsp,
             keyboardType: TextInputType.text,
-            obscureText: false,
-            formColor: MyColors().colorClaro()
-          ),
+            style: GoogleFonts.poppins(
+              fontSize: 14,
+              color: MyColors().colorAzulMedio(),
+              fontWeight: FontWeight.w500
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hoverColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(roundedL)
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(roundedL)
+              ),
+              hintText: "Descripción",
+              contentPadding: EdgeInsets.zero,
+              hintStyle: GoogleFonts.poppins(
+                fontSize: 14,
+                color: MyColors().colorGris(),
+                fontWeight: FontWeight.w400
+              ),
+            ),
+          )
         ),
         actions: [
           MyRButton(
             onPressed: () {
               if(accion == "Editar"){
+
                 if(_controlNombreEsp.text != "" && _controlDescripcionEsp.text != ""){
                   editarEspecialidad(id, _controlNombreEsp.text, _controlDescripcionEsp.text);
+                  obtenerEspecialidades();
+                  obtenerEspecialiadesFuture();
                   Navigator.pop(context);
                   state(3);
                   _controlDescripcionEsp.clear();
@@ -202,6 +256,8 @@ AlertDialog editarEspecialidadAlert(String id, String nombre, String descripcion
               }else if(accion == "Agregar"){
                 if(_controlNombreEsp.text != "" && _controlDescripcionEsp.text != ""){
                   insertarEspecialidad(_controlNombreEsp.text, _controlDescripcionEsp.text);
+                  obtenerEspecialidades();
+                  obtenerEspecialiadesFuture();
                   Navigator.pop(context);
                   state(3);
                   _controlDescripcionEsp.clear();

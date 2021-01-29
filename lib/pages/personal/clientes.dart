@@ -68,22 +68,6 @@ class _ClientesState extends State<Clientes> {
                       ),
                     ]
                   ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 6
-                      ),
-                      primary: Colors.white
-                    ),
-                    onPressed: () {},
-                    child: MyRText(
-                      text: "+ Agregar Paciente",
-                      tipo: "bodyLL",
-                      color: MyColors().colorOscuro(),
-                      bold: 6
-                    )
-                  ),
                 ],
               ),
             ),
@@ -125,13 +109,136 @@ Widget header(){
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Datos(),
+            //_DatosCliente(),
             SizedBox(height: separador),
           ],
         )
       ],
     ),
   );
+}
+
+class _DatosCliente extends StatelessWidget {
+
+  List<int> obtenerFecha(String dato, String separador){
+    List<int> lista = [];
+    int ultimoIndice = 0;
+
+    for (var i = 0; i < dato.length; i++) {
+      if(dato.substring(i, i+1) == separador || i == dato.length-1){
+        if(i == dato.length-1) {i+=1;}
+        lista.add(int.parse(dato.substring(ultimoIndice, i)));
+        ultimoIndice = i+1;
+      }
+    }
+    return lista;
+  }
+
+  DateTime hoy = DateTime.now();
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: obtenerCitasLista(),
+      builder: (context, snapshot){
+        if(snapshot.hasError) {print(snapshot.error);}
+        if(snapshot.hasData){
+
+          String fechaCitaDespues;
+          String horaCitaDespues;
+          String fechaCitaAntes;
+          String horaCitaAntes;
+          DateTime hoy = DateTime.now();
+          DateTime citaFechaAntes;
+          DateTime citaFechaDespues;
+
+          for (var i = 0; i < snapshot.data.length; i++) {
+
+            fechaCitaDespues = snapshot.data[i]["fecha_cita"];
+            horaCitaDespues = snapshot.data[i]["fecha_cita"];
+
+            fechaCitaAntes = snapshot.data[i+1]["fecha_cita"];
+            horaCitaAntes = snapshot.data[i+1]["fecha_cita"];
+
+            citaFechaAntes = DateTime(
+              obtenerFecha(fechaCitaAntes, "-")[0],
+              obtenerFecha(fechaCitaAntes, "-")[1],
+              obtenerFecha(fechaCitaAntes, "-")[2],
+              obtenerFecha(horaCitaAntes, ":")[0],
+              obtenerFecha(horaCitaAntes, ":")[1]
+            );
+
+            citaFechaDespues = DateTime(
+              obtenerFecha(fechaCitaAntes, "-")[0],
+              obtenerFecha(fechaCitaAntes, "-")[1],
+              obtenerFecha(fechaCitaAntes, "-")[2],
+              obtenerFecha(horaCitaAntes, ":")[0],
+              obtenerFecha(horaCitaAntes, ":")[1]
+            );
+
+            if (hoy.isAfter(citaFechaAntes) && hoy.isBefore(citaFechaDespues)){
+              return FutureBuilder(
+                future: obtenerCliente(snapshot.data[i]["dni_usu"]),
+                builder: (context, snapshot2){
+                  if(snapshot2.hasError){print(snapshot2.error);}
+                  return !snapshot2.hasData
+                    ? Container()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          MyRText(text: "Cliente Actual", tipo: "subtitleL", bold: 7, color: MyColors().colorOscuro()),
+                          Padding(
+                            padding: EdgeInsets.only(left: sangria),
+                            child: MyRText(text: "${snapshot2.data[0]["nombres_usu"]} ${snapshot2.data[0]["apellidos_usu"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: sangria),
+                            child: MyRText(text: "${snapshot2.data[0]["correo_usu"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: sangria),
+                            child: Row(
+                              children: [
+                                MyRText(text: "DNI: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                                MyRText(text: "${snapshot2.data[0]["dni_usu"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: sangria),
+                            child: Row(
+                              children: [
+                                MyRText(text: "Celular: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                                MyRText(text: "${snapshot2.data[0]["telefono_usu"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+                              ],
+                            ),
+                          ),
+                          if(snapshot2.data.length > 6)
+                            Padding(
+                              padding: EdgeInsets.only(left: sangria),
+                              child: Row(
+                                children: [
+                                  MyRText(text: "Dirección: ", tipo: "bodyL", bold: 6, color: MyColors().colorOscuro()),
+                                  MyRText(text: "${snapshot2.data[0]["direccion_pac"]}", tipo: "bodyL", bold: 5, color: MyColors().colorAzulMedio()),
+                                ],
+                              ),
+                            ),
+                        ],
+                      );
+                }
+              );
+              
+            }else{
+              print(false);
+            }
+          }
+        }else{
+          return Container();
+        }
+      },
+    );
+  }
 }
 
 class TablaCitas extends StatefulWidget {

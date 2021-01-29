@@ -15,21 +15,26 @@ var datosCitas = [];
 //Datos de la pagina web
 var datosPlanes = [];
 var datosEspecialidades = [];
+var listaEspecialidades = [];
 
 final url = "http://192.168.18.3/PooWeb/";
 
 //URL para obtener datos de MySql
 final urlUsuarios = url + "obtenerPacientesUsuarios.php";
+final urlObtenerCliente = url + "obtenerCliente.php";
 final urlObtenerPaciente = url + "obtenerPaciente.php";
 final urlObtenerPersonal = url + "obtenerPersonal.php";
 final urlObtenerAdmin = url + "obtenerAdmin.php";
 final urlObtenerPlanes = url + "obtenerPlanesDentales.php";
 final urlObtenerCitas  = url + "obtenerCitas.php";
+final urlObtenerCitasLista  = url + "obtenerCitasLista.php";
 final urlObtenerEspecialidades = url + "obtenerEspecialidades.php";
 
 //URL para insertar datos en MySql
 final urlInsertarUsuarioPaciente = url + "insertarUsuarioPaciente.php";
 final urlInsertarEspecialidad = url + "insertarEspecialidad.php";
+final urlInsertarCita = url + "insertarCita.php";
+final urlInsertarCitaLista = url + "insertarCitaLista.php";
 
 //URL para borrar datos de MySql
 final urlBorrarCita = url + "borrarCita.php";
@@ -55,6 +60,16 @@ Future<List> obtenerPacienteFicha(String identificador) async{
 
   var resultado = jsonDecode(resp.body);
 
+  return resultado;
+}
+
+Future<Map> obtenerCliente(String identificador) async{
+  final resp = await http.post(urlObtenerCliente, body: {
+    "dni": identificador
+  });
+
+  var resultado = jsonDecode(resp.body)[0];
+  
   return resultado;
 }
 
@@ -158,22 +173,39 @@ void obtenerCitas() async{
   }
 }
 
+Future<List> obtenerCitasLista() async{
+  final resp = await http.post(urlObtenerCitasLista);
+
+  final respuesta = jsonDecode(resp.body);
+  return respuesta;
+}
+
 void obtenerEspecialidades() async{
   final res = await http.post(urlObtenerEspecialidades);
   
   final u = jsonDecode(res.body);
 
   datosEspecialidades.clear();
+  listaEspecialidades.clear();
   for (var i = 0; i < u.length; i++) {
     datosEspecialidades.add({
       "id" : u[i]["id_esp"],
       "nombre" : u[i]["nombre_esp"],
       "descripcion" : u[i]["descripcion_esp"],
     });
+    listaEspecialidades.add(u[i]["nombre_esp"]);
   }
 }
 
 Future<List> obtenerEspecialiadesFuture() async{
+  final res = await http.post(urlObtenerEspecialidades);
+  
+  final u = jsonDecode(res.body);
+
+  return u;
+}
+
+Future<List> obtenerCitasFuture() async{
   final res = await http.post(urlObtenerEspecialidades);
   
   final u = jsonDecode(res.body);
@@ -199,7 +231,6 @@ void insertarEspecialidad(String nombre, String descripcion) async{
     "descripcion": descripcion,
   });
 }
-
 
 //Funciones para eliminar datos de MySql
 
