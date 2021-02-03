@@ -11,10 +11,8 @@ double maxHeight = 0;
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     //obtenerPlanes();
     //obtenerEspecialidades();
-    
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
