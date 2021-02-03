@@ -37,7 +37,9 @@ class _CitasState extends State<Citas> {
                 ),
                 primary: Colors.white
               ),
-              onPressed: () {},
+              onPressed: () {
+                
+              },
               child: MyRText(
                 text: "+ Agregar Cita",
                 tipo: "bodyLL",
