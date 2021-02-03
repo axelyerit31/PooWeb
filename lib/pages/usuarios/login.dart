@@ -22,7 +22,7 @@ TextEditingController controlContrasena = new TextEditingController();
 
 var urlLogin = url + "login.php";
 
-Future<List> login(BuildContext context) async{
+void login(BuildContext context) async{
 
   final response = await http.post(urlLogin, body: {
     "correo": controlCorreo.text,
