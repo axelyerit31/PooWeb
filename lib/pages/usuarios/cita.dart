@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
 import '../datos.dart';
 import 'package:http/http.dart' as http;
+
+import 'despuesCita.dart';
 
 TextEditingController _controlNombre = new TextEditingController();
 TextEditingController _controlCorreo = new TextEditingController();
@@ -12,12 +16,17 @@ String _controlEspecialidad;
 TextEditingController _controlApellidos = new TextEditingController();
 TextEditingController _controlDni = new TextEditingController();
 TextEditingController _controlCelular = new TextEditingController();
+
+//Controllers que mostraran la fecha en los forms
 TextEditingController _controlFecha = new TextEditingController();
 TextEditingController _controlHora = new TextEditingController();
 
+//Variables que almacenaran las fechas correctamente formateadas para MySql
 String _controlEnvioFecha;
 String _controlEnvioHora;
 String _controlEnvioGenCita;
+
+//Variables que reciben los cambios del DateTimePicker
 DateTime dateInput;
 TimeOfDay timeInput;
 
@@ -45,8 +54,6 @@ List _formControllers = [
 ];
 
 bool vacio = false;
-
-final urlInsertarCita = url + "insertarCita.php";
 
 int idEspecialidad(){
   for (var i = 0; i < listaEspecialidades.length; i++) {
@@ -127,11 +134,13 @@ class CrearCita extends StatelessWidget {
                     _controlEnvioGenCita = DateTime.now().toString();
                     insertarCita();
                     for (var i = 0; i < _formControllers.length; i++) {
-                      _formControllers.clear();
+                      _formControllers[i].clear();
                     }
-                    _controlSexo = "";
-                    _controlEspecialidad = "";
+                    _controlSexo = null;
+                    _controlEspecialidad = null;
                     vacio = false;
+                    Navigator.push(context,
+                      new CupertinoPageRoute(builder: (context) => DespuesCita()));
                   }
                 },
                 child: MyRText(
@@ -249,8 +258,16 @@ class _FormularioCitaState extends State<FormularioCita> {
                 SizedBox(height: separaform),
                 
                 //Sexo
-                Center(
+                Container(
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: MyColors().colorGrisClaro(),
+                    borderRadius: BorderRadius.circular(roundedL)
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 25),
                   child: DropdownButton<String>(
+                    isExpanded: true,
+                    underline: Container(),
                     dropdownColor: MyColors().colorGrisClaro(),
                     elevation: 0,
                     items: <String>['Masculino', 'Femenino']
@@ -261,14 +278,14 @@ class _FormularioCitaState extends State<FormularioCita> {
                       );
                     }).toList(),
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       color: MyColors().colorOscuro(),
                       fontWeight: FontWeight.w400
                     ),
                     value: _controlSexo,
                     hint: MyRText(
                       text: formHintsCita[2],
-                      tipo: "bodyLL",
+                      tipo: "bodyL",
                       color: MyColors().colorGris()
                     ),
                     onChanged: (String newValue) {
@@ -279,8 +296,16 @@ class _FormularioCitaState extends State<FormularioCita> {
                 SizedBox(height: separaform),
 
                 //Especialidad
-                Center(
+                Container(
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: MyColors().colorGrisClaro(),
+                    borderRadius: BorderRadius.circular(roundedL)
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 25),
                   child: DropdownButton<String>(
+                    isExpanded: true,
+                    underline: Container(),
                     dropdownColor: MyColors().colorGrisClaro(),
                     elevation: 0,
                     items: listaEspecialidades
@@ -291,14 +316,14 @@ class _FormularioCitaState extends State<FormularioCita> {
                       );
                     }).toList(),
                     style: GoogleFonts.poppins(
-                      fontSize: 14,
+                      fontSize: 16,
                       color: MyColors().colorOscuro(),
                       fontWeight: FontWeight.w400
                     ),
                     value: _controlEspecialidad,
                     hint: MyRText(
                       text: formHintsCita[3],
-                      tipo: "bodyLL",
+                      tipo: "bodyL",
                       color: MyColors().colorGris()
                     ),
                     onChanged: (String newValue) {
@@ -367,6 +392,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                 ),
                 SizedBox(height: separaform),
                 MyRTextFormField(
+                  showCursor: false,
                   onTap: _datePresent,
                   hintText: formHintsCita[7],
                   controller: _controlFecha,
@@ -375,8 +401,11 @@ class _FormularioCitaState extends State<FormularioCita> {
                   formColor: MyColors().colorGrisClaro(),
                   textColor: MyColors().colorGris(),
                 ),
+
+
                 SizedBox(height: separaform),
                 MyRTextFormField(
+                  showCursor: false,
                   onTap: _timePresent,
                   hintText: formHintsCita[8],
                   controller: _controlHora,
