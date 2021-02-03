@@ -1,13 +1,11 @@
 import 'dart:ui';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poo_web/pages/datos.dart';
 import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
-import 'package:poo_web/pages/usuarios/login.dart';
 
 import 'package:http/http.dart' as http;
 

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/usuarios/home.dart';
-import 'package:poo_web/pages/usuarios/planesDentales.dart';
-
-import 'pages/usuarios/cita.dart';
-
 
 void main() {
   runApp(MyApp());

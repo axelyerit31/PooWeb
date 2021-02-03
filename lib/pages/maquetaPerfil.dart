@@ -13,6 +13,7 @@ import 'datos.dart';
 import 'personal/clientes.dart';
 import 'personal/especialidades.dart';
 import 'usuarios/home.dart';
+import 'usuarios/registro.dart';
 
 //funcion para obtner el primer nombre y primer apellido de forma vertical
 String nombresVertical(){
@@ -129,7 +130,7 @@ class _MaquetaState extends State<Maqueta> {
           child: Row(
             children: [
 
-              //DrweBar
+              //DrawBar
               Container(
                 height: altura,
                 width: sWActual * 7/43,
@@ -141,13 +142,11 @@ class _MaquetaState extends State<Maqueta> {
                   iconos: widget.iconosOpciones
                 ),
               ),
+              
               SizedBox(width: separador),
               
               //Main
               Container(height: altura, width: sWActual * 36/43, child: Main(sW)),
-              //SizedBox(width: separador),
-              //Container(height: altura, width: sWActual * 12/43, child: Placeholder()),
-              //Expanded(flex: 12, child: Placeholder(),),
             ],
           )
         ),
@@ -156,6 +155,11 @@ class _MaquetaState extends State<Maqueta> {
   }
 
   Widget Main(double sW){
+
+    PageController _controllerPageView = PageController(
+      initialPage: 0
+    );
+
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -214,16 +218,22 @@ class _MaquetaState extends State<Maqueta> {
               Expanded(
                 child: Container(
                   margin: EdgeInsets.all(separador+13),
-                  child: Builder(
-                    builder: (BuildContext context){
-                      if(indexSeleccionado < widget.iconosOpciones.length-1){
-                        ultimoIndexSeleccionado = indexSeleccionado;
-                        ultimoWidget = pantallas[indexSeleccionado];
-                        return pantallas[indexSeleccionado];
-                      }else{
-                        return ultimoWidget;
-                      }
-                    },
+                  child: PageView(
+                    controller: _controllerPageView,
+                    scrollDirection: Axis.vertical,
+                    children: [
+                      Builder(
+                        builder: (BuildContext context){
+                          if(indexSeleccionado < widget.iconosOpciones.length-1){
+                            ultimoIndexSeleccionado = indexSeleccionado;
+                            ultimoWidget = pantallas[indexSeleccionado];
+                            return pantallas[indexSeleccionado];
+                          }else{
+                            return pantallas[ultimoIndexSeleccionado];
+                          }
+                        },
+                      ),
+                    ],
                   )
                 )
               )
@@ -281,7 +291,7 @@ class _DrawBarState extends State<DrawBar> {
       pantallas = [
         FichaPersonal(),
         Citas(state: widget.state),
-        PlanDental(state: widget.state),
+        PlanDental(),
         //Notificaciones(),
         EditarPerfil(state: widget.state)
       ];
@@ -307,8 +317,6 @@ class _DrawBarState extends State<DrawBar> {
     iconos = widget.iconos;
   }
 
-
-  
   void opcionApuntada(int valor){
     setState(() {
       indexApuntado = valor;
@@ -417,6 +425,7 @@ class _DrawBarState extends State<DrawBar> {
                   MyRButton(
                     onPressed: () {
                       rolGlobal = "usuario";
+                      planDentalDefecto = 0;
                       datosPersonales.clear();
                       datosCitas.clear();
                       indexSeleccionado = 0;
@@ -435,6 +444,57 @@ class _DrawBarState extends State<DrawBar> {
               );
             }
           );
+        }else if(rolGlobal == "paciente" && valor == widget.opciones.length-2){
+          /* showDialog(
+            context: context,
+            builder: (context){
+              return AlertDialog(
+                title: MyRText(
+                  text: "Confirme su contraseña",
+                  tipo: "body", color: MyColors().colorOscuro(),
+                  bold: 6
+                ),
+                content: MyRText(
+                  text: "Para editar sus datos, primero confirme su contraseña.",
+                  tipo: "bodyLL", color: MyColors().colorAzulMedio(),
+                  bold: 5
+                ),
+                actions: [
+                  MyROutlineButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                      widget.state(ultimoIndexSeleccionado);
+                    },
+                    child: MyRText(
+                      text: "Cancelar",
+                      tipo: "bodyLL",
+                      color: MyColors().colorOscuro(),
+                      bold: 5
+                    ),
+                    color: MyColors().colorOscuro(),
+                  ),
+                  MyRButton(
+                    onPressed: () {
+                      rolGlobal = "usuario";
+                      planDentalDefecto = 0;
+                      datosPersonales.clear();
+                      datosCitas.clear();
+                      indexSeleccionado = 0;
+                      Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
+                      );
+                    },
+                    child: MyRText(
+                      text: "Confirmar",
+                      tipo: "bodyLL",
+                      color: Colors.white,
+                      bold: 5
+                    )
+                  )
+                ],
+              );
+            }
+          ); */
         }
       },
       child: MouseRegion(
@@ -473,8 +533,6 @@ class _DrawBarState extends State<DrawBar> {
     );
   }
 }
-
-
 
 //Widget con la imagen del perfil cerca, que usare para todas las pantallas donde vaya imagen de perfil cerca
 Widget perfilCerca(){

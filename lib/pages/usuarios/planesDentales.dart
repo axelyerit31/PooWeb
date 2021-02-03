@@ -4,10 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:poo_web/pages/admin/adminPerfil.dart';
+import 'package:poo_web/pages/pacientes/homePacientes.dart';
+import 'package:poo_web/pages/pacientes/pacientesPerfil.dart';
 
 import '../../myWidgets.dart';
 import '../../mystyle.dart';
 import '../datos.dart';
+import 'login.dart';
 import 'registro.dart';
 
 
@@ -352,7 +356,34 @@ class __PlanesState extends State<_Planes> {
                           vertical: 8
                         )
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if(datosPersonales["dni"] == null){
+                          rowAlert("Inicia sesión para poder cancelar tu afiliación.", context,
+                            "Inicia Sesión",
+                            "Iniciar Sesión",
+                            (){
+                              Navigator.push(context,
+                                new CupertinoPageRoute(builder: (context) => Login()));
+                            },
+                            true,
+                            "Cancelar",
+                            (){
+                              Navigator.pop(context);
+                            }
+                          );
+                        }else{
+                          if(rolGlobal == "paciente"){
+                            Navigator.pushReplacement(context,
+                            new CupertinoPageRoute(builder: (context) => PacientesPerfil()));
+                          }else if(rolGlobal == "personal"){
+                            Navigator.pushReplacement(context,
+                            new CupertinoPageRoute(builder: (context) => PersonalPerfil()));
+                          }else if(rolGlobal == "admin"){
+                            Navigator.pushReplacement(context,
+                            new CupertinoPageRoute(builder: (context) => PersonalPerfil()));
+                          }
+                        }
+                      },
                       child: MyRText(
                         text: "cancelar su afiliación",
                         tipo: "bodyL",
@@ -459,22 +490,41 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
                     Navigator.pop(context);
                   }
                 );
-              }else{
+              }else if (rolGlobal == "paciente"){
                 rowAlert("¿Desea hacer el pago en Sonríamos Juntos, o procederá de forma virtual?", context,
                   "Bienvenido al Plan ${widget.datos["plan"]}",
                   "Pago Virtual",
                   (){
-                    print("Paso a pasarela");
-                    editarActualizarPlan(widget.datos["id"], datosPersonales["dni"]);
+                    Navigator.pop(context);
+                    rowAlert("Pago por método virtual.", context,
+                      "Pasarela de pago",
+                      "Pagar",
+                      (){
+                        Navigator.pop(context);
+                        editarActualizarPlan(
+                          widget.datos["id"],
+                          datosPersonales["dni"],
+                          datosPersonales["plan"] == "Cero" ? DateTime.now().toString() : datosPersonales["afiliacionPlan"]
+                        );
+                      }
+                    );
                   },
                   true,
                   "Pago en local",
                   (){
                     Navigator.pop(context);
                     rowAlert("Te esperamos en Sonríamos Juntos, nos encontramos en Av. Calderon Espino, cdra. 5, frente al restaurante NhGozu. ¡Ven cuando quieras!", context,
-                      "Gracias por afiliarte al Plan ${widget.datos["plan"]}"
+                      "Gracias por afiliarte al Plan ${widget.datos["plan"]}",
+                      "Aceptar",
+                      (){
+                        Navigator.pop(context);
+                        editarActualizarPlan(
+                          widget.datos["id"], 
+                          datosPersonales["dni"],
+                          datosPersonales["plan"] == "Cero" ? DateTime.now().toString() : datosPersonales["afiliacionPlan"]
+                        );
+                      }
                     );
-                    editarActualizarPlan(widget.datos["id"], datosPersonales["dni"]);
                   }
                 );
               }

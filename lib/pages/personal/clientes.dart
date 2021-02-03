@@ -3,17 +3,25 @@ import 'package:poo_web/myWidgets.dart';
 import 'package:poo_web/pages/baseDatos/bdUsuario.dart';
 import 'package:poo_web/pages/pacientes/fichaPersonal.dart';
 
-import 'package:time_machine/time_machine.dart' as time;
 
 import '../../mystyle.dart';
 import '../datos.dart';
 import '../maquetaPerfil.dart';
 
+//Funcion para obtener fecha y meterlas en un lista
+List<int> obtenerFecha(String dato, String separador){
+  List<int> lista = [];
+  int ultimoIndice = 0;
 
-void datosPacienteActual(){
-  var now = time.Instant.now();
+  for (var i = 0; i < dato.length; i++) {
+    if(dato.substring(i, i+1) == separador || i == dato.length-1){
+      if(i == dato.length-1) {i+=1;}
+      lista.add(int.parse(dato.substring(ultimoIndice, i)));
+      ultimoIndice = i+1;
+    }
+  }
+  return lista;
 }
-
 
 
 class Clientes extends StatefulWidget {
@@ -120,22 +128,7 @@ Widget header(){
 
 class _DatosCliente extends StatelessWidget {
 
-  List<int> obtenerFecha(String dato, String separador){
-    List<int> lista = [];
-    int ultimoIndice = 0;
-
-    for (var i = 0; i < dato.length; i++) {
-      if(dato.substring(i, i+1) == separador || i == dato.length-1){
-        if(i == dato.length-1) {i+=1;}
-        lista.add(int.parse(dato.substring(ultimoIndice, i)));
-        ultimoIndice = i+1;
-      }
-    }
-    return lista;
-  }
-
   DateTime hoy = DateTime.now();
-  
 
   @override
   Widget build(BuildContext context) {

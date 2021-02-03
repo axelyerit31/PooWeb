@@ -263,9 +263,10 @@ void editarEspecialidad(String id, String nombre, String descripcion) async{
   });
 }
 
-void editarActualizarPlan(String id, String dni) async{
+void editarActualizarPlan(String id, String dni, String afiliacion) async{
   http.post(urlActualizarPlan, body: {
     "id_plan": id,
-    "dni_pac" : dni
+    "dni_pac" : dni,
+    "afiliacion" : afiliacion
   });
 }
