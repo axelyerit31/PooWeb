@@ -48,7 +48,7 @@ List formControllersRegistro = [
 int planDentalDefecto = 0;
 String planDentalFecha = "0";
 
-var urlRegistro = "http://192.168.18.3/PooWeb/registro.php";
+var urlRegistro = url + "registro.php";
 
 void registroPaciente(){
   http.post(urlRegistro, body: {

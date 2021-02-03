@@ -10,7 +10,7 @@ import '../../myWidgets.dart';
 import '../maquetaPerfil.dart';
 
 
-var urlEditarPaciente = "http://192.168.18.3//PooWeb/editarPaciente.php";
+var urlEditarPaciente = url + "editarPaciente.php";
 
 TextEditingController _controlNombres = new TextEditingController();
 TextEditingController _controlApellidos = new TextEditingController();

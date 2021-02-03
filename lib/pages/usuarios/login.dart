@@ -20,7 +20,7 @@ List<String> formHints = [
 TextEditingController controlCorreo = new TextEditingController();
 TextEditingController controlContrasena = new TextEditingController();
 
-var urlLogin = "http://192.168.18.3/PooWeb/login.php";
+var urlLogin = url + "login.php";
 
 Future<List> login(BuildContext context) async{
 
