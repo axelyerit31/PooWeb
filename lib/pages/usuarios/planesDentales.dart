@@ -439,7 +439,7 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyRText(
-              text: "S/. ${widget.datos["costo"]}0",
+              text: widget.datos["costo"] == "0" ? "S/ ${widget.datos["costo"]}.00" : "S/ ${widget.datos["costo"]}0",
               tipo: "precio",
               color: Color(0xFF4568E7),
               bold: 7
