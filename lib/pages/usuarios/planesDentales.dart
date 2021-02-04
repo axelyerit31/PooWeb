@@ -179,7 +179,7 @@ Widget _MejorSonrisa(double sW) {
           width: sW,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/clinica-dental.png"),
+                  image: AssetImage("assets/labios.jfif"),
                   fit: BoxFit.fitWidth)),
         ),
       ),
