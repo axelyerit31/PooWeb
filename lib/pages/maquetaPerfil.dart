@@ -300,7 +300,7 @@ class _DrawBarState extends State<DrawBar> {
     }else if(widget.rol == "personal"){
       pantallas = [
         PerfilDentista (),
-        CitasDentista (state: widget.state),
+        CitasDentista (),
         Clientes(),
         EspecialidadesPersonal(state: widget.state),
       ];
