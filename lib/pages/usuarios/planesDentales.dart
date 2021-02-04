@@ -184,7 +184,7 @@ Widget _MejorSonrisa(double sW){
         height: sizeMiPantalla - sizeAppBar,
         width: sW,
         color: MyColors().colorClaro(),
-      ),/* 
+      ),
       Opacity(
         opacity: 0.12,
         child: Container(
@@ -197,7 +197,7 @@ Widget _MejorSonrisa(double sW){
             )
           ),
         ),
-      ), */
+      ),
       Container(
         height: sizeMiPantalla - sizeAppBar,
         width: double.infinity,

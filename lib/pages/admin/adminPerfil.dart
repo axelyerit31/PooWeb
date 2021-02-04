@@ -18,7 +18,7 @@ List<String> iconos = [
   "assets/iconos/citas.png",
   "assets/iconos/clientes.png",
   "assets/iconos/dentistas.png",
-  "assets/iconos/notificacion.png",
+  //"assets/iconos/notificacion.png",
   "assets/iconos/editar_perfil.png",
   "assets/iconos/cerrar_sesion.png",
 ];

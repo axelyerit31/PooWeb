@@ -247,6 +247,7 @@ class _CitasState extends State<Citas> {
                   _controlEspecialidad = null;
                   _vacio = false;
                 });
+                obtenerCitas();
                 rowAlert("La cita fue creada con éxito,", context, "Hecho");
               }
             },

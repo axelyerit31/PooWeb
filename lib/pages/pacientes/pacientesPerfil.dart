@@ -14,7 +14,7 @@ List<String> opciones = [
 List<String> iconos = [
   "assets/iconos/perfil.png",
   "assets/iconos/citas.png",
-  "assets/iconos/citas.png",
+  "assets/iconos/plan_dental.png",
   "assets/iconos/editar_perfil.png",
   //"assets/iconos/notificacion.png",
   "assets/iconos/cerrar_sesion.png",
