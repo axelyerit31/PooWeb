@@ -164,6 +164,15 @@ void obtenerCitas() async {
   }
 }
 
+Future<List> obtenerCitasFuture() async {
+  final resp =
+      await http.post(urlObtenerCitas, body: {"dni": datosPersonales["dni"]});
+
+  var resultado = jsonDecode(resp.body);
+
+  return resultado;
+}
+
 Future<List> obtenerCitasLista() async {
   final resp = await http.post(urlObtenerCitasLista);
 
@@ -189,14 +198,6 @@ void obtenerEspecialidades() async {
 }
 
 Future<List> obtenerEspecialiadesFuture() async {
-  final res = await http.post(urlObtenerEspecialidades);
-
-  final u = jsonDecode(res.body);
-
-  return u;
-}
-
-Future<List> obtenerCitasFuture() async {
   final res = await http.post(urlObtenerEspecialidades);
 
   final u = jsonDecode(res.body);

@@ -309,7 +309,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                     dropdownColor: MyColors().colorGrisClaro(),
                     elevation: 0,
                     items: listaEspecialidades
-                        .map<DropdownMenuItem<String>>(( value) {
+                        .map<DropdownMenuItem<String>>((value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
