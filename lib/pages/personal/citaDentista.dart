@@ -133,7 +133,7 @@ class _CitasDentistaState extends State<CitasDentista> {
           children: [
             SizedBox(height: separador),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   height: 220,
@@ -144,7 +144,6 @@ class _CitasDentistaState extends State<CitasDentista> {
                   padding: EdgeInsets.symmetric(horizontal: 0),
                   child: SingleChildScrollView(child: TablaCitasDentista(state: widget.state))
                 ),
-                _formsCita()
               ],
             ),
           ],
@@ -325,11 +324,11 @@ class _TablaCitasDentistaState extends State<TablaCitasDentista> {
               dividerThickness: 2,
               sortColumnIndex: 0,
               sortAscending: true,
-              columnSpacing: 20,
+              columnSpacing: 40,
               horizontalMargin: 0,
               columns: [
                 DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
-                DataColumn(label: MyRText(text: "Nombre", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
+                DataColumn(label: MyRText(text: "Nombre", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)), 
                 DataColumn(label: MyRText(text: "Especialidad", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
                 DataColumn(label: MyRText(text: "Fecha", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
                 DataColumn(label: MyRText(text: "Hora", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),

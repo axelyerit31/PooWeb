@@ -442,17 +442,11 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-<<<<<<< HEAD
-        Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          MyRText(
-              text: "S/. ${widget.datos["costo"]}0",
-=======
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyRText(
               text: widget.datos["costo"] == "0" ? "S/ ${widget.datos["costo"]}.00" : "S/ ${widget.datos["costo"]}0",
->>>>>>> 7e39957122747fc329dd638787e03499df7bcfe7
               tipo: "precio",
               color: Color(0xFF4568E7),
               bold: 7),
