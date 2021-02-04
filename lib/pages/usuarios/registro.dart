@@ -97,7 +97,7 @@ class _RegistroState extends State<Registro> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.only(top: 40),
           child: Row(
             mainAxisAlignment: sW > maxScreenSize ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,7 +211,7 @@ class _RegistroState extends State<Registro> {
                         ),
                       ),
                     ),
-                    Container(height: _separador/1.5),
+                    /* Container(height: _separador/1.5),
 
                     Container(
                       constraints: BoxConstraints(minWidth: sW > maxScreenSize ? formW * 1 / 4 : formW * 7/10),
@@ -225,7 +225,7 @@ class _RegistroState extends State<Registro> {
                         ),
                         color: MyColors().colorOscuro(),
                       ),
-                    ),
+                    ), */
 
                   ],
                 ),

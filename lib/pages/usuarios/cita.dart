@@ -86,17 +86,18 @@ class CrearCita extends StatelessWidget {
 
     //datos variables
     String textop ="Reservar tu cita es completamente gratis.";
-    String creatext = "Creat tu cita";
+    String creatext = "Crea tu cita";
     final toptext = new MyRText(
       textAlign: TextAlign.center,
       text: textop,
       color: MyColors().colorVerdeOscuro(),
-      tipo: "bodyL",
+      tipo: "bodyLL",
       bold: 5,
     );
     final creacitatext = new MyRText(
       text: creatext,
       color: MyColors().colorOscuro(),
+      tipo: "title",
       bold: 7,
     );
 
@@ -107,52 +108,78 @@ class CrearCita extends StatelessWidget {
           tipo: rolGlobal,
         )
       ),
-      body: Center(
-        child: Container(
-          width: 800,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              toptext,
-              creacitatext,
-              new FormularioCita(),
-              SizedBox(height: separaform*2),
-              MyRButton(
-                onPressed: (){
-                  for (var i = 0; i < _formControllers.length; i++) {
-                    if(_formControllers[i].text == ""){
-                      vacio = true;
-                    }
-                  }
-                  if(_controlSexo == "" && _controlEspecialidad == ""){
-                    vacio = true;
-                  }
-                  if(vacio){
-                    rowAlert("Algunos campos estan vacíos, asegúrese de llenarlos todos", context);
-                  }else{
-                    _controlEnvioGenCita = DateTime.now().toString();
-                    insertarCita();
-                    for (var i = 0; i < _formControllers.length; i++) {
-                      _formControllers[i].clear();
-                    }
-                    _controlSexo = null;
-                    _controlEspecialidad = null;
-                    vacio = false;
-                    Navigator.push(context,
-                      new CupertinoPageRoute(builder: (context) => DespuesCita()));
-                  }
-                },
-                child: MyRText(
-                  text: "Crear Cita",
-                  tipo: "buttonContent",
-                  color: Colors.white,
-                  bold: 6
-                ),
+      body:  Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+                image: AssetImage("assets/fondo_home.png"),
+                fit: BoxFit.fitWidth
               )
-            ],
+            )
           ),
-        ),
+          Container(
+            width: 1250,
+            height: 700,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/fondo-cita.png"),
+                fit: BoxFit.fitWidth
+              )
+            )
+          ),
+          Center(
+            child: Container(
+              width: 800,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  toptext,
+                  SizedBox(height: separaform/4),
+                  creacitatext,
+                  SizedBox(height: separaform),
+                  new FormularioCita(),
+                  SizedBox(height: separaform*2),
+                  MyRButton(
+                    onPressed: (){
+                      for (var i = 0; i < _formControllers.length; i++) {
+                        if(_formControllers[i].text == ""){
+                          vacio = true;
+                        }
+                      }
+                      if(_controlSexo == "" && _controlEspecialidad == ""){
+                        vacio = true;
+                      }
+                      if(vacio){
+                        rowAlert("Algunos campos estan vacíos, asegúrese de llenarlos todos", context);
+                      }else{
+                        _controlEnvioGenCita = DateTime.now().toString();
+                        insertarCita();
+                        for (var i = 0; i < _formControllers.length; i++) {
+                          _formControllers[i].clear();
+                        }
+                        _controlSexo = null;
+                        _controlEspecialidad = null;
+                        vacio = false;
+                        Navigator.push(context,
+                          new CupertinoPageRoute(builder: (context) => DespuesCita()));
+                      }
+                    },
+                    child: MyRText(
+                      text: "Crear Cita",
+                      tipo: "buttonContent",
+                      color: Colors.white,
+                      bold: 6
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -241,7 +268,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                   controller: _controlNombre,
                   keyboardType: TextInputType.name,
                   obscureText: false,
-                  formColor: MyColors().colorGrisClaro(),
+                  formColor: Colors.white,
                   textColor: MyColors().colorGris(),
                 ),
                 SizedBox(height: separaform),
@@ -252,7 +279,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                   controller: _controlCorreo,
                   keyboardType: TextInputType.emailAddress,
                   obscureText: false,
-                  formColor: MyColors().colorGrisClaro(),
+                  formColor: Colors.white,
                   textColor: MyColors().colorGris(),
                 ),
                 SizedBox(height: separaform),
@@ -261,14 +288,14 @@ class _FormularioCitaState extends State<FormularioCita> {
                 Container(
                   width: 300,
                   decoration: BoxDecoration(
-                    color: MyColors().colorGrisClaro(),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(roundedL)
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: DropdownButton<String>(
                     isExpanded: true,
                     underline: Container(),
-                    dropdownColor: MyColors().colorGrisClaro(),
+                    dropdownColor: Colors.white,
                     elevation: 0,
                     items: <String>['Masculino', 'Femenino']
                         .map<DropdownMenuItem<String>>((String value) {
@@ -299,14 +326,14 @@ class _FormularioCitaState extends State<FormularioCita> {
                 Container(
                   width: 300,
                   decoration: BoxDecoration(
-                    color: MyColors().colorGrisClaro(),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(roundedL)
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 25),
                   child: DropdownButton<String>(
                     isExpanded: true,
                     underline: Container(),
-                    dropdownColor: MyColors().colorGrisClaro(),
+                    dropdownColor: Colors.white,
                     elevation: 0,
                     items: listaEspecialidades
                         .map<DropdownMenuItem<String>>((value) {
@@ -348,7 +375,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                   controller: _controlApellidos,
                   keyboardType: TextInputType.name,
                   obscureText: false,
-                  formColor: MyColors().colorGrisClaro(),
+                  formColor: Colors.white,
                   textColor: MyColors().colorGris(),
                 ),
                 SizedBox(height: separaform),
@@ -368,7 +395,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                             controller: _controlDni,
                             keyboardType: TextInputType.number,
                             obscureText: false,
-                            formColor: MyColors().colorGrisClaro(),
+                            formColor: Colors.white,
                             textColor: MyColors().colorGris(),
                           ),
                         ),
@@ -382,7 +409,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                             controller: _controlCelular,
                             keyboardType: TextInputType.phone,
                             obscureText: false,
-                            formColor: MyColors().colorGrisClaro(),
+                            formColor: Colors.white,
                             textColor: MyColors().colorGris(),
                           ),
                         ),
@@ -398,7 +425,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                   controller: _controlFecha,
                   keyboardType: TextInputType.text,
                   obscureText: false,
-                  formColor: MyColors().colorGrisClaro(),
+                  formColor: Colors.white,
                   textColor: MyColors().colorGris(),
                 ),
 
@@ -411,7 +438,7 @@ class _FormularioCitaState extends State<FormularioCita> {
                   controller: _controlHora,
                   keyboardType: TextInputType.text,
                   obscureText: false,
-                  formColor: MyColors().colorGrisClaro(),
+                  formColor: Colors.white,
                   textColor: MyColors().colorGris(),
                 ),
               ],

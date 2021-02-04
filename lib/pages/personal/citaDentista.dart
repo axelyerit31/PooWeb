@@ -136,7 +136,7 @@ class _CitasDentistaState extends State<CitasDentista> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 220,
+                  height: 250,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(roundedB),
                     color: Colors.white
@@ -274,7 +274,6 @@ Widget _header(){
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Datos(),
-            SizedBox(height: separador),
           ],
         )
       ],
@@ -301,7 +300,7 @@ class _TablaCitasDentistaState extends State<TablaCitasDentista> {
     showDialog(
       context: context,
       builder: (BuildContext context){
-        return rowAlert(indice, selected);
+        return _rowAlert(indice, selected);
       }
     );
   }
@@ -363,7 +362,7 @@ class _TablaCitasDentistaState extends State<TablaCitasDentista> {
 
   
 
-  AlertDialog rowAlert(int indice, bool selected){
+  AlertDialog _rowAlert(int indice, bool selected){
     return AlertDialog(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -399,10 +398,11 @@ class _TablaCitasDentistaState extends State<TablaCitasDentista> {
           onPressed: () {
             borrarCita(indice);
             widget.state(1);
+            obtenerCitasLista();
             setState(() {
-              obtenerCitas(); 
             });
             Navigator.pop(context);
+            rowAlert("La cita fue anulada", context, "Hecho");
           },
           color: MyColors().colorOscuro(),
           child: MyRText(text: "Anular Cita", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)

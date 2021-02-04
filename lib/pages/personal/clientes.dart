@@ -117,8 +117,7 @@ Widget header(){
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //_DatosCliente(),
-            SizedBox(height: separador),
+            Datos(),
           ],
         )
       ],

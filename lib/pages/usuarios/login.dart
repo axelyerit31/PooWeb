@@ -182,7 +182,7 @@ class _LoginState extends State<Login> {
                               color: Colors.white,
                             ),
                           ),
-                        ),
+                        ),/* 
                         Container(height: separador / 1.5),
                         Container(
                           constraints: BoxConstraints(
@@ -199,7 +199,7 @@ class _LoginState extends State<Login> {
                             ),
                             color: MyColors().colorOscuro(),
                           ),
-                        ),
+                        ), */
                         Container(height: separador * 0.7),
                         Center(
                           child: TextButton(

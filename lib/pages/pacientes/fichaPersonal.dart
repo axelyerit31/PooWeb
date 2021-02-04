@@ -17,11 +17,11 @@ class FichaPersonal extends StatelessWidget {
 
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 height: 350,
@@ -37,7 +37,7 @@ class FichaPersonal extends StatelessWidget {
                   SizedBox(height: separador),
                   PlanDentalFicha(),
                   SizedBox(height: separador),
-                  _Recomendaciones()
+                  //_Recomendaciones()
                 ]
               )
             ],
@@ -170,7 +170,7 @@ class _Citas extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 20),
       alignment: Alignment.center,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           _ultimaCita(),
           _proximaCita()
@@ -191,7 +191,7 @@ class _Citas extends StatelessWidget {
             borderRadius: BorderRadius.circular(roundedB)
           ),
           height: 60,
-          width: 300
+          width: 400
         )
       ],
     );
@@ -209,7 +209,7 @@ class _Citas extends StatelessWidget {
             borderRadius: BorderRadius.circular(roundedB)
           ),
           height: 60,
-          width: 300
+          width: 400
         )
       ],
     );

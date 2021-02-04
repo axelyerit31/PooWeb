@@ -182,9 +182,11 @@ class _MyRAppBarState extends State<MyRAppBar> {
                             primary: Colors.white
                           ),
                           onPressed: (){
+                            Navigator.push(context,
+                              new CupertinoPageRoute(builder: (context) => CrearCita(),));
                           },
                           child: MyRText(
-                            text: "Contacto",
+                            text: "Crear Cita",
                             tipo: "bodyL",
                             color: _cursorContacto ? MyColors().colorClaro() : MyColors().colorOscuro(),
                             bold: 6
@@ -475,6 +477,7 @@ class Header extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         MyRText(
           text: "La vida es mejor cuando sonríes",
@@ -503,7 +506,7 @@ class Header extends StatelessWidget {
             Navigator.push(context,
               new CupertinoPageRoute(builder: (context) => CrearCita(),));
           },
-        ),
+        ),/* 
         SizedBox(height: separador),
         MyROutlineButton(
           child: MyRText(
@@ -514,7 +517,7 @@ class Header extends StatelessWidget {
           ),
           onPressed: () {},
           color: MyColors().colorOscuro(),
-        )
+        ) */
       ]
     );
   }
@@ -554,94 +557,145 @@ class _ContentState extends State<Content> {
     var screenS = MediaQuery.of(context).size;
     var sW = screenS.width;
 
-    return Stack(
-      alignment: Alignment.center,
+    return Column(
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 10),
-          height: sizeMiPantalla - sizeAppBar - 40,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/fondo-especialidades.png"),
-              fit: BoxFit.fitHeight,
-              alignment:Alignment.centerRight 
-            )
-          ),
-        ),
-        FutureBuilder<List>(
-          future: obtenerEspecialiadesFuture(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError){print(snapshot.error);}
-            return snapshot.hasData
-              ? Container(
-                  width: sW / 1.3,
-                  padding: EdgeInsets.symmetric(vertical: 100),
-                  height: sizeMiPantalla - sizeAppBar,
-                  alignment: Alignment.center,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
+        SizedBox(height: 120),
+        _medium(sW),
+        SizedBox(height: 120),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              height: sizeMiPantalla - sizeAppBar - 40,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/fondo-especialidades.png"),
+                  fit: BoxFit.fitHeight,
+                  alignment:Alignment.centerRight 
+                )
+              ),
+            ),
+            FutureBuilder<List>(
+              future: obtenerEspecialiadesFuture(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError){print(snapshot.error);}
+                return snapshot.hasData
+                  ? Container(
+                      width: sW / 1.3,
+                      padding: EdgeInsets.symmetric(vertical: 100),
+                      height: sizeMiPantalla - sizeAppBar,
+                      alignment: Alignment.center,
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyRText(
-                            text: "Agendar una cita es completamente gratis",
-                            tipo: "bodyB2",
-                            color: MyColors().colorVerdeOscuro(),
-                            bold: 5
-                          ),
-                          MyRText(
-                            text: "Especialidades",
-                            tipo: "title",
-                            color: MyColors().colorOscuro(),
-                            bold: 7
-                          ),
-                          SizedBox(height: separador/3),
-                          Stack(
-                            alignment: Alignment.topLeft,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AnimatedContainer(
-                                curve: Curves.easeInOutCirc,
-                                duration: Duration(milliseconds: 300),
-                                margin: EdgeInsets.only(top: _indiceSeleccionado * _alturaOpcion),
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.only(
-                                  left: _anchoOpcion/_divisionPadding/1.3 - (_anchoPuntero/2),
-                                  top: _alturaOpcion / 4.5
-                                 ),
-                                child: Container(
-                                  height: _alturaOpcion / 2,
-                                  width: _anchoPuntero,
-                                  decoration: BoxDecoration(
-                                    color: MyColors().colorOscuro(),
-                                    borderRadius: BorderRadius.circular(roundedB)
-                                  ),
-                                )
+                              MyRText(
+                                text: "Agendar una cita es completamente gratis",
+                                tipo: "bodyB2",
+                                color: MyColors().colorVerdeOscuro(),
+                                bold: 5
                               ),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              MyRText(
+                                text: "Especialidades",
+                                tipo: "title",
+                                color: MyColors().colorOscuro(),
+                                bold: 7
+                              ),
+                              SizedBox(height: separador/3),
+                              Stack(
+                                alignment: Alignment.topLeft,
                                 children: [
-                                  for (var i = 0; i < snapshot.data.length; i++)
-                                    _opcion(snapshot.data[i]["nombre_esp"], i)
+                                  AnimatedContainer(
+                                    curve: Curves.easeInOutCirc,
+                                    duration: Duration(milliseconds: 300),
+                                    margin: EdgeInsets.only(top: _indiceSeleccionado * _alturaOpcion),
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.only(
+                                      left: _anchoOpcion/_divisionPadding/1.3 - (_anchoPuntero/2),
+                                      top: _alturaOpcion / 4.5
+                                     ),
+                                    child: Container(
+                                      height: _alturaOpcion / 2,
+                                      width: _anchoPuntero,
+                                      decoration: BoxDecoration(
+                                        color: MyColors().colorOscuro(),
+                                        borderRadius: BorderRadius.circular(roundedB)
+                                      ),
+                                    )
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      for (var i = 0; i < snapshot.data.length; i++)
+                                        _opcion(snapshot.data[i]["nombre_esp"], i)
+                                    ],
+                                  ),
                                 ],
-                              ),
+                              )
                             ],
+                          ),
+                          SizedBox(width: separador*4),
+                          Container(
+                            margin: EdgeInsets.only(top: 25),
+                            child: _especialidad(sW, snapshot.data[_indiceSeleccionado]["descripcion_esp"])
                           )
-                        ],
+                        ]        
                       ),
-                      SizedBox(width: separador*4),
-                      Container(
-                        margin: EdgeInsets.only(top: 25),
-                        child: _especialidad(sW, snapshot.data[_indiceSeleccionado]["descripcion_esp"])
-                      )
-                    ]        
-                  ),
-                )
-              : Center(child: CircularProgressIndicator());
-          }
+                    )
+                  : Center(child: CircularProgressIndicator());
+              }
+            ),
+          ],
         ),
       ],
+    );
+  }
+
+  Widget _medium(double sW){
+    return Container(
+      width: 1300,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/sonriamosJuntos.png"),
+          fit: BoxFit.fitWidth
+        )
+      ),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MyRText(
+            text: "Protege tu felicidad con nuestros planes pensados para ti",
+            tipo: "bodyL",
+            bold: 5,
+            color: MyColors().colorVerdeOscuro(),
+          ),
+          SizedBox(height: 15,),
+          MyRText(
+            text: "Planes desde S/ 39.90",
+            tipo: "titleL",
+            bold: 7,
+            color: MyColors().colorOscuro(),
+          ),
+          SizedBox(height: 15,),
+          MyRButton(
+            onPressed: (){
+              Navigator.push(context,
+                new CupertinoPageRoute(builder: (context) => PlanesDentalesHome(),));
+            },
+            child: MyRText(
+              text: "Ver los Planes",
+              tipo: "buttonContent",
+              bold: 5,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
     );
   }
 

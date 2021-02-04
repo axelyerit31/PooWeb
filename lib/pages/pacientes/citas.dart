@@ -137,7 +137,7 @@ class _CitasState extends State<Citas> {
           children: [
             SizedBox(height: separador),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   height: 220,

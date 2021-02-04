@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/usuarios/home.dart';
 
+import 'pages/datos.dart';
+import 'pages/usuarios/cita.dart';
 import 'pages/usuarios/despuesCita.dart';
 
 void main() {

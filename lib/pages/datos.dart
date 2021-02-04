@@ -17,7 +17,8 @@ var datosEspecialidades = [];
 var listaEspecialidades = [];
 
 final urlHenry = "http://192.168.43.213";
-final url = urlHenry + "/PooWeb/";
+final urlAxel = "http://192.168.18.3";
+final url = urlAxel + "/PooWeb/";
 
 
 final String datos = "";
