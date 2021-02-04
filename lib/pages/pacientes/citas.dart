@@ -247,7 +247,7 @@ class _CitasState extends State<Citas> {
                   _controlEspecialidad = null;
                   _vacio = false;
                 });
-                obtenerCitas();
+                obtenerCitasFuture();
                 rowAlert("La cita fue creada con éxito,", context, "Hecho");
               }
             },
@@ -316,45 +316,53 @@ class _TablaCitasState extends State<TablaCitas> {
 
   @override
   Widget build(BuildContext context) {
-
-    obtenerCitas();
-
-    return Container(
-      child: DataTable(
-        showCheckboxColumn: false,
-        dividerThickness: 2,
-        sortColumnIndex: 0,
-        sortAscending: true,
-        columnSpacing: 50,
-        horizontalMargin: 0,
-        columns: [
-          DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
-          DataColumn(label: MyRText(text: "Especialidad", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: MyRText(text: "Fecha", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: MyRText(text: "Hora", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: MyRText(text: "Estado", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
-          DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
-        ],
-        rows: [
-          for (var i = 0; i < datosCitas.length; i++)
-            DataRow(
-              onSelectChanged: (selected) {
-                if(selected){
-                  rowSelected(int.parse(datosCitas[i]["id"]), selected);
-                }
-              },
-              cells: [
-                DataCell(Container(width: anchoSeparador, color: colorSeparador)),
-                DataCell(MyRText(text: "${datosEspecialidades[int.parse(datosCitas[i]["especialidad"])-1]["nombre"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${datosCitas[i]["fecha"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${datosCitas[i]["hora"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(MyRText(text: "${datosCitas[i]["estado"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
-                DataCell(Container(width: anchoSeparador, color: colorSeparador)),
-              ]
-            ),
-        ],
-      )
+    return FutureBuilder(
+      future: obtenerCitasFuture(),
+      builder: (context, snapshot){
+        if (snapshot.connectionState == ConnectionState.waiting){
+          return Center(child: CircularProgressIndicator(),);
+        }else{
+          return DataTable(
+            showCheckboxColumn: false,
+            dividerThickness: 2,
+            sortColumnIndex: 0,
+            sortAscending: true,
+            columnSpacing: 50,
+            horizontalMargin: 0,
+            columns: [
+              DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
+              DataColumn(label: MyRText(text: "Especialidad", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
+              DataColumn(label: MyRText(text: "Fecha", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
+              DataColumn(label: MyRText(text: "Hora", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
+              DataColumn(label: MyRText(text: "Estado", tipo: "bodyL", color: MyColors().colorAzulMedio(), bold: 6)),
+              DataColumn(label: Container(width: anchoSeparador, color: colorSeparador)),
+            ],
+            rows: [
+              for (var i = 0; i < snapshot.data.length; i++)
+                DataRow(
+                  onSelectChanged: (selected) {
+                    if(selected){
+                      rowSelected(int.parse(snapshot.data[i]["id_cita"]), selected);
+                    }
+                  },
+                  cells: [
+                    DataCell(Container(width: anchoSeparador, color: colorSeparador)),
+                    DataCell(MyRText(text: "${datosEspecialidades[int.parse(snapshot.data[i]["id_esp"])-1]["nombre"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                    DataCell(MyRText(text: "${snapshot.data[i]["fecha_cita"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                    DataCell(MyRText(text: "${snapshot.data[i]["hora_cita"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                    DataCell(MyRText(text: "${snapshot.data[i]["estado_cita"]}", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)),
+                    DataCell(Container(width: anchoSeparador, color: colorSeparador)),
+                  ]
+                ),
+            ],
+          );
+        }
+      },
     );
+      
+      
+      
+      
   }
 
   AlertDialog _rowAlert(int indice, bool selected){
@@ -392,11 +400,11 @@ class _TablaCitasState extends State<TablaCitas> {
         MyROutlineButton(
           onPressed: () {
             borrarCita(indice);
-            widget.state(1);
-            setState(() {
-              obtenerCitas();
-            });
             Navigator.pop(context);
+            obtenerCitasFuture();
+            setState(() {
+              
+            });
           },
           color: MyColors().colorOscuro(),
           child: MyRText(text: "Anular Cita", tipo: "bodyLLL", color: MyColors().colorOscuro(), bold: 5)

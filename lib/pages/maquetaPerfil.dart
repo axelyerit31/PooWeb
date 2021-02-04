@@ -309,9 +309,7 @@ class _DrawBarState extends State<DrawBar> {
         Container(),
         Container(),
         Clientes(),
-        Clientes(),
         EspecialidadesPersonal(state: widget.state),
-        Container(),
       ];
     }
     opciones = widget.opciones;

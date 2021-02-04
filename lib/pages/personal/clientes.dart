@@ -276,6 +276,32 @@ class _TablaCitasState extends State<TablaCitas> {
                 for (var i = 0; i < snapshot.data[1].length; i++)
                   DataRow(
                     onSelectChanged: (selected){
+                      rowAlert(
+                        "¿Qué acción desea realizar con el paciente?",  context,
+                        "${snapshot.data[1][i]["nombres_usu"]}",
+                        "Eliminar",
+                        (){
+                          Navigator.pop(context);
+                          rowAlert(
+                            "¿Está seguro que desea eliminar este usuario?", context,
+                            "Eliminar a ${snapshot.data[1][i]["nombres_usu"]}",
+                            "Eliminar",
+                            (){
+                              borrarPacienteUsuario(snapshot.data[0][i]["dni_usu"]);
+                              print(snapshot.data[1][i]["dni_pac"]);
+                              Navigator.pop(context);
+                              obtenerUsuarios();
+                              setState(() {});
+                              rowAlert("El usuario se eliminó exitosamente.", context, "¡Hecho!");
+                            },
+                            true,
+                            "Cancelar",
+                            (){
+                              Navigator.pop(context);
+                            }
+                          );
+                        }
+                      );
                     },
                     cells: [
                       DataCell(Container(width: anchoSeparador, color: colorSeparador)),
@@ -313,8 +339,9 @@ class _TablaCitasState extends State<TablaCitas> {
                               borrarPacienteUsuario(snapshot.data[0][i]["dni_usu"]);
                               print(snapshot.data[0][i]["dni_usu"]);
                               Navigator.pop(context);
-                              rowAlert("El usuario se eliminó exitosamente.", context, "¡Hecho!");
                               obtenerUsuarios();
+                              setState(() {});
+                              rowAlert("El usuario se eliminó exitosamente.", context, "¡Hecho!");
                             },
                             true,
                             "Cancelar",

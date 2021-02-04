@@ -37,20 +37,24 @@ void login(BuildContext context) async {
     rowAlert("La contraseña ingresada es incorrecta.", context);
   } else {
     rolGlobal = resultado[0];
+    
     print("Inicio de sesión exitoso, bienvenido $rolGlobal.");
+
     if (resultado[0] == "paciente") {
       obtenerPaciente(resultado[1]);
       datosPersonales = {"dni": resultado[1], "nombres": resultado[2]};
       Navigator.of(context).pushAndRemoveUntil(
           CupertinoPageRoute(builder: (context) => HomePacientes()),
           (Route<dynamic> route) => false);
-    } else if (resultado[0] == "personal") {
+    }
+    else if (resultado[0] == "personal") {
       datosPersonales = {"nro": resultado[1], "nombres": resultado[2]};
       obtenerPersonal(datosPersonales["nro"]);
       Navigator.of(context).pushAndRemoveUntil(
           CupertinoPageRoute(builder: (context) => HomePacientes()),
           (Route<dynamic> route) => false);
-    } else if (resultado[0] == "admin") {
+    }
+    else if (resultado[0] == "admin") {
       obtenerAdmin(resultado[1]);
       datosPersonales = {"id": resultado[1], "nombres": resultado[2]};
       Navigator.of(context).pushAndRemoveUntil(

@@ -7,9 +7,9 @@ List<String> opciones = [
   "Perfil",
   "Citas",
   "Clientes",
-  "Dentistas",
+  //"Dentistas",
   "Especialidades",
-  "Editar Perfil",
+  //"Editar Perfil",
   "Cerrar Sesión"
 ];
 
@@ -17,9 +17,9 @@ List<String> iconos = [
   "assets/iconos/perfil.png",
   "assets/iconos/citas.png",
   "assets/iconos/clientes.png",
-  "assets/iconos/dentistas.png",
-  //"assets/iconos/notificacion.png",
-  "assets/iconos/editar_perfil.png",
+  //"assets/iconos/dentistas.png",
+  "assets/iconos/especialidades.png",
+  //"assets/iconos/editar_perfil.png",
   "assets/iconos/cerrar_sesion.png",
 ];
 
