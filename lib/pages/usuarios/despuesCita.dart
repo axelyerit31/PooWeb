@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:poo_web/pages/usuarios/registro.dart';
 
+import '../../myWidgets.dart';
 import '../../mystyle.dart';
+import '../datos.dart';
 import 'home.dart';
 
 
@@ -12,6 +14,12 @@ class DespuesCita extends StatelessWidget {
 
     double ancho = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: new Size.fromHeight(sizeAppBar),
+        child: MyRAppBar(
+          tipo: rolGlobal,
+        )
+      ),
       body: Stack(
         alignment: Alignment.center,
         children:<Widget> [
@@ -23,7 +31,7 @@ class DespuesCita extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
-                  image: AssetImage('fondo.jpg'))
+                  image: AssetImage('fondo-loading.png'))
               ),
 
             ),

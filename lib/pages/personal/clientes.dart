@@ -310,8 +310,11 @@ class _TablaCitasState extends State<TablaCitas> {
                             "Eliminar a ${snapshot.data[0][i]["nombres_usu"]}",
                             "Eliminar",
                             (){
-                              borrarPacienteUsuario(snapshot.data[i]["dni_usu"]);
+                              borrarPacienteUsuario(snapshot.data[0][i]["dni_usu"]);
+                              print(snapshot.data[0][i]["dni_usu"]);
+                              Navigator.pop(context);
                               rowAlert("El usuario se eliminó exitosamente.", context, "¡Hecho!");
+                              obtenerUsuarios();
                             },
                             true,
                             "Cancelar",
@@ -406,6 +409,7 @@ AlertDialog usuarioAlert(String nombres, String dni, BuildContext context){
             onPressed: () {
               if(_controlDireccion.text != "" && _controlContrasena.text != ""){
                 insertarUsuarioPaciente(dni, _controlDireccion.text, _controlContrasena.text);
+                obtenerUsuarios();
                 Navigator.pop(context);
                 _controlContrasena.clear();
                 _controlDireccion.clear();

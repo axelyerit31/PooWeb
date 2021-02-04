@@ -253,7 +253,7 @@ class _PlanDentalState extends State<PlanDental> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MyRText(
-                            text: "S/. $precio",
+                            text: "S/ $precio",
                             tipo: "bodyLL",
                             color: MyColors().colorAzulClaro(),
                             bold: 7
@@ -288,7 +288,7 @@ class _PlanDentalState extends State<PlanDental> {
       obtenerFecha(afiliacionPlan, "-")[2],
     );
     
-    Duration tiempoPlan = DateTime.now().difference(dateAfiliacionPlan);
+    Duration tiempoPlan = DateTime.now().difference(dateAfiliacionPlan).inDays > 365 ? DateTime.now().difference(DateTime.now()) : DateTime.now().difference(dateAfiliacionPlan);
 
     return Container(
       padding: EdgeInsets.only(bottom: 0),
@@ -327,7 +327,7 @@ class _PlanDentalState extends State<PlanDental> {
                       child: AnimatedContainer(
                         duration: Duration(milliseconds: 300),
                         child: FractionallySizedBox(
-                          widthFactor: datosPersonales["plan"] == "Cero" && datosPersonales["afiliacionPlan"] == "0000-00-00" ? 0 : tiempoPlan.inDays/365,
+                          widthFactor: datosPersonales["plan"] == "Cero" && tiempoPlan.inDays > 365 ? 0 : tiempoPlan.inDays/365,
                           child: Container(
                             height: alturaBarra,
                             decoration: BoxDecoration(
