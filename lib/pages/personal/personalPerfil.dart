@@ -8,7 +8,7 @@ List<String> opciones = [
   "Citas",
   "Clientes",
   "Especialidades",
-  "Editar Perfil",
+  //"Editar Perfil",
   "Cerrar Sesión"
 ];
 
@@ -17,7 +17,7 @@ List<String> iconos = [
   "assets/iconos/citas.png",
   "assets/iconos/citas.png",
   "assets/iconos/notificacion.png",
-  "assets/iconos/editar_perfil.png",
+  //"assets/iconos/editar_perfil.png",
   "assets/iconos/cerrar_sesion.png",
 ];
 

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:poo_web/mystyle.dart';
+import 'package:poo_web/pages/personal/citaDentista.dart';
+import 'package:poo_web/pages/personal/perfilDentista.dart';
 
 import '../myWidgets.dart';
 import 'pacientes/citas.dart';
@@ -297,11 +299,10 @@ class _DrawBarState extends State<DrawBar> {
       ];
     }else if(widget.rol == "personal"){
       pantallas = [
-        Container(),
-        Container(),
+        PerfilDentista (),
+        CitasDentista (state: widget.state),
         Clientes(),
         EspecialidadesPersonal(state: widget.state),
-        Container(),
       ];
     }else if(widget.rol == "admin"){
       pantallas = [
