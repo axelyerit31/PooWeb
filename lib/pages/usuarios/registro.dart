@@ -48,7 +48,7 @@ List formControllersRegistro = [
 int planDentalDefecto = 0;
 String planDentalFecha = "0";
 
-var urlRegistro = "http://192.168.18.3/PooWeb/registro.php";
+var urlRegistro = url + "registro.php";
 
 void registroPaciente(){
   http.post(urlRegistro, body: {
@@ -196,7 +196,7 @@ class _RegistroState extends State<Registro> {
                             );
                             for (var i = 0; i < formControllersRegistro.length; i++) {
                               if(i == 6){
-                                controlSexo = "";
+                                controlSexo = null;
                               }else{
                                 formControllersRegistro[i].clear();
                               }
@@ -325,32 +325,37 @@ class _RegistroState extends State<Registro> {
 
         Container(
           constraints: BoxConstraints(minWidth: sW > maxScreenSize ? (formW * 1 / 4) - 40 : (formW * 7/10) - 40),
-          child: Center(
-            child: DropdownButton<String>(
-              dropdownColor: MyColors().colorGrisClaro(),
-              elevation: 0,
-              items: <String>['Masculino', 'Femenino']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              style: GoogleFonts.poppins(
-                fontSize: 14,
-                color: MyColors().colorOscuro(),
-                fontWeight: FontWeight.w400
-              ),
-              value: controlSexo,
-              hint: MyRText(
-                text: "Seleccione su sexo",
-                tipo: "bodyLL",
-                color: MyColors().colorGris()
-              ),
-              onChanged: (String newValue) {
-                dropDownButton(newValue);
-              },
+          decoration: BoxDecoration(
+            color: MyColors().colorGrisClaro(),
+            borderRadius: BorderRadius.circular(roundedL)
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 25),
+          child: DropdownButton<String>(
+          isExpanded: true,
+          underline: Container(),
+            dropdownColor: MyColors().colorGrisClaro(),
+            elevation: 0,
+            items: <String>['Masculino', 'Femenino']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: MyColors().colorOscuro(),
+              fontWeight: FontWeight.w400
             ),
+            value: controlSexo,
+            hint: MyRText(
+              text: "Seleccione su sexo",
+              tipo: "bodyL",
+              color: MyColors().colorGris()
+            ),
+            onChanged: (String newValue) {
+              dropDownButton(newValue);
+            },
           ),
         ),
       

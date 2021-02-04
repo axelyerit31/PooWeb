@@ -1,14 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:poo_web/pages/usuarios/registro.dart';
 
+import '../../myWidgets.dart';
 import '../../mystyle.dart';
+import '../datos.dart';
+import 'home.dart';
 
 
 class DespuesCita extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    void Function() {}
+
     double ancho = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: new Size.fromHeight(sizeAppBar),
+        child: MyRAppBar(
+          tipo: rolGlobal,
+        )
+      ),
       body: Stack(
         alignment: Alignment.center,
         children:<Widget> [
@@ -20,7 +31,7 @@ class DespuesCita extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fitWidth,
-                  image: AssetImage('fondo.jpg'))
+                  image: AssetImage('fondo-loading.png'))
               ),
 
             ),
@@ -40,10 +51,11 @@ class DespuesCita extends StatelessWidget {
                 ),
                 Container(
                   child: MyRText(
-                          text: "Gracias por reservar una cita con nosotros",
-                          color: MyColors().colorOscuro(),
-                          bold: 7,
-                        ),
+                    text: "Gracias por reservar una cita con nosotros",
+                    tipo: "subtitle",
+                    color: MyColors().colorOscuro(),
+                    bold: 7,
+                  ),
                   margin: EdgeInsets.only(bottom: 4 ),
                 ),
                 Container(
@@ -63,7 +75,11 @@ class DespuesCita extends StatelessWidget {
                     children: [
                       MyROutlineButton(
                         color: Colors.blue,
-                        onPressed: Function, 
+                        onPressed: (){
+                          Navigator.of(context).pushAndRemoveUntil(
+                            CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
+                          );
+                        }, 
                         child: MyRText(
                           text: "Volver al inicio",
                           color: Colors.blue,
@@ -75,8 +91,11 @@ class DespuesCita extends StatelessWidget {
                         width: 20,
                       ),
                       MyRButton(
-                        onPressed: Function, 
-                         child: MyRText(
+                        onPressed: (){
+                          Navigator.push(context,
+                            new CupertinoPageRoute(builder: (context) => Registro()));
+                        }, 
+                        child: MyRText(
                           text: "Registrarme",
                           color: Colors.white,
                           tipo: "buttonContent",

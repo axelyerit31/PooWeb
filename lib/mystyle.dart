@@ -265,8 +265,16 @@ class MyRTextFormField extends StatelessWidget {
   final Function onTap;
   final Function onFieldSubmitted;
   final int maxLines;
+  final bool showCursor;
 
-  const MyRTextFormField({Key key, this.controller, this.hintText, this.keyboardType, this.obscureText, this.textColor, this.formColor, this.onTap, this.onFieldSubmitted, this.maxLines}) : super(key: key);
+  const MyRTextFormField({
+    Key key, this.controller,
+    this.hintText, this.keyboardType,
+    this.obscureText, this.textColor,
+    this.formColor, this.onTap,
+    this.onFieldSubmitted, this.maxLines,
+    this.showCursor
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +288,7 @@ class MyRTextFormField extends StatelessWidget {
     double fontSize = lerpDouble(12, 16, sW/width);
 
     return TextFormField(
+      showCursor: showCursor == null ? true : showCursor,
       maxLines: maxLines == null ? 1 : maxLines,
       onTap: onTap,
       cursorHeight: fontSize*1.5,

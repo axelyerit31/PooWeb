@@ -113,7 +113,7 @@ class _MyRAppBarState extends State<MyRAppBar> {
                                 Container(
                                   constraints: BoxConstraints(maxHeight: 27),
                                   child: Text(
-                                    "Sonríamos",
+                                    "Sonriamos",
                                     style: GoogleFonts.reemKufi(color: MyColors().colorAzulClaro(), fontSize: 24, fontWeight: FontWeight.w600)
                                   ),
                                 ),

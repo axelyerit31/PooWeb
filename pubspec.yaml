@@ -65,6 +65,7 @@ flutter:
     - assets/dentista-loading.png
     - assets/nosotros-dibujo.png
     - assets/fondo-cita.png
+    - assets/fondo-loading.png
     - assets/fondo-especialidades.png
     - assets/labios.jfif
     - assets/perfil-bottomLeft.png
