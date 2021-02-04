@@ -16,7 +16,9 @@ var datosPlanes = [];
 var datosEspecialidades = [];
 var listaEspecialidades = [];
 
-final url = "http://192.168.18.3/PooWeb/";
+final urlHenry = "http://192.168.43.213";
+final url = urlHenry + "/PooWeb/";
+
 
 final String datos = "";
 //URL para obtener datos de MySql
