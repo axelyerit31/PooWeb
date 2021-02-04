@@ -287,12 +287,12 @@ class _TablaCitasState extends State<TablaCitas> {
                             "Eliminar a ${snapshot.data[1][i]["nombres_usu"]}",
                             "Eliminar",
                             (){
-                              borrarPacienteUsuario(snapshot.data[0][i]["dni_usu"]);
-                              print(snapshot.data[1][i]["dni_pac"]);
                               Navigator.pop(context);
+                              borrarPacienteUsuario(snapshot.data[1][i]["dni_usu"]);
+                              print(snapshot.data[1][i]["dni_usu"]);
                               obtenerUsuarios();
                               setState(() {});
-                              rowAlert("El usuario se eliminó exitosamente.", context, "¡Hecho!");
+                              rowAlert("El paciente se eliminó exitosamente.", context, "¡Hecho!");
                             },
                             true,
                             "Cancelar",

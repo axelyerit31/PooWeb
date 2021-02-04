@@ -1,21 +1,38 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:poo_web/mystyle.dart';
 import 'package:poo_web/pages/personal/citaDentista.dart';
 import 'package:poo_web/pages/personal/perfilDentista.dart';
-
+import 'package:http/http.dart' as http;
 import '../myWidgets.dart';
 import 'pacientes/citas.dart';
 import 'pacientes/editarPerfil.dart';
 import 'pacientes/fichaPersonal.dart';
-import 'pacientes/notificaciones.dart';
 import 'pacientes/planDental.dart';
 import 'datos.dart';
 import 'personal/clientes.dart';
 import 'personal/especialidades.dart';
 import 'usuarios/home.dart';
 import 'usuarios/registro.dart';
+
+final urlConfirmarContrasena = url + "confirmarContrasena.php";
+TextEditingController _controlContrasena = TextEditingController();
+
+
+Future<String> confirmarContrasena() async{
+  final response = await http.post(urlConfirmarContrasena, body: {
+    "dni": datosPersonales["dni"],
+    "pass": _controlContrasena.text
+  });
+
+  var resultado = jsonDecode(response.body)[0];
+  return resultado;
+}
+
+
 
 //funcion para obtner el primer nombre y primer apellido de forma vertical
 String nombresVertical(){
@@ -391,7 +408,6 @@ class _DrawBarState extends State<DrawBar> {
 
     return GestureDetector(
       onTap: () {
-        widget.state(valor);
         if(valor == widget.opciones.length-1){
           showDialog(
             context: context,
@@ -444,7 +460,7 @@ class _DrawBarState extends State<DrawBar> {
             }
           );
         }else if(rolGlobal == "paciente" && valor == widget.opciones.length-2){
-          /* showDialog(
+          showDialog(
             context: context,
             builder: (context){
               return AlertDialog(
@@ -453,16 +469,21 @@ class _DrawBarState extends State<DrawBar> {
                   tipo: "body", color: MyColors().colorOscuro(),
                   bold: 6
                 ),
-                content: MyRText(
-                  text: "Para editar sus datos, primero confirme su contraseña.",
-                  tipo: "bodyLL", color: MyColors().colorAzulMedio(),
-                  bold: 5
+                content: Container(
+                  width: 300,
+                  child: MyRTextFormField(
+                    textColor: MyColors().colorGris(),
+                    hintText: "Contraseña",
+                    controller: _controlContrasena,
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    formColor: MyColors().colorGrisClaro()
+                  )
                 ),
                 actions: [
                   MyROutlineButton(
                     onPressed: (){
                       Navigator.pop(context);
-                      widget.state(ultimoIndexSeleccionado);
                     },
                     child: MyRText(
                       text: "Cancelar",
@@ -473,15 +494,29 @@ class _DrawBarState extends State<DrawBar> {
                     color: MyColors().colorOscuro(),
                   ),
                   MyRButton(
-                    onPressed: () {
-                      rolGlobal = "usuario";
-                      planDentalDefecto = 0;
-                      datosPersonales.clear();
-                      datosCitas.clear();
-                      indexSeleccionado = 0;
-                      Navigator.of(context).pushAndRemoveUntil(
-                        CupertinoPageRoute(builder: (context) => Home()),(Route<dynamic> route) => false
-                      );
+                    onPressed: () async{
+                      if(_controlContrasena.text == ""){
+                        rowAlert("El campo contraseña está vacío.", context);
+                      }else{
+                        final response = await http.post(urlConfirmarContrasena, body: {
+                          "dni": datosPersonales["dni"],
+                          "pass": _controlContrasena.text
+                        });
+
+                        var resultado = jsonDecode(response.body)[0];
+
+                        if(resultado == "correcta"){
+                          print("BIEN");
+                          Navigator.pop(context);
+                          widget.state(valor);
+                          _controlContrasena.clear();
+                        }else{
+                          print("MAL");
+                          Navigator.pop(context);
+                          widget.state(ultimoIndexSeleccionado);
+                          _controlContrasena.clear();
+                        }
+                      }
                     },
                     child: MyRText(
                       text: "Confirmar",
@@ -493,7 +528,9 @@ class _DrawBarState extends State<DrawBar> {
                 ],
               );
             }
-          ); */
+          );
+        }else{
+          widget.state(valor);
         }
       },
       child: MouseRegion(

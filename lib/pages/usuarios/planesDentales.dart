@@ -173,13 +173,13 @@ Widget _MejorSonrisa(double sW) {
         color: MyColors().colorClaro(),
       ),
       Opacity(
-        opacity: 0.12,
+        opacity: 0.07,
         child: Container(
           height: sizeMiPantalla - sizeAppBar,
           width: sW,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/labios.jfif"),
+                  image: AssetImage("assets/sonrisa_dental.png"),
                   fit: BoxFit.fitWidth)),
         ),
       ),
@@ -442,17 +442,11 @@ class __TarjetaDentalState extends State<_TarjetaDental> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-<<<<<<< HEAD
-        Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          MyRText(
-              text: "S/. ${widget.datos["costo"]}0",
-=======
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MyRText(
               text: widget.datos["costo"] == "0" ? "S/ ${widget.datos["costo"]}.00" : "S/ ${widget.datos["costo"]}0",
->>>>>>> 7e39957122747fc329dd638787e03499df7bcfe7
               tipo: "precio",
               color: Color(0xFF4568E7),
               bold: 7),
